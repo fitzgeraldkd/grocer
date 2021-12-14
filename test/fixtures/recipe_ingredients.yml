@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  recipe: pancakes
+  ingredient: eggs
+  quantity: 2
+  units: 
+  prepared: 
+  group_name: 
+
+two:
+  recipe: pancakes
+  ingredient: flour
+  quantity: 1.5
+  units: cups
+  prepared: sifted
+  group_name: 
+
+three:
+  recipe: cilantro_lime_chicken
+  ingredient: chicken
+  quantity: 1.5
+  units: lbs
+  prepared: 
+  group_name: 
+
+four:
+  recipe: cilantro_lime_chicken
+  ingredient: avocado
+  quantity: 1
+  units: 
+  prepared: diced
+  group_name: Salsa
