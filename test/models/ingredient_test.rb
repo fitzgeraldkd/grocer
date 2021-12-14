@@ -3,7 +3,7 @@ require "test_helper"
 class IngredientTest < ActiveSupport::TestCase
 
   test "ingredient belongs to user" do
-    ingredient = Ingredient.first
+    ingredient = Ingredient.all.sample
     assert_not_nil ingredient.user, "Expected ingredient to belong to user"
   end
 

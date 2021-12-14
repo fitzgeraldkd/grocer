@@ -3,4 +3,5 @@ class User < ApplicationRecord
   validates :username, format: { with: /\A[a-zA-Z_\d]+\z/, message: "Only letters, numbers, and underscores allowed"}
 
   has_many :ingredients, dependent: :destroy
+  has_many :recipes, dependent: :destroy
 end

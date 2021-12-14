@@ -1,17 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-eggs:
-  name: Eggs
+pancakes:
+  name: Pancakes
+  cuisine:
   user: kenny
 
-flour:
-  name: Flour
-  user: kenny
-
-chicken:
-  name: Chicken
-  user: fitzgeraldkd
-
-avocado:
-  name: Avocado
+cilantro_lime_chicken:
+  name: Cilantro Lime Chicken
+  cuisine: Mexican
   user: fitzgeraldkd

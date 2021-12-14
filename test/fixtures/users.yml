@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+kenny:
   username: kenny
   firebase_id: kenny_firebase
   email: fake_email@fake.com
 
-two:
+fitzgeraldkd:
   username: fitzgeraldkd
   firebase_id: fitzgeraldkd_firebase
   email: fake_email_2@fake.com

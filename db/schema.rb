@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_14_185839) do
+ActiveRecord::Schema.define(version: 2021_12_14_203908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,15 @@ ActiveRecord::Schema.define(version: 2021_12_14_185839) do
     t.index ["user_id"], name: "index_ingredients_on_user_id"
   end
 
+  create_table "recipes", force: :cascade do |t|
+    t.string "name"
+    t.string "cuisine"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_recipes_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "firebase_id"
@@ -32,4 +41,5 @@ ActiveRecord::Schema.define(version: 2021_12_14_185839) do
   end
 
   add_foreign_key "ingredients", "users"
+  add_foreign_key "recipes", "users"
 end
