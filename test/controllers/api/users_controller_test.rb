@@ -23,17 +23,13 @@ class Api::UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should have ok status on show if logged in" do
-    # TODO: should pass only if this is the user logged in
-    # user = User.first
-    # session[:user_id] = user.id
-    # TODO: use login action to validate
+    post "/api/login", params: { username: "kenny" }
     get "/api/me"
     assert_response 200
     assert_equal "application/json", @response.media_type
   end
 
   test "should have unauthorized status on show if not logged in" do
-    # TODO: should pass only if this is the user not logged in
     get "/api/me"
     assert_response 401
     assert_equal "application/json", @response.media_type
@@ -46,7 +42,7 @@ class Api::UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should have created status on create if valid" do
-    post "/api/users", params: { username: "a unique username", password: "some password" }
+    post "/api/users", params: { username: "a unique username", password: "some password", password_confirmation: "some password" }
     assert_response 201
     assert_equal "application/json", @response.media_type
   end
@@ -83,7 +79,8 @@ class Api::UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "should have ok status on destroy if logged in and valid" do
     # TODO: should pass only if this is the user logged in
-    user = User.first
+    post "/api/login", params: { username: "kenny" }
+    user = User.find_by(username: "kenny")
     delete "/api/users/#{user.id}"
     assert_response 200
     assert_equal "application/json", @response.media_type
@@ -91,7 +88,8 @@ class Api::UsersControllerTest < ActionDispatch::IntegrationTest
 
   test "should have forbidden status on destroy if logged in but invalid" do
     # TODO: should pass only if logged in but not as the deleted user
-    user = User.first
+    post "/api/login", params: { username: "kenny" }
+    user = User.find_by(username: "fitzgeraldkd")
     delete "/api/users/#{user.id}"
     assert_response 403
     assert_equal "application/json", @response.media_type
