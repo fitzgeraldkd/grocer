@@ -6,18 +6,15 @@ class Api::UsersController < ApplicationController
   end
 
   def create
-    salt = BCrypt::Engine.generate_salt
-    hash = BCrypt::Engine.hash_secret params[:password], salt
-    hash_confirmation = BCrypt::Engine.hash_secret params[:password_confirmation], salt
-    if (hash == hash_confirmation) 
+    if (params[:password] == params[:password_confirmation]) 
       conn = Faraday.new do |f|
         f.request :json
         f.response :json
       end
-      response = conn.post(get_firebase_enpoint('signup'), { email: params[:email], password: hash, returnSecureToken: true })
+      response = conn.post(get_firebase_enpoint('signup'), { email: params[:email], password: params[:password], returnSecureToken: true })
       if (response.status == 200)
         begin
-          user = User.create!(username: params[:username], firebase_id: response.body['localId'], password_salt: salt)
+          user = User.create!(username: params[:username], firebase_id: response.body['localId'], email: params[:email])
           render json: { username: user.username }, status: :created
         rescue ActiveRecord::RecordInvalid => invalid
           conn.post(get_firebase_enpoint('delete'), { idToken: response.body['idToken'] })

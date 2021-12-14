@@ -3,11 +3,9 @@
 one:
   username: kenny
   firebase_id: kenny_firebase
-  password_salt: somesalt
   email: fake_email@fake.com
 
 two:
   username: fitzgeraldkd
   firebase_id: fitzgeraldkd_firebase
-  password_salt: somesalt
   email: fake_email_2@fake.com
