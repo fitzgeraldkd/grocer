@@ -1,7 +1,7 @@
 class Api::UsersController < ApplicationController
+  skip_before_action :authenticate_user, only: [:create]
   before_action :authorize
   skip_before_action :authorize, only: [:show, :create]
-  skip_before_action :authenticate_user, only: [:create]
 
   def show
     render json: @current_user
@@ -77,7 +77,7 @@ class Api::UsersController < ApplicationController
   end
 
   def authorize
-    return render json: { errors: ["You are not authorized to perform this action."] }, status: :forbidden unless current_user.id == params[:id].to_i
+    return render json: { errors: ["You are not authorized to perform this action."] }, status: :forbidden unless @current_user.id == params[:id].to_i
   end
 
 end

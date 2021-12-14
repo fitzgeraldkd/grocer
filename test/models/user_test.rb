@@ -6,6 +6,11 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 2, User.count
   end
 
+  test "user has ingredients" do
+    user = User.first
+    assert_not_empty user.ingredients, "Expected user to have many ingredients"
+  end
+
   test "user_invalid" do
     test_user = User.create(username: 'kenny', firebase_id: 'unique_id', email: 'fake_email_3@fake.com')
     assert_not test_user.valid?, "Expected user to be invalid (username exists)"
