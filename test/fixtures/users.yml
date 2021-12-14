@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  username: kenny
+  firebase_id: kenny_firebase
+  password_salt: somesalt
+
+two:
+  username: fitzgeraldkd
+  firebase_id: fitzgeraldkd_firebase
+  password_salt: somesalt
