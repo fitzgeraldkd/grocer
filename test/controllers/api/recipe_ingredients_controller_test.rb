@@ -4,19 +4,19 @@ class Api::RecipeIngredientsControllerTest < ActionDispatch::IntegrationTest
 
   # ~~~ INDEX ~~~
 
-  test "should not get index" do
-    assert_raises ActionController::RoutingError do
-      get "/api/recipe_ingredients" 
-    end
-  end
+  # test "should not get index" do
+  #   assert_raises ActionController::RoutingError do
+  #     get "/api/recipe_ingredients" 
+  #   end
+  # end
 
   # ~~~ SHOW ~~~
 
-  test "should not get show" do
-    assert_raises ActionController::RoutingError do
-      get "/api/recipe_ingredients/1" 
-    end
-  end
+  # test "should not get show" do
+  #   assert_raises ActionController::RoutingError do
+  #     get "/api/recipe_ingredients/1" 
+  #   end
+  # end
 
   # ~~~ CREATE ~~~
 

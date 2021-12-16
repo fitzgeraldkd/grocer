@@ -4,19 +4,29 @@ class Api::UsersControllerTest < ActionDispatch::IntegrationTest
 
   # ~~~ INDEX ~~~
 
-  test "should not get index" do
-    assert_raises ActionController::RoutingError do
-      get "/api/users" 
-    end
-  end
+  # test "should not get index" do
+  #   assert_raises ActionController::RoutingError do
+  #     get "/api/users" 
+  #   end
+  # end
+
+  # test "should invoke fallback on get index" do
+  #   # assert_raises ActionController::UrlGenerationError do
+
+  #   # end
+  #   # assert_generates "/api/users", controller: "fallback", action: "index"
+  #   get "/api/users"
+  #   p @response
+  #   p @response.status
+  # end
 
   # ~~~ SHOW ~~~
 
-  test "should not get show" do
-    assert_raises ActionController::RoutingError do
-      get "/api/users/1" 
-    end
-  end
+  # test "should not get show" do
+  #   assert_raises ActionController::RoutingError do
+  #     get "/api/users/1" 
+  #   end
+  # end
 
   test "should get me" do
     assert_routing "/api/me", controller: "api/users", action: "show"
