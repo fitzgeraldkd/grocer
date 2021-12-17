@@ -1,5 +1,3 @@
-// export const sendRequest = async (path: string, method: string, body: {}, sideEffect: Function) => {
-
 type RequestInputs = {
   path?: string,
   method?: 'GET' | 'POST' | 'PATCH' | 'DELETE',
@@ -19,5 +17,4 @@ export const sendRequest = async ({path = '/', method = 'GET', body = {}, sideEf
   const payload = await response.json();
   if (sideEffect) sideEffect(response.ok, payload);
   return {success: response.ok, data: payload};
-  return payload;
 };

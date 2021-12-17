@@ -1,10 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { UserCredentialsType } from '../../utils/types/formData.types';
 import { sendRequest } from '../../utils/helpers/requests.helpers';
-import { UserRecordType, ValidRecordType, ValidResponse } from '../../utils/types/record.types';
-import { useNavigate } from "react-router-dom";
+import { UserRecordType, ValidRecordType } from '../../utils/types/record.types';
 
-export interface AuthenticationState {
+interface AuthenticationState {
   userId: number | null,
   status: 'idle' | 'loading' | 'failed'
 };
@@ -30,9 +29,6 @@ type ThunkOutput = {
 export const authenticateUser = createAsyncThunk<ThunkOutput, ThunkInput>(
   'authenticate/login', 
   async data => {
-    // const sideEffect = (success: boolean, payload: ValidResponse) => {
-    //   if (data.setMessages) data.setMessages(payload.messages);
-    // };
     return sendRequest({ 
       path: '/api/login', 
       method: 'POST', 
@@ -45,13 +41,6 @@ export const authenticateUser = createAsyncThunk<ThunkOutput, ThunkInput>(
 export const registerUser = createAsyncThunk<ThunkOutput, ThunkInput>(
   'authenticate/register',
   async data => {
-    // const sideEffect = (success: boolean, payload: ValidResponse) => {
-    //   if (success) {
-
-    //   } else if (data.setMessages) {
-    //     data.setMessages(payload.messages);
-    //   }
-    // }
     return sendRequest({ 
       path: '/api/users', 
       method: 'POST', 
@@ -65,32 +54,39 @@ const authenticationSlice = createSlice({
   name: 'authentication',
   initialState: initialState,
   reducers: {
-    // userSet(state, action) {
-    //   state.userId = action.payload.userId;
-    // }
+    userLoggedOut(state) {
+      state.userId = null;
+      state.status = 'idle';
+    }
   },
   extraReducers: builder => {
-    builder.addCase(authenticateUser.pending, (state, { payload }) => {
+    builder.addCase(authenticateUser.pending, (state) => {
       state.userId = null;
       state.status = 'loading';
     });
     builder.addCase(authenticateUser.fulfilled, (state, { payload }) => {
       state.userId = payload.success ? payload.data.payload.id : null;
       state.status = 'idle';
-      // payload.setMessages(payload.data.messages);
-      // if (payload.success) {
-      //   state.userId = payload.data.payload.id;
-      // } else {
-      //   state.userId = null;
-      // }
-      // console.log(payload)
     });
     builder.addCase(authenticateUser.rejected, (state, action) => {
+      state.status = 'failed';
+      console.error(action);
+    });
+
+    builder.addCase(registerUser.pending, (state) => {
+      state.userId = null;
+      state.status = 'loading';
+    });
+    builder.addCase(registerUser.fulfilled, (state, { payload }) => {
+      state.userId = payload.success ? payload.data.payload.id : null;
+      state.status = 'idle';
+    });
+    builder.addCase(registerUser.rejected, (state, action) => {
       state.status = 'failed';
       console.error(action);
     });
   }
 });
 
-// export const { userSet } = authenticationSlice.actions;
+export const { userLoggedOut } = authenticationSlice.actions;
 export default authenticationSlice.reducer;

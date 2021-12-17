@@ -33,8 +33,8 @@ function RegisterForm() {
 
   return (
     <div>
-    <form onSubmit={handleSubmit}>
-      Create A New Account
+      <form onSubmit={handleSubmit}>
+        Create A New Account
         <label htmlFor='username'>Username</label>
         <input id='username' name='username' type='text' value={formData.username} onChange={handleChange} />
         <label htmlFor='email'>Email</label>
@@ -44,9 +44,9 @@ function RegisterForm() {
         <label htmlFor='confirmPassword'>Confirm Password</label>
         <input id='confirmPassword' name='confirmPassword' type='password' value={formData.confirmPassword} onChange={handleChange} />
         <input type='submit' />
-    </form>
-    {messages.map(message => <div key={message}>{message}</div>)}
-    <Link to='/login'>Have an account?</Link>
+      </form>
+      {messages.map(message => <div key={message}>{message}</div>)}
+      <Link to='/login'>Have an account?</Link>
     </div>
   );
 }
