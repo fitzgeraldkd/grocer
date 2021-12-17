@@ -14,7 +14,7 @@ class Api::RecipesControllerTest < ActionDispatch::IntegrationTest
     assert_response 200
     assert_equal "application/json", @response.media_type
     json_response = JSON.parse(response.body)
-    json_response.each do |recipe|
+    json_response['payload'].each do |recipe|
       assert_equal session[:user_id], recipe["user_id"], "Should only return recipes belonging to logged in user"
     end
   end
