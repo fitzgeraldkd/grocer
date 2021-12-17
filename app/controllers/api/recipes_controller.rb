@@ -13,7 +13,21 @@ class Api::RecipesController < ApplicationController
 
   def create
     recipe = @current_user.recipes.create!(recipe_params)
+    ingredients = params[:ingredients] || []
+    ingredients.each do |ingredient|
+      recipe.recipe_ingredients.create!(
+        ingredient_id: ingredient['id'],
+        quantity: ingredient['quantity'],
+        units: ingredient['units'],
+        prepared: ingredient['prepared'],
+        group_name: ingredient['group_name']
+      )
+    end
+    # TODO: add instructions as well
     render json: {payload: recipe, messages: []}, status: :created
+  rescue ActiveRecord::RecordInvalid => invalid
+    recipe.destroy
+    render_record_invalid(invalid)
   end
 
   def update
