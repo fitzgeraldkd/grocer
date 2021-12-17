@@ -21,7 +21,7 @@ function NavBar() {
           <span>Pantry</span>
           <Link to='/' onClick={() => dispatch(userLoggedOut())}>Log Out</Link>
         </NavBarMenu>
-      : <></>}
+      : <NavBarMenu><Link to='login'>Log In</Link></NavBarMenu>}
 
       <Link to='/'>WIIMF</Link>
 

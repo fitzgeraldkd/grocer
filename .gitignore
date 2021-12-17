@@ -25,3 +25,5 @@
 
 secrets.rb
 node_modules/
+
+public/
