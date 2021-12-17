@@ -12,6 +12,6 @@ export type ValidRecordType = {
 export type UserRecordType = {
   id?: number,
   username: string,
-  firebase_id: string,
+  // firebase_id: string,
   email: string
 };

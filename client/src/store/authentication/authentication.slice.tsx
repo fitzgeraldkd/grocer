@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { UserCredentialsType } from '../../utils/types/formData.types';
 import { sendRequest } from '../../utils/helpers/requests.helpers';
-import { ValidResponse } from '../../utils/types/record.types';
+import { UserRecordType, ValidRecordType, ValidResponse } from '../../utils/types/record.types';
+import { useNavigate } from "react-router-dom";
 
 export interface AuthenticationState {
   userId: number | null,
@@ -13,25 +14,52 @@ const initialState: AuthenticationState = {
   status: 'idle'
 };
 
-type ThunkChunk = {
+type ThunkInput = {
   body: UserCredentialsType,
-  setMessages?: React.Dispatch<React.SetStateAction<string[]>>
+  sideEffect?: Function
 };
 
-export const authenticateUser = createAsyncThunk<any, ThunkChunk>(
+type ThunkOutput = {
+  success: boolean,
+  data: {
+    messages: string[],
+    payload: UserRecordType & ValidRecordType
+  }
+}
+
+export const authenticateUser = createAsyncThunk<ThunkOutput, ThunkInput>(
   'authenticate/login', 
   async data => {
-    const sideEffect = (payload: ValidResponse) => {
-      if (data.setMessages) data.setMessages(payload.messages);
-    };
+    // const sideEffect = (success: boolean, payload: ValidResponse) => {
+    //   if (data.setMessages) data.setMessages(payload.messages);
+    // };
     return sendRequest({ 
       path: '/api/login', 
       method: 'POST', 
       body: data.body, 
-      sideEffect: sideEffect
+      sideEffect: data.sideEffect
     });
   }
 );
+
+export const registerUser = createAsyncThunk<ThunkOutput, ThunkInput>(
+  'authenticate/register',
+  async data => {
+    // const sideEffect = (success: boolean, payload: ValidResponse) => {
+    //   if (success) {
+
+    //   } else if (data.setMessages) {
+    //     data.setMessages(payload.messages);
+    //   }
+    // }
+    return sendRequest({ 
+      path: '/api/users', 
+      method: 'POST', 
+      body: data.body, 
+      sideEffect: data.sideEffect
+    });
+  }
+)
 
 const authenticationSlice = createSlice({
   name: 'authentication',

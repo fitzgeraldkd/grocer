@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { authenticateUser } from '../../../store/authentication/authentication.slice';
 import { UserCredentialsType } from '../../../utils/types/formData.types';
+import { ValidResponse } from '../../../utils/types/record.types';
+import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
   const [formData, setFormData] = useState<UserCredentialsType>({
@@ -12,6 +14,7 @@ function LoginForm() {
   const [messages, setMessages] = useState<string[]>([]);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value});
@@ -19,7 +22,10 @@ function LoginForm() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(authenticateUser({body: formData, setMessages: setMessages}));
+    const sideEffect = (success: boolean, payload: ValidResponse) => {
+      success ? navigate('/') : setMessages(payload.messages);
+    };
+    dispatch(authenticateUser({body: formData, sideEffect: sideEffect}));
   };
 
   return (
@@ -32,6 +38,7 @@ function LoginForm() {
         <input id='password' name='password' type='password' value={formData.password} onChange={handleChange} />
         <input type='submit' />
       </form>
+      {messages.map(message => <div key={message}>{message}</div>)}
       <Link to='/login?new_user=true'>Need an account?</Link>
     </div>
   );

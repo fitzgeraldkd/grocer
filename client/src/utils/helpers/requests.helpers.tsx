@@ -17,7 +17,7 @@ export const sendRequest = async ({path = '/', method = 'GET', body = {}, sideEf
   }
   const response = await fetch(path, options);
   const payload = await response.json();
-  if (sideEffect) sideEffect(payload);
+  if (sideEffect) sideEffect(response.ok, payload);
   return {success: response.ok, data: payload};
   return payload;
 };

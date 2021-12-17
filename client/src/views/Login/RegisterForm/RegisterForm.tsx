@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../../../store/authentication/authentication.slice';
+import { ValidResponse } from '../../../utils/types/record.types';
+import { useNavigate } from "react-router-dom";
+
 
 function RegisterForm() {
+  const [messages, setMessages] = useState<string[]>([])
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -9,12 +15,20 @@ function RegisterForm() {
     confirmPassword: ''
   });
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value});
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-
+    e.preventDefault();
+    const dataToSubmit = {...formData, password_confirmation: formData.confirmPassword};
+    const sideEffect = (success: boolean, payload: ValidResponse) => {
+      success ? navigate('/') : setMessages(payload.messages);
+    };
+    dispatch(registerUser({body: dataToSubmit, sideEffect: sideEffect}));
   };
 
   return (
@@ -31,6 +45,7 @@ function RegisterForm() {
         <input id='confirmPassword' name='confirmPassword' type='password' value={formData.confirmPassword} onChange={handleChange} />
         <input type='submit' />
     </form>
+    {messages.map(message => <div key={message}>{message}</div>)}
     <Link to='/login'>Have an account?</Link>
     </div>
   );
