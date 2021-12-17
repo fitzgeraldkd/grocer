@@ -1,11 +1,15 @@
 import React from 'react';
 
-function Input() {
+interface NavBarLinkProps {
+  children: JSX.Element
+}
+
+function NavBarLink({ children }: NavBarLinkProps) {
   return (
-    <div>
-      
+    <div role='link'>
+      {children}
     </div>
   );
 }
 
-export default Input;
+export default NavBarLink;

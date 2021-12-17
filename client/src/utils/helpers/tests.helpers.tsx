@@ -1,10 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux';
+import store from '../../rootReducer';
 
 export const renderWrappedComponent = function(component: JSX.Element, path: string = '/') {
   window.history.pushState({}, 'Test', path);
-  render(component, {wrapper: BrowserRouter});
+  render(<Provider store={store}>{component}</Provider>, {wrapper: BrowserRouter});
 }
 
 export const countLabeledInputs = function(expectedCount: number) {
