@@ -7,22 +7,22 @@ class Api::RecipeIngredientsController < ApplicationController
     ingredient = Ingredient.find(params[:ingredient_id])
     if @current_user.id == recipe.user.id && @current_user.id == ingredient.user.id
       recipe_ingredient = RecipeIngredient.create!(recipe_ingredient_params)
-      render json: recipe_ingredient, status: :created
+      render json: {payload: recipe_ingredient, messages: []}, status: :created
     else
-      render json: { errors: ["You are not authorized to perform this action."] }, status: :forbidden
+      render json: {payload: nil, messages: ["You are not authorized to perform this action."]}, status: :forbidden
     end
   end
 
   def update
     recipe_ingredient = RecipeIngredient.find(params[:id])
     recipe_ingredient.update!(recipe_ingredient_params)
-    render json: recipe_ingredient, status: :ok
+    render json: {payload: recipe_ingredient, messages: []}, status: :ok
   end
 
   def destroy
     recipe_ingredient = RecipeIngredient.find(params[:id])
     recipe_ingredient.destroy
-    render json: { messages: ["Recipe has been deleted"] }, status: :ok
+    render json: {payload: nil, messages: ["Recipe has been deleted"]}, status: :ok
   end
 
   private
@@ -32,7 +32,7 @@ class Api::RecipeIngredientsController < ApplicationController
   end
 
   def authorize
-    return render json: { errors: ["You are not authorized to perform this action."] }, status: :forbidden unless @current_user.id == RecipeIngredient.find(params[:id]).recipe.user_id
+    return render json: {payload: nil, messages: ["You are not authorized to perform this action."]}, status: :forbidden unless @current_user.id == RecipeIngredient.find(params[:id]).recipe.user_id
   end
 
 end

@@ -11,15 +11,15 @@ class ApplicationController < ActionController::API
   end
 
   def authenticate_user
-    render json: { errors: ["You are not logged in."] }, status: :unauthorized unless current_user
+    render json: { payload: nil, messages: ["You are not logged in."] }, status: :unauthorized unless current_user
   end
 
   def render_record_not_found(error)
-    render json: { errors: [error.message] }, status: :not_found
+    render json: { payload: nil, messages: [error.message] }, status: :not_found
   end
 
   def render_record_invalid(invalid)
-    render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
+    render json: { payload: nil, messages: invalid.record.errors.full_messages }, status: :unprocessable_entity
   end
 
   def make_firebase_request(action, body)
