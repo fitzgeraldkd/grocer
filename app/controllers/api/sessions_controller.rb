@@ -15,16 +15,16 @@ class Api::SessionsController < ApplicationController
     if (response.status == 200)
       session[:user_id] = user.id
       session[:id_token] = response.body['idToken']
-      render json: user, status: :ok
+      render json: { payload: user, messages: [] }, status: :ok
     else
-      render json: { errors: [response.body['error']['message']] }, status: :unauthorized
+      render json: { payload: nil, messages: [response.body['error']['message']] }, status: :unauthorized
     end
   end
 
   def destroy
     session.delete :user_id
     session.delete :id_token
-    render json: { messages: ['You have been logged out.'] }, status: :ok
+    render json: { payload: nil, messages: ['You have been logged out.'] }, status: :ok
   end
 
 end

@@ -1,5 +1,10 @@
 export {}
 
+export type ValidResponse = {
+  payload: {},
+  messages: string[]
+}
+
 export type ValidRecordType = {
   id: number
 };

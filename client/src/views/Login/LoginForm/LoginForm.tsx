@@ -9,6 +9,7 @@ function LoginForm() {
     username: '',
     password: ''
   });
+  const [messages, setMessages] = useState<string[]>([]);
 
   const dispatch = useDispatch();
 
@@ -18,21 +19,8 @@ function LoginForm() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // const options = {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     username: 'fitzgeraldkd'
-    //   })
-    // }
-    // fetch('/api/login', options)
-    //   .then(resp => resp.json())
-    //   .then(data => console.log(data))
-    console.log(formData);
-    dispatch(authenticateUser(formData));
-  }
+    dispatch(authenticateUser({body: formData, setMessages: setMessages}));
+  };
 
   return (
     <div>
