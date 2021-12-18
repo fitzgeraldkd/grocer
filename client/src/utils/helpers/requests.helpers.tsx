@@ -6,12 +6,17 @@ type RequestInputs = {
 }
 
 export const sendRequest = async ({path = '/', method = 'GET', body = {}, sideEffect}: RequestInputs) => {
-  const options = {
-    method: method,
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body)
+  let options;
+  if (['GET', 'DELETE'].includes(method)) {
+    options = {method: method};
+  } else {
+    options = {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    };
   }
   const response = await fetch(path, options);
   const payload = await response.json();
