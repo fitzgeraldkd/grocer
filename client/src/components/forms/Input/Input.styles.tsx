@@ -1,3 +1,9 @@
 import styled from 'styled-components';
 
-export const InputStyled = styled.input``;
+export interface StyleProps {
+
+}
+
+export default styled.input<StyleProps>`
+
+`;

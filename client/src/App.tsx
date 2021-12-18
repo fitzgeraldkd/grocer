@@ -6,7 +6,13 @@ import LoginPage from './views/Login/LoginPage/LoginPage';
 import NavBar from './components/navigation/NavBar/NavBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { verifyUser } from './store/authentication/authentication.slice';
+import { indexRecipes } from './store/recipes/recipes.slice';
+import { indexIngredients } from './store/ingredients/ingredients.slice';
 import { RootState } from './rootReducer';
+import IngredientsListPage from './views/Ingredients/IngredientsListPage/IngredientsListPage';
+import IngredientDetailPage from './views/Ingredients/IngredientDetailPage/IngredientDetailPage';
+import IngredientCreatePage from './views/Ingredients/IngredientCreatePage/IngredientCreatePage';
+import AppStyled from './App.styles';
 
 function App() {
   const dispatch = useDispatch();
@@ -19,34 +25,30 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    
+    if (userId) {
+      // dispatch(indexRecipes({}));
+      dispatch(indexIngredients({}));
+    }
   }, [dispatch, userId])
 
   return (
-    <div className="App">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-      {/* Render loading overlay depending on page status */}
-
+    <AppStyled>
       <NavBar />
-      <Routes>
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/recipes' element={<></>} />
-      </Routes>
-      {/* <LoginPage /> */}
-    </div>
+
+      <main>
+        <Routes>
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/recipes' element={<></>} />
+
+          <Route path='/ingredients/'>
+            <Route path='' element={<IngredientsListPage />} />
+            <Route path='new' element={<IngredientCreatePage />} />
+            <Route path=':id' element={<IngredientDetailPage />} />
+          </Route>
+          {/* <Route path='/ingredients/:id/edit' element={<IngredientEditPage />} /> */}
+        </Routes>
+      </main>
+    </AppStyled>
   );
 }
 
