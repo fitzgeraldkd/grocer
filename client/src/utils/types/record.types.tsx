@@ -14,6 +14,10 @@ export type IngredientRecordType = {
   name: string
 };
 
+export type IngredientRelationsType = {
+  recipes: RecipeRecordType[]
+}
+
 export type RecipeRecordType = {
   id?: number,
   name: string,

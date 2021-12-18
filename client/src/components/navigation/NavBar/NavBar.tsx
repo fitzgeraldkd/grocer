@@ -17,7 +17,7 @@ function NavBar() {
       {userId ?       
         <NavBarMenu>
           <Link to='/recipes'>Recipes</Link>
-          <span>Ingredients</span>
+          <Link to='/ingredients'>Ingredients</Link>
           <span>Pantry</span>
           <Link to='/' onClick={() => dispatch(userLoggedOut())}>Log Out</Link>
         </NavBarMenu>
