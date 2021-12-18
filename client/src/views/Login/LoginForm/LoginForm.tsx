@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { authenticateUser } from '../../../store/authentication/authentication.slice';
 import { UserCredentialsType } from '../../../utils/types/formData.types';
-import { ValidResponse } from '../../../utils/types/record.types';
+import { UserRecordType, ValidRecordType, ValidResponse } from '../../../utils/types/record.types';
 import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
@@ -22,7 +22,7 @@ function LoginForm() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const sideEffect = (success: boolean, payload: ValidResponse) => {
+    const sideEffect = (success: boolean, payload: ValidResponse<UserRecordType & ValidRecordType>) => {
       success ? navigate('/') : setMessages(payload.messages);
     };
     dispatch(authenticateUser({body: formData, sideEffect: sideEffect}));

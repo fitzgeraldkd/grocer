@@ -12,6 +12,7 @@ import { RootState } from './rootReducer';
 import IngredientsListPage from './views/Ingredients/IngredientsListPage/IngredientsListPage';
 import IngredientDetailPage from './views/Ingredients/IngredientDetailPage/IngredientDetailPage';
 import IngredientCreatePage from './views/Ingredients/IngredientCreatePage/IngredientCreatePage';
+import IngredientEditPage from './views/Ingredients/IngredientEditPage/IngredientEditPage';
 import AppStyled from './App.styles';
 
 function App() {
@@ -44,8 +45,8 @@ function App() {
             <Route path='' element={<IngredientsListPage />} />
             <Route path='new' element={<IngredientCreatePage />} />
             <Route path=':id' element={<IngredientDetailPage />} />
+          <Route path='/ingredients/:id/edit' element={<IngredientEditPage />} />
           </Route>
-          {/* <Route path='/ingredients/:id/edit' element={<IngredientEditPage />} /> */}
         </Routes>
       </main>
     </AppStyled>

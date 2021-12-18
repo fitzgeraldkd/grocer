@@ -1,7 +1,7 @@
 export type RequestStatus = 'idle' | 'loading' | 'failed'
 
-export type ValidResponse = {
-  payload: {},
+export type ValidResponse<T> = {
+  payload: T | null,
   messages: string[]
 };
 
@@ -13,10 +13,6 @@ export type IngredientRecordType = {
   id?: number
   name: string
 };
-
-export type IngredientRelationsType = {
-  recipes: RecipeRecordType[]
-}
 
 export type RecipeRecordType = {
   id?: number,
@@ -39,4 +35,8 @@ export type UserRecordType = {
   username: string,
   // firebase_id: string,
   email: string
+};
+
+export type IngredientRelationsType = {
+  recipes: RecipeRecordType[]
 };

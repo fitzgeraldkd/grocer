@@ -136,9 +136,13 @@ const ingredientsSlice = createSlice({
       state.status = 'loading';
     });
     builder.addCase(updateIngredient.fulfilled, (state, { payload }) => {
-      state.ingredients = state.ingredients.map(ingredient => (
-        ingredient.id === payload.data.payload.id ? payload.data.payload : ingredient
-      ));
+      // console.log(state);
+      // state.ingredients = state.ingredients.map(ingredient => (
+      //   ingredient.id === payload.data.payload.id ? payload.data.payload : ingredient
+      // ));
+      console.log(payload)
+      const index = state.ingredients.findIndex(ingredient => ingredient.id === payload.data.payload.id);
+      state.ingredients[index] = payload.data.payload;
       state.activeIngredient = payload.data.payload;
       state.status = 'idle';
     });
@@ -146,13 +150,12 @@ const ingredientsSlice = createSlice({
     builder.addCase(destroyIngredient.pending, state => {
       state.status = 'loading';
     });
-    builder.addCase(destroyIngredient.fulfilled, (state, { payload }) => {
-      // TODO: For this to work, backend will need to return the id of the deleted element
-      // TODO: Could achieve this by modifying ThunkOutput to include headers, and return id from destroy request
-      state.ingredients = state.ingredients.filter(ingredient => (
-        ingredient.id !== payload.data.payload.id
-      ));
-      state.activeIngredient = null;
+    builder.addCase(destroyIngredient.fulfilled, (state, action) => {
+      if (action.payload.success) {
+        const index = state.ingredients.findIndex(ingredient => ingredient.id === action.meta.arg.id);
+        state.ingredients.splice(index, 1);
+        state.activeIngredient = null;
+      }
       state.status = 'idle';
     });
   }
