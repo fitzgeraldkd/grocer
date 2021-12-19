@@ -14,6 +14,9 @@ import IngredientDetailPage from './views/Ingredients/IngredientDetailPage/Ingre
 import IngredientCreatePage from './views/Ingredients/IngredientCreatePage/IngredientCreatePage';
 import IngredientEditPage from './views/Ingredients/IngredientEditPage/IngredientEditPage';
 import AppStyled from './App.styles';
+import RecipeListPage from './views/Recipes/RecipesListPage/RecipeListPage';
+import RecipeDetailPage from './views/Recipes/RecipeDetailPage/RecipeDetailPage';
+import RecipeCreatePage from './views/Recipes/RecipeCreatePage/RecipeCreatePage';
 
 function App() {
   const dispatch = useDispatch();
@@ -27,8 +30,8 @@ function App() {
 
   useEffect(() => {
     if (userId) {
-      // dispatch(indexRecipes({}));
       dispatch(indexIngredients({}));
+      dispatch(indexRecipes({}));
     }
   }, [dispatch, userId])
 
@@ -39,13 +42,19 @@ function App() {
       <main>
         <Routes>
           <Route path='/login' element={<LoginPage />} />
-          <Route path='/recipes' element={<></>} />
+
+          <Route path='/recipes'>
+            <Route path='' element={<RecipeListPage />} />
+            <Route path='new' element={<RecipeCreatePage />} />
+            <Route path=':id' element={<RecipeDetailPage />} />
+
+          </Route>
 
           <Route path='/ingredients/'>
             <Route path='' element={<IngredientsListPage />} />
             <Route path='new' element={<IngredientCreatePage />} />
             <Route path=':id' element={<IngredientDetailPage />} />
-          <Route path='/ingredients/:id/edit' element={<IngredientEditPage />} />
+            <Route path='/ingredients/:id/edit' element={<IngredientEditPage />} />
           </Route>
         </Routes>
       </main>

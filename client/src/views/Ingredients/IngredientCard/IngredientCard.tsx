@@ -4,7 +4,7 @@ import { IngredientRecordType, ValidRecordType } from '../../../utils/types/reco
 
 interface IngredientCardProps {
   ingredient: IngredientRecordType & ValidRecordType
-}
+};
 
 function IngredientCard({ ingredient }: IngredientCardProps) {
   return (

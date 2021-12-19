@@ -10,7 +10,7 @@ function IngredientDetailPage() {
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const ingredient = useSelector((state: RootState) => state.ingredients.activeIngredient)
+  const ingredient = useSelector((state: RootState) => state.ingredients.activeIngredient);
 
   useEffect(() => {
     if (params.id) dispatch(showIngredient({id: parseInt(params.id, 10)}))
