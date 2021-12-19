@@ -1,7 +1,7 @@
 import React from 'react';
 import InputStyles, { StyleProps } from './Input.styles';
 
-interface InputProps {
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string,
   inputProps: {
     name: string,
@@ -9,13 +9,14 @@ interface InputProps {
   }
 }
 
-function Input({ label, inputProps }: InputProps) {
+function Input({ label, inputProps, ...intrinsic }: InputProps) {
+// const Input: React.FC<InputProps> = ({ label, inputProps }) => {
   if (!inputProps.id) inputProps.id = inputProps.name
 
   return (
     <>
       {label ? <label htmlFor={inputProps.id}>{label}</label> : null}
-      <InputStyles {...inputProps} />
+      <InputStyles {...intrinsic} {...inputProps} />
     </>
   );
 }
