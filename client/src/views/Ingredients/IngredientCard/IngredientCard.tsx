@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { IngredientRecordType, ValidRecordType } from '../../../utils/types/record.types';
+import { Ingredient } from '../../../utils/types/record.types';
 
 interface IngredientCardProps {
-  ingredient: IngredientRecordType & ValidRecordType
+  ingredient: Ingredient
 };
 
 function IngredientCard({ ingredient }: IngredientCardProps) {

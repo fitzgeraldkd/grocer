@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../../store/authentication/authentication.slice';
-import { UserRecordType, ValidRecordType, ValidResponse } from '../../../utils/types/record.types';
+import { User, ValidResponse } from '../../../utils/types/record.types';
 import { useNavigate } from "react-router-dom";
 
 
@@ -25,7 +25,7 @@ function RegisterForm() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const dataToSubmit = {...formData, password_confirmation: formData.confirmPassword};
-    const sideEffect = (success: boolean, payload: ValidResponse<UserRecordType & ValidRecordType>) => {
+    const sideEffect = (success: boolean, payload: ValidResponse<User>) => {
       success ? navigate('/') : setMessages(payload.messages);
     };
     dispatch(registerUser({body: dataToSubmit, sideEffect: sideEffect}));

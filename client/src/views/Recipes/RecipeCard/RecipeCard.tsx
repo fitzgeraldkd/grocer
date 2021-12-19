@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { RecipeRecordType, ValidRecordType } from '../../../utils/types/record.types';
+import { Recipe } from '../../../utils/types/record.types';
 import RecipeCardStyles from './RecipeCard.styles';
 
 interface RecipeCardProps {
-  recipe: RecipeRecordType & ValidRecordType
+  recipe: Recipe
 };
 
 function RecipeCard({ recipe }: RecipeCardProps) {

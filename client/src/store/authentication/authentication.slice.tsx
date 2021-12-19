@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { sendRequest } from '../../utils/helpers/requests.helpers';
 import { UserCredentialsType } from '../../utils/types/formData.types';
-import { RequestStatus, UserRecordType, ValidRecordType } from '../../utils/types/record.types';
+import { RequestStatus, User } from '../../utils/types/record.types';
 
 interface AuthenticationState {
   userId: number | null,
@@ -23,7 +23,7 @@ type ThunkOutput = {
   success: boolean,
   data: {
     messages: string[],
-    payload: UserRecordType & ValidRecordType
+    payload: User
   }
 };
 

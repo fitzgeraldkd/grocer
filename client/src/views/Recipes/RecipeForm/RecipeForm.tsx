@@ -7,13 +7,13 @@ import Input from '../../../components/forms/Input/Input';
 import Select from '../../../components/forms/Select/Select';
 import { RootState } from '../../../rootReducer';
 import { createRecipe, updateRecipe } from '../../../store/recipes/recipes.slice';
-import { RecipeRecordType, ValidRecordType, ValidResponse } from '../../../utils/types/record.types';
+import { Recipe, ValidResponse } from '../../../utils/types/record.types';
 import RecipeFormStyles from './RecipeForm.styles';
 import { RiAddFill, RiCloseCircleFill } from 'react-icons/ri';
 import { MdDragIndicator } from 'react-icons/md';
 
 interface RecipeFormProps {
-  recipe?: (RecipeRecordType & ValidRecordType) | null;
+  recipe?: Recipe | null;
 };
 
 type Draggable = 'ingredient' | 'direction' | null;
@@ -47,7 +47,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const action = recipe ? updateRecipe : createRecipe;
-    const sideEffect = (success: boolean, payload: ValidResponse<RecipeRecordType & ValidRecordType>) => {
+    const sideEffect = (success: boolean, payload: ValidResponse<Recipe>) => {
       success ? navigate('/recipes') : setMessages(payload.messages);
     };
     // dispatch(action({id: recipe ? recipe.id : undefined, body: formData, sideEffect}));

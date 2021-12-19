@@ -1,4 +1,4 @@
-import { RecipeIngredientRecordType } from "./record.types";
+import { RecipeIngredient } from "./record.types";
 
 export type IngredientDataType = {
   name: string
@@ -7,7 +7,7 @@ export type IngredientDataType = {
 export type RecipeDataType = {
   name: string,
   cuisine: string,
-  recipeIngredients: RecipeIngredientRecordType[]
+  recipeIngredients: RecipeIngredient[]
 };
 
 export type UserCredentialsType = {

@@ -5,25 +5,25 @@ import IngredientForm from '../IngredientForm/IngredientForm';
 import IngredientEditPageStyles from './IngredientEditPage.styles';
 import { RootState } from '../../../rootReducer';
 import { destroyIngredient, showIngredient } from '../../../store/ingredients/ingredients.slice';
-import { IngredientRecordType, ValidRecordType, ValidResponse } from '../../../utils/types/record.types';
+import { Ingredient, ValidResponse } from '../../../utils/types/record.types';
 import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
 import { RiDeleteBin2Fill } from 'react-icons/ri';
 
 function IngredientEditPage() {
-  const [ingredient, setIngredient] = useState<IngredientRecordType & ValidRecordType>();
+  const [ingredient, setIngredient] = useState<Ingredient>();
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const ingredient = useSelector((state: RootState) => state.ingredients.activeIngredient)
 
-  const handleLoadIngredient = (payload: (IngredientRecordType & ValidRecordType)) => {
+  const handleLoadIngredient = (payload: Ingredient) => {
     setIngredient(payload);
   }
 
   useEffect(() => {
     if (params.id) dispatch(showIngredient({
       id: parseInt(params.id, 10), 
-      sideEffect: (success: boolean, data: ValidResponse<IngredientRecordType & ValidRecordType>) => {
+      sideEffect: (success: boolean, data: ValidResponse<Ingredient>) => {
         if (success && data.payload) handleLoadIngredient(data.payload);
         else navigate('/');
       }

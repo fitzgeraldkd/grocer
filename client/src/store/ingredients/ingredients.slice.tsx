@@ -2,11 +2,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { sendRequest } from '../../utils/helpers/requests.helpers';
 import { IngredientDataType } from '../../utils/types/formData.types';
-import { IngredientRecordType, RequestStatus, ValidRecordType } from '../../utils/types/record.types';
+import { Ingredient, RequestStatus } from '../../utils/types/record.types';
 
 interface IngredientsState {
-  ingredients: (IngredientRecordType & ValidRecordType)[],
-  activeIngredient: (IngredientRecordType & ValidRecordType) | null,
+  ingredients: Ingredient[],
+  activeIngredient: Ingredient | null,
   status: RequestStatus
 };
 
@@ -22,7 +22,7 @@ interface ThunkInput {
   sideEffect?: Function
 };
 
-interface ThunkOutput<Payload = IngredientRecordType & ValidRecordType> {
+interface ThunkOutput<Payload = Ingredient> {
   success: boolean,
   data: {
     messages: string[],
@@ -30,7 +30,7 @@ interface ThunkOutput<Payload = IngredientRecordType & ValidRecordType> {
   }
 };
 
-export const indexIngredients = createAsyncThunk<ThunkOutput<(IngredientRecordType & ValidRecordType)[]>, ThunkInput>(
+export const indexIngredients = createAsyncThunk<ThunkOutput<(Ingredient)[]>, ThunkInput>(
   'ingredients/index',
   async ({body={}, sideEffect=() => {}}) => {
     return sendRequest({
