@@ -14,7 +14,9 @@ import { MdDragIndicator } from 'react-icons/md';
 
 interface RecipeFormProps {
   recipe?: (RecipeRecordType & ValidRecordType) | null;
-}
+};
+
+type Draggable = 'ingredient' | 'recipe' | null;
 
 function RecipeForm({ recipe }: RecipeFormProps) {
   const [formData, setFormData] = useState({
@@ -23,9 +25,11 @@ function RecipeForm({ recipe }: RecipeFormProps) {
   });
   const [ingredients, setIngredients] = useState<{tempId: number}[]>([]);
   const [tempIngredientId, setTempIngredientId] = useState(0);
-  const [instructions, setInstructions] = useState([]);
+  const [directions, setDirections] = useState<{tempId: number}[]>([]);
+  const [tempDirectionId, setTempDirectionId] = useState(0);
   const [messages, setMessages] = useState<string[]>([]);
-  const [draggedIngredient, setDraggedIngredient] = useState<number | null>(null);
+  const [draggedTempId, setDraggedTempId] = useState<number | null>(null);
+  const [draggedElement, setDraggedElement] = useState<Draggable>(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -58,34 +62,42 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     setIngredients(ingredients.filter(ingredient => ingredient.tempId !== tempId));
   };
 
-  const handleDrag = (tempId: number) => {
-    setDraggedIngredient(tempId);
+  const handleAddDirection = () => {
+    setDirections([...directions, {tempId: tempDirectionId}]);
+    setTempDirectionId(current => current + 1);
+  };
+
+  const handleRemoveDirection = (tempId: number) => {
+    setDirections(directions.filter(direction => direction.tempId !== tempId));
+  };
+
+  const handleDrag = (element: Draggable, tempId: number) => {
+    setDraggedTempId(tempId);
+    setDraggedElement(element);
   };
 
   const handleDragEnd = () => {
-    setDraggedIngredient(null);
+    setDraggedTempId(null);
+    setDraggedElement(null);
   };
 
-  const handleDragOver = (tempId: number) => {
-    console.log(tempId);
-    const ingredientIndexDrag = ingredients.findIndex(ingredient => ingredient.tempId === draggedIngredient);
-    const ingredientIndexOver = ingredients.findIndex(ingredient => ingredient.tempId === tempId);
-    if (ingredientIndexDrag > ingredientIndexOver) {
-      setIngredients(currentIngredients => {
-        const start = currentIngredients.slice(0, ingredientIndexOver);
-        const middle = currentIngredients.slice(ingredientIndexOver, ingredientIndexDrag);
-        const end = currentIngredients.slice(ingredientIndexDrag + 1);
-        const moved = currentIngredients[ingredientIndexDrag];
-        return [...start, moved, ...middle, ...end];
-      });
-    } else if (ingredientIndexDrag < ingredientIndexOver) {
-      setIngredients(currentIngredients => {
-        const start = currentIngredients.slice(0, ingredientIndexDrag);
-        const middle = currentIngredients.slice(ingredientIndexDrag + 1, ingredientIndexOver + 1);
-        const end = currentIngredients.slice(ingredientIndexOver + 1);
-        const moved = currentIngredients[ingredientIndexDrag];
-        return [...start, ...middle, moved, ...end];
-      })
+  const handleDragOver = (element: Draggable, tempId: number) => {
+    if (element === draggedElement) {
+      const entities = element === 'ingredient' ? ingredients : directions;
+      const setter = element === 'ingredient' ? setIngredients : setDirections;
+      const entityIndexDrag = entities.findIndex(entity => entity.tempId === draggedTempId);
+      const entityIndexOver = entities.findIndex(entity => entity.tempId === tempId);
+      if (entityIndexDrag !== entityIndexOver) {
+        setter(currentEntities => {
+          const moveUp = entityIndexDrag > entityIndexOver;
+          const start = currentEntities.slice(0, moveUp ? entityIndexOver : entityIndexDrag);
+          const middle = currentEntities.slice(moveUp ? entityIndexOver : entityIndexDrag + 1, moveUp ? entityIndexDrag : entityIndexOver + 1);
+          const end = currentEntities.slice(moveUp ? entityIndexDrag + 1 : entityIndexOver + 1);
+          const moved = currentEntities[entityIndexDrag];
+          return moveUp ? [...start, moved, ...middle, ...end] : [...start, ...middle, moved, ...end];
+  
+        });
+      }
     }
   };
 
@@ -96,6 +108,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
         <Fieldset>
           <Input label='Name:' inputProps={{name: 'name', value: formData.name, onChange: handleFormChange}} />
           <Input label='Cuisine:' inputProps={{name: 'cuisine', value: formData.cuisine, onChange: handleFormChange}} />
+
           <Fieldset styleProps={{columns: 6, literals: {'grid-column': '1 / 3'}}}>
             <span></span>
             <span>Ingredient</span>
@@ -103,9 +116,10 @@ function RecipeForm({ recipe }: RecipeFormProps) {
             <span>Units</span>
             <span>Prepared</span>
             <span><RiAddFill onClick={handleAddIngredient} /></span>
+
             {ingredients.map(ingredient => (
               <React.Fragment key={ingredient.tempId}>
-                <span draggable='true' onDrag={() => handleDrag(ingredient.tempId)} onDragEnd={handleDragEnd} onDragEnter={() => handleDragOver(ingredient.tempId)}><MdDragIndicator /></span>
+                <span draggable='true' onDrag={() => handleDrag('ingredient', ingredient.tempId)} onDragEnd={handleDragEnd} onDragEnter={() => handleDragOver('ingredient', ingredient.tempId)}><MdDragIndicator /></span>
                 <Datalist inputProps={{id: `ingredient`, name: `ingredient`}}>
                   {allIngredients.map(option => <option key={option.name} value={option.name} />)}
                 </Datalist>
@@ -118,6 +132,21 @@ function RecipeForm({ recipe }: RecipeFormProps) {
               </React.Fragment>
             ))}
           </Fieldset>
+
+          <Fieldset styleProps={{columns: 3, literals: {'grid-column': '1 / 3'}}}>
+            <span></span>
+            <span>Directions</span>
+            <span><RiAddFill onClick={handleAddDirection} /></span>
+
+            {directions.map(direction => (
+              <React.Fragment key={direction.tempId}>
+                <span draggable='true' onDrag={() => handleDrag('recipe', direction.tempId)} onDragEnd={handleDragEnd} onDragEnter={() => handleDragOver('recipe', direction.tempId)}><MdDragIndicator /></span>
+                <textarea></textarea>
+                <span><RiCloseCircleFill onClick={() => handleRemoveDirection(direction.tempId)} /></span>
+              </React.Fragment>
+            ))}
+          </Fieldset>
+
         </Fieldset>
       </form>
     </RecipeFormStyles>
