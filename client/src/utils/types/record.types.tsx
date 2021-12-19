@@ -15,11 +15,11 @@ export interface PendingIngredient {
 };
 export type Ingredient = PendingIngredient & ValidRecord;
 
-export interface PendingInstruction {
+export interface PendingDirection {
   id?: number,
   content: string
 };
-export type Instruction = PendingInstruction & ValidRecord;
+export type Direction = PendingDirection & ValidRecord;
 
 export interface PendingRecipe {
   id?: number,
@@ -30,15 +30,18 @@ export type Recipe = PendingRecipe & ValidRecord;
 
 export interface PendingRecipeIngredient {
   id?: number,
-  recipe_id: number,
-  ingredient_id: number,
+  recipe_id?: number,
+  ingredient_id?: number,
   ingredient_name: string,
   quantity: number,
   units: string,
   prepared: string,
-  group_name: string
+  group_name?: string
 };
-export type RecipeIngredient = PendingRecipeIngredient & ValidRecord;
+export type RecipeIngredient = PendingRecipeIngredient & ValidRecord & {
+  recipe_id: number,
+  ingredient_id: number
+};
 
 export interface PendingUser {
   id?: number,
@@ -56,11 +59,11 @@ export interface IngredientDetailed extends Ingredient {
 };
 
 export interface PendingRecipeDetailed extends PendingRecipe {
-  instructions: PendingInstruction[],
+  directions: PendingDirection[],
   ingredients: PendingRecipeIngredient[]
 };
 export interface RecipeDetailed extends Recipe {
-  instructions: Instruction[],
+  directions: Direction[],
   ingredients: RecipeIngredient[]
 };
 

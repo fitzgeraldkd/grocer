@@ -7,7 +7,7 @@ import Input from '../../../components/forms/Input/Input';
 import Select from '../../../components/forms/Select/Select';
 import { RootState } from '../../../rootReducer';
 import { createRecipe, updateRecipe } from '../../../store/recipes/recipes.slice';
-import { Recipe, ValidResponse } from '../../../utils/types/record.types';
+import { Direction, RecipeIngredient, PendingDirection, PendingRecipeIngredient, Recipe, ValidResponse, PendingIngredient } from '../../../utils/types/record.types';
 import RecipeFormStyles from './RecipeForm.styles';
 import { RiAddFill, RiCloseCircleFill } from 'react-icons/ri';
 import { MdDragIndicator } from 'react-icons/md';
@@ -16,6 +16,10 @@ interface RecipeFormProps {
   recipe?: Recipe | null;
 };
 
+interface SubRecord {
+  tempId: number
+}
+
 type Draggable = 'ingredient' | 'direction' | null;
 
 function RecipeForm({ recipe }: RecipeFormProps) {
@@ -23,9 +27,9 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     name: '',
     cuisine: ''
   });
-  const [ingredients, setIngredients] = useState<{tempId: number}[]>([]);
+  const [ingredients, setIngredients] = useState<((PendingRecipeIngredient | RecipeIngredient) & SubRecord)[]>([]);
   const [tempIngredientId, setTempIngredientId] = useState(0);
-  const [directions, setDirections] = useState<{tempId: number}[]>([]);
+  const [directions, setDirections] = useState<((PendingDirection | Direction) & SubRecord)[]>([]);
   const [tempDirectionId, setTempDirectionId] = useState(0);
   const [messages, setMessages] = useState<string[]>([]);
   const [draggedTempId, setDraggedTempId] = useState<number | null>(null);
@@ -50,11 +54,36 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     const sideEffect = (success: boolean, payload: ValidResponse<Recipe>) => {
       success ? navigate('/recipes') : setMessages(payload.messages);
     };
-    // dispatch(action({id: recipe ? recipe.id : undefined, body: formData, sideEffect}));
+    const bodyIngredients = [] as (RecipeIngredient | PendingRecipeIngredient)[];
+    ingredients.forEach(ingredient => {
+      bodyIngredients.push({
+        id: ingredient.id,
+        recipe_id: recipe ? recipe.id : undefined,
+        ingredient_id: ingredient.ingredient_id,
+        ingredient_name: ingredient.ingredient_name,
+        quantity: ingredient.quantity,
+        units: ingredient.units,
+        prepared: ingredient.prepared,
+        group_name: ingredient.group_name
+      });
+    });
+
+    const bodyDirections = [] as (Direction | PendingDirection)[];
+
+
+    const body = {...formData, ingredients: bodyIngredients, directions: bodyDirections};
+
+    dispatch(action({id: recipe ? recipe.id : undefined, body, sideEffect}));
   };
 
   const handleAddIngredient = () => {
-    setIngredients([...ingredients, {tempId: tempIngredientId}]);
+    setIngredients([...ingredients, {
+      tempId: tempIngredientId,
+      ingredient_name: '',
+      quantity: 0,
+      units: '',
+      prepared: ''
+    }]);
     setTempIngredientId(current => current + 1);
   };
 
@@ -63,7 +92,10 @@ function RecipeForm({ recipe }: RecipeFormProps) {
   };
 
   const handleAddDirection = () => {
-    setDirections([...directions, {tempId: tempDirectionId}]);
+    setDirections([...directions, {
+      tempId: tempDirectionId,
+      content: ''
+    }]);
     setTempDirectionId(current => current + 1);
   };
 
@@ -88,14 +120,13 @@ function RecipeForm({ recipe }: RecipeFormProps) {
       const entityIndexDrag = entities.findIndex(entity => entity.tempId === draggedTempId);
       const entityIndexOver = entities.findIndex(entity => entity.tempId === tempId);
       if (entityIndexDrag !== entityIndexOver) {
-        setter(currentEntities => {
+        setter((currentEntities: any[]) => {
           const moveUp = entityIndexDrag > entityIndexOver;
           const start = currentEntities.slice(0, moveUp ? entityIndexOver : entityIndexDrag);
           const middle = currentEntities.slice(moveUp ? entityIndexOver : entityIndexDrag + 1, moveUp ? entityIndexDrag : entityIndexOver + 1);
           const end = currentEntities.slice(moveUp ? entityIndexDrag + 1 : entityIndexOver + 1);
           const moved = currentEntities[entityIndexDrag];
           return moveUp ? [...start, moved, ...middle, ...end] : [...start, ...middle, moved, ...end];
-  
         });
       }
     }
