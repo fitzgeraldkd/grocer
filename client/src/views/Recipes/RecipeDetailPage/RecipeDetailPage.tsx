@@ -19,6 +19,8 @@ function RecipeDetailPage() {
 
   const handleEditRecipe = () => navigate(`/recipes/${params.id}/edit`);
 
+  console.log(recipe);
+
   return (
     <RecipeDetailPageStyles>
       {recipe ? recipe.name : null}

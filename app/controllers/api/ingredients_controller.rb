@@ -3,23 +3,23 @@ class Api::IngredientsController < ApplicationController
   skip_before_action :authorize, only: [:index, :create]
 
   def index
-    render json: {payload: @current_user.ingredients, messages: []}, status: :ok
+    render json: {payload: serialize_all(@current_user.ingredients, IngredientSerializer), messages: []}, status: :ok
   end
 
   def show
     ingredient = Ingredient.find(params[:id])
-    render json: {payload: ingredient, messages: []}, status: :ok
+    render json: {payload: serialize(ingredient, IngredientDetailSerializer), messages: []}, status: :ok
   end
 
   def create
     ingredient = @current_user.ingredients.create!(ingredient_params)
-    render json: {payload: ingredient, messages: []}, status: :created
+    render json: {payload: serialize(ingredient, IngredientDetailSerializer), messages: []}, status: :created
   end
 
   def update
     ingredient = Ingredient.find(params[:id])
     ingredient.update!(ingredient_params)
-    render json: {payload: ingredient, messages: []}, status: :ok
+    render json: {payload: serialize(ingredient, IngredientDetailSerializer), messages: []}, status: :ok
   end
 
   def destroy

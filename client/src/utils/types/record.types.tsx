@@ -60,11 +60,11 @@ export interface IngredientDetailed extends Ingredient {
 
 export interface PendingRecipeDetailed extends PendingRecipe {
   directions: PendingDirection[],
-  ingredients: PendingRecipeIngredient[]
+  recipe_ingredients: PendingRecipeIngredient[]
 };
 export interface RecipeDetailed extends Recipe {
   directions: Direction[],
-  ingredients: RecipeIngredient[]
+  recipe_ingredients: RecipeIngredient[]
 };
 
 export interface PendingUserDetailed extends PendingUser {

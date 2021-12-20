@@ -3,17 +3,17 @@ class Api::RecipesController < ApplicationController
   skip_before_action :authorize, only: [:index, :create]
 
   def index
-    render json: {payload: @current_user.recipes, messages: []}, status: :ok
+    render json: {payload: serialize_all(@current_user.recipes, RecipeSerializer), messages: []}, status: :ok
   end
 
   def show
     recipe = Recipe.find(params[:id])
-    render json: {payload: recipe, messages: []}, status: :ok
+    render json: {payload: serialize(recipe, RecipeDetailSerializer), messages: []}, status: :ok
   end
 
   def create
     recipe = @current_user.recipes.create!(recipe_params)
-    recipe_ingredients = params[:ingredients]
+    recipe_ingredients = params[:recipe_ingredients]
     directions = params[:directions]
     recipe_ingredients.each do |recipe_ingredient|
       p "TESTING"

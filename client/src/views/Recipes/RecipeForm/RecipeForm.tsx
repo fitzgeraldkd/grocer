@@ -7,7 +7,7 @@ import Input from '../../../components/forms/Input/Input';
 import Select from '../../../components/forms/Select/Select';
 import { RootState } from '../../../rootReducer';
 import { createRecipe, updateRecipe } from '../../../store/recipes/recipes.slice';
-import { Direction, RecipeIngredient, PendingDirection, PendingRecipeIngredient, Recipe, ValidResponse, PendingIngredient } from '../../../utils/types/record.types';
+import { Direction, RecipeIngredient, PendingDirection, PendingRecipeDetailed, PendingRecipeIngredient, Recipe, ValidResponse, PendingIngredient } from '../../../utils/types/record.types';
 import RecipeFormStyles from './RecipeForm.styles';
 import { RiAddFill, RiCloseCircleFill } from 'react-icons/ri';
 import { MdDragIndicator } from 'react-icons/md';
@@ -81,7 +81,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     const bodyDirections = [] as (Direction | PendingDirection)[];
 
 
-    const body = {...formData, ingredients: bodyIngredients, directions: bodyDirections};
+    const body: PendingRecipeDetailed = {...formData, recipe_ingredients: bodyIngredients, directions: bodyDirections};
 
     dispatch(action({id: recipe ? recipe.id : undefined, body, sideEffect}));
   };
