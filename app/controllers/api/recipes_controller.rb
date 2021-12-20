@@ -13,8 +13,8 @@ class Api::RecipesController < ApplicationController
 
   def create
     recipe = @current_user.recipes.create!(recipe_params)
-    recipe_ingredients = params[:recipe_ingredients]
-    directions = params[:directions]
+    recipe_ingredients = params[:recipe_ingredients] || []
+    directions = params[:directions] || []
     recipe_ingredients.each do |recipe_ingredient|
       p "TESTING"
       p recipe_ingredient
@@ -54,7 +54,7 @@ class Api::RecipesController < ApplicationController
     # end
 
     # TODO: add instructions as well
-    render json: {payload: recipe, messages: []}, status: :created
+    render json: {payload: serialize(recipe, RecipeDetailSerializer), messages: []}, status: :created
   rescue ActiveRecord::RecordInvalid => invalid
     recipe.destroy
     render_record_invalid(invalid)
@@ -63,7 +63,7 @@ class Api::RecipesController < ApplicationController
   def update
     recipe = Recipe.find(params[:id])
     recipe.update!(recipe_params)
-    render json: {payload: recipe, messages: []}, status: :ok
+    render json: {payload: serialize(recipe, RecipeDetailSerializer), messages: []}, status: :ok
   end
 
   def destroy
