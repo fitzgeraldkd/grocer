@@ -17,7 +17,8 @@ export type Ingredient = PendingIngredient & ValidRecord;
 
 export interface PendingDirection {
   id?: number,
-  content: string
+  content: string,
+  order: number
 };
 export type Direction = PendingDirection & ValidRecord;
 

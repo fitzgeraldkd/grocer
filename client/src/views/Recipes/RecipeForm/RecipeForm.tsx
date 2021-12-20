@@ -55,8 +55,18 @@ function RecipeForm({ recipe }: RecipeFormProps) {
       } else {
         return ingredient
       }
-    }))
-  }
+    }));
+  };
+
+  const handleDirectionFormChange = (e: React.ChangeEvent<HTMLTextAreaElement>, tempId: number) => {
+    setDirections(directions.map(direction => {
+      if (direction.tempId === tempId) {
+        return {...direction, [e.target.name]: e.target.value}
+      } else {
+        return direction
+      }
+    }));
+  };
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -79,7 +89,13 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     });
 
     const bodyDirections = [] as (Direction | PendingDirection)[];
-
+    directions.forEach((direction, index) => {
+      bodyDirections.push({
+        id: direction.id,
+        content: direction.content,
+        order: index
+      })
+    })
 
     const body: PendingRecipeDetailed = {...formData, recipe_ingredients: bodyIngredients, directions: bodyDirections};
 
@@ -104,7 +120,8 @@ function RecipeForm({ recipe }: RecipeFormProps) {
   const handleAddDirection = () => {
     setDirections([...directions, {
       tempId: tempDirectionId,
-      content: ''
+      content: '',
+      order: 0
     }]);
     setTempDirectionId(current => current + 1);
   };
@@ -151,11 +168,11 @@ function RecipeForm({ recipe }: RecipeFormProps) {
         <Datalist inputProps={{id: `ingredient_name_${ingredient.tempId}`, name: `ingredient_name`}} onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.ingredient_name} required={true} >
           {allIngredients.map(option => <option key={option.name} value={option.name} />)}
         </Datalist>
-        <Input inputProps={{name: 'quantity', type: 'number'}} onDragEnter={dragEnterHandler} />
-        <Datalist inputProps={{id: `units`, name: `units`}} onDragEnter={dragEnterHandler}>
+        <Input inputProps={{name: 'quantity', type: 'number'}} onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.quantity} />
+        <Datalist inputProps={{id: `units`, name: `units`}} onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.units}>
           {['cups', 'oz'].map(unit => <option key={unit} value={unit} />)}
         </Datalist>
-        <Input inputProps={{name: 'prepared', type: 'text'}} onDragEnter={dragEnterHandler} />
+        <Input inputProps={{name: 'prepared', type: 'text'}} onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.prepared} />
         <span onDragEnter={dragEnterHandler}><RiCloseCircleFill onClick={() => handleRemoveIngredient(ingredient.tempId)} /></span>
       </React.Fragment>
     );
@@ -167,7 +184,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     return (
       <React.Fragment key={direction.tempId}>
         <span draggable='true' onDrag={dragHandler} onDragEnd={handleDragEnd} onDragEnter={dragEnterHandler}><MdDragIndicator /></span>
-        <textarea onDragEnter={dragEnterHandler}></textarea>
+        <textarea name='content' onDragEnter={dragEnterHandler} onChange={e => handleDirectionFormChange(e, direction.tempId)} value={direction.content}></textarea>
         <span onDragEnter={dragEnterHandler}><RiCloseCircleFill onClick={() => handleRemoveDirection(direction.tempId)} /></span>
       </React.Fragment>
     );

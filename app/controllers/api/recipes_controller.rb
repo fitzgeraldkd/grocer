@@ -14,15 +14,11 @@ class Api::RecipesController < ApplicationController
   def create
     recipe = @current_user.recipes.create!(recipe_params)
     recipe_ingredients = params[:recipe_ingredients] || []
-    directions = params[:directions] || []
     recipe_ingredients.each do |recipe_ingredient|
-      p "TESTING"
-      p recipe_ingredient
       # ingredient = Ingredient.where(["name = :name and user_id = :user_id", { name: recipe_ingredient['ingredient_name'], user_id: @current_user.id }])
       ingredient = Ingredient.find_by(name: recipe_ingredient['ingredient_name'], user_id: @current_user.id)
       ingredient = @current_user.ingredients.create!(name: recipe_ingredient['ingredient_name']) if !ingredient
       if recipe_ingredient['id'] == nil
-        p ingredient.id
         recipe.recipe_ingredients.create!(
           ingredient_id: ingredient.id,
           quantity: recipe_ingredient['quantity'],
@@ -37,6 +33,21 @@ class Api::RecipesController < ApplicationController
           units: recipe_ingredient['units'],
           prepared: recipe_ingredient['prepared'],
           group_name: recipe_ingredient['group_name']
+        )
+      end
+    end
+
+    directions = params[:directions] || []
+    directions.each do |direction|
+      if direction['id'] == nil
+        recipe.directions.create!(
+          content: direction['content'],
+          order: direction['order']
+        )
+      else
+        Direction.find_by(id: direction['id']).update!(
+          content: direction['content'],
+          order: direction['order']
         )
       end
     end
