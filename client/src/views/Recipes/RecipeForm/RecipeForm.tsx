@@ -88,7 +88,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
       success ? navigate('/recipes') : setMessages(payload.messages);
     };
     const bodyIngredients = [] as (RecipeIngredient | PendingRecipeIngredient)[];
-    ingredients.forEach(ingredient => {
+    ingredients.forEach((ingredient, index) => {
       bodyIngredients.push({
         id: ingredient.id,
         recipe_id: recipe ? recipe.id : undefined,
@@ -97,7 +97,8 @@ function RecipeForm({ recipe }: RecipeFormProps) {
         quantity: ingredient.quantity,
         units: ingredient.units,
         prepared: ingredient.prepared,
-        group_name: ingredient.group_name
+        group_name: ingredient.group_name,
+        order: index
       });
     });
 
@@ -121,7 +122,8 @@ function RecipeForm({ recipe }: RecipeFormProps) {
       ingredient_name: '',
       quantity: 0,
       units: '',
-      prepared: ''
+      prepared: '',
+      order: 0
     }]);
     setTempIngredientId(current => current + 1);
   };

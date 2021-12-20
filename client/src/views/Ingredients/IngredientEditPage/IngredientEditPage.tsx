@@ -39,7 +39,7 @@ function IngredientEditPage() {
         }
       }))
     }
-  }
+  };
 
   // if (!ingredient) return null;
   console.log(ingredient)

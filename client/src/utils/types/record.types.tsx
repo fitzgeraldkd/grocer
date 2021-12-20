@@ -37,7 +37,8 @@ export interface PendingRecipeIngredient {
   quantity: number,
   units: string,
   prepared: string,
-  group_name?: string
+  group_name?: string,
+  order: number
 };
 export type RecipeIngredient = PendingRecipeIngredient & ValidRecord & {
   recipe_id: number,

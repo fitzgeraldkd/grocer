@@ -6,4 +6,8 @@ class RecipeDetailSerializer < ActiveModel::Serializer
   def directions
     object.directions.order(:order)
   end
+
+  def recipe_ingredients
+    object.recipe_ingredients.order(:order)
+  end
 end

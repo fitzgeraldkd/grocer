@@ -61,7 +61,6 @@ class Api::RecipesController < ApplicationController
 
   def update
     recipe = Recipe.find(params[:id])
-    
     recipe_ingredients = params[:recipe_ingredients] || []
     add_related_ingredients(recipe, recipe_ingredients)
 
@@ -98,7 +97,8 @@ class Api::RecipesController < ApplicationController
           quantity: recipe_ingredient['quantity'],
           units: recipe_ingredient['units'],
           prepared: recipe_ingredient['prepared'],
-          group_name: recipe_ingredient['group_name']
+          group_name: recipe_ingredient['group_name'],
+          order: recipe_ingredient['order'] || 0
         )
       else
         RecipeIngredient.find_by(id: recipe_ingredient['id']).update!(
@@ -106,7 +106,8 @@ class Api::RecipesController < ApplicationController
           quantity: recipe_ingredient['quantity'],
           units: recipe_ingredient['units'],
           prepared: recipe_ingredient['prepared'],
-          group_name: recipe_ingredient['group_name']
+          group_name: recipe_ingredient['group_name'],
+          order: recipe_ingredient['order'] || 0
         )
       end
     end
