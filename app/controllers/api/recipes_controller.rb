@@ -13,16 +13,46 @@ class Api::RecipesController < ApplicationController
 
   def create
     recipe = @current_user.recipes.create!(recipe_params)
-    ingredients = params[:ingredients] || []
-    ingredients.each do |ingredient|
-      recipe.recipe_ingredients.create!(
-        ingredient_id: ingredient['id'],
-        quantity: ingredient['quantity'],
-        units: ingredient['units'],
-        prepared: ingredient['prepared'],
-        group_name: ingredient['group_name']
-      )
+    recipe_ingredients = params[:ingredients]
+    directions = params[:directions]
+    recipe_ingredients.each do |recipe_ingredient|
+      p "TESTING"
+      p recipe_ingredient
+      # ingredient = Ingredient.where(["name = :name and user_id = :user_id", { name: recipe_ingredient['ingredient_name'], user_id: @current_user.id }])
+      ingredient = Ingredient.find_by(name: recipe_ingredient['ingredient_name'], user_id: @current_user.id)
+      ingredient = @current_user.ingredients.create!(name: recipe_ingredient['ingredient_name']) if !ingredient
+      if recipe_ingredient['id'] == nil
+        p ingredient.id
+        recipe.recipe_ingredients.create!(
+          ingredient_id: ingredient.id,
+          quantity: recipe_ingredient['quantity'],
+          units: recipe_ingredient['units'],
+          prepared: recipe_ingredient['prepared'],
+          group_name: recipe_ingredient['group_name']
+        )
+      else
+        RecipeIngredient.find_by(id: recipe_ingredient['id']).update!(
+          ingredient_id: ingredient.id,
+          quantity: recipe_ingredient['quantity'],
+          units: recipe_ingredient['units'],
+          prepared: recipe_ingredient['prepared'],
+          group_name: recipe_ingredient['group_name']
+        )
+      end
     end
+
+    # recipe = @current_user.recipes.create!(recipe_params)
+    # ingredients = params[:ingredients] || []
+    # ingredients.each do |ingredient|
+    #   recipe.recipe_ingredients.create!(
+    #     ingredient_id: ingredient['id'],
+    #     quantity: ingredient['quantity'],
+    #     units: ingredient['units'],
+    #     prepared: ingredient['prepared'],
+    #     group_name: ingredient['group_name']
+    #   )
+    # end
+
     # TODO: add instructions as well
     render json: {payload: recipe, messages: []}, status: :created
   rescue ActiveRecord::RecordInvalid => invalid

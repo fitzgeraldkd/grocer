@@ -48,6 +48,16 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     setFormData({...formData, [e.target.name]: e.target.value})
   };
 
+  const handleIngredientFormChange = (e: React.ChangeEvent<HTMLInputElement>, tempId: number) => {
+    setIngredients(ingredients.map(ingredient => {
+      if (ingredient.tempId === tempId) {
+        return {...ingredient, [e.target.name]: e.target.value}
+      } else {
+        return ingredient
+      }
+    }))
+  }
+
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const action = recipe ? updateRecipe : createRecipe;
@@ -135,7 +145,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
 
   return (
     <RecipeFormStyles>
-      <form>
+      <form onSubmit={handleFormSubmit}>
         <Fieldset>
           <Input label='Name:' inputProps={{name: 'name', value: formData.name, onChange: handleFormChange}} />
           <Input label='Cuisine:' inputProps={{name: 'cuisine', value: formData.cuisine, onChange: handleFormChange}} />
@@ -154,7 +164,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
               return (
                 <React.Fragment key={ingredient.tempId}>
                   <span draggable='true' onDrag={dragHandler} onDragEnd={handleDragEnd} onDragEnter={dragEnterHandler}><MdDragIndicator /></span>
-                  <Datalist inputProps={{id: `ingredient`, name: `ingredient`}} onDragEnter={dragEnterHandler}>
+                  <Datalist inputProps={{id: `ingredient_name_${ingredient.tempId}`, name: `ingredient_name`}} onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.ingredient_name} >
                     {allIngredients.map(option => <option key={option.name} value={option.name} />)}
                   </Datalist>
                   <Input inputProps={{name: 'quantity', type: 'number'}} onDragEnter={dragEnterHandler} />
@@ -187,6 +197,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
           </Fieldset>
 
         </Fieldset>
+        <input type='submit' />
       </form>
     </RecipeFormStyles>
   );
