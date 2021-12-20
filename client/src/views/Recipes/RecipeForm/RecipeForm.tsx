@@ -142,6 +142,36 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     }
   };
 
+  const renderIngredientInput = (ingredient: (PendingRecipeIngredient | RecipeIngredient) & SubRecord) => {
+    const dragHandler = () => handleDrag('ingredient', ingredient.tempId);
+    const dragEnterHandler = () => handleDragOver('ingredient', ingredient.tempId);
+    return (
+      <React.Fragment key={ingredient.tempId}>
+        <span draggable='true' onDrag={dragHandler} onDragEnd={handleDragEnd} onDragEnter={dragEnterHandler}><MdDragIndicator /></span>
+        <Datalist inputProps={{id: `ingredient_name_${ingredient.tempId}`, name: `ingredient_name`}} onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.ingredient_name} required={true} >
+          {allIngredients.map(option => <option key={option.name} value={option.name} />)}
+        </Datalist>
+        <Input inputProps={{name: 'quantity', type: 'number'}} onDragEnter={dragEnterHandler} />
+        <Datalist inputProps={{id: `units`, name: `units`}} onDragEnter={dragEnterHandler}>
+          {['cups', 'oz'].map(unit => <option key={unit} value={unit} />)}
+        </Datalist>
+        <Input inputProps={{name: 'prepared', type: 'text'}} onDragEnter={dragEnterHandler} />
+        <span onDragEnter={dragEnterHandler}><RiCloseCircleFill onClick={() => handleRemoveIngredient(ingredient.tempId)} /></span>
+      </React.Fragment>
+    );
+  };
+
+  const renderDirectionInput = (direction: (PendingDirection | Direction) & SubRecord) => {
+    const dragHandler = () => handleDrag('direction', direction.tempId);
+    const dragEnterHandler = () => handleDragOver('direction', direction.tempId);
+    return (
+      <React.Fragment key={direction.tempId}>
+        <span draggable='true' onDrag={dragHandler} onDragEnd={handleDragEnd} onDragEnter={dragEnterHandler}><MdDragIndicator /></span>
+        <textarea onDragEnter={dragEnterHandler}></textarea>
+        <span onDragEnter={dragEnterHandler}><RiCloseCircleFill onClick={() => handleRemoveDirection(direction.tempId)} /></span>
+      </React.Fragment>
+    );
+  };
 
   return (
     <RecipeFormStyles>
@@ -158,24 +188,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
             <span>Prepared</span>
             <span><RiAddFill onClick={handleAddIngredient} /></span>
 
-            {ingredients.map(ingredient => {
-              const dragHandler = () => handleDrag('ingredient', ingredient.tempId);
-              const dragEnterHandler = () => handleDragOver('ingredient', ingredient.tempId);
-              return (
-                <React.Fragment key={ingredient.tempId}>
-                  <span draggable='true' onDrag={dragHandler} onDragEnd={handleDragEnd} onDragEnter={dragEnterHandler}><MdDragIndicator /></span>
-                  <Datalist inputProps={{id: `ingredient_name_${ingredient.tempId}`, name: `ingredient_name`}} onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.ingredient_name} >
-                    {allIngredients.map(option => <option key={option.name} value={option.name} />)}
-                  </Datalist>
-                  <Input inputProps={{name: 'quantity', type: 'number'}} onDragEnter={dragEnterHandler} />
-                  <Datalist inputProps={{id: `units`, name: `units`}} onDragEnter={dragEnterHandler}>
-                    {['cups', 'oz'].map(unit => <option key={unit} value={unit} />)}
-                  </Datalist>
-                  <Input inputProps={{name: 'prepared', type: 'text'}} onDragEnter={dragEnterHandler} />
-                  <span onDragEnter={dragEnterHandler}><RiCloseCircleFill onClick={() => handleRemoveIngredient(ingredient.tempId)} /></span>
-                </React.Fragment>
-              );
-            })}
+            {ingredients.map(renderIngredientInput)}
           </Fieldset>
 
           <Fieldset styleProps={{columns: 3, literals: {'grid-column': '1 / 3'}}}>
@@ -183,17 +196,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
             <span>Directions</span>
             <span><RiAddFill onClick={handleAddDirection} /></span>
 
-            {directions.map(direction => {
-              const dragHandler = () => handleDrag('direction', direction.tempId);
-              const dragEnterHandler = () => handleDragOver('direction', direction.tempId);
-              return (
-                <React.Fragment key={direction.tempId}>
-                  <span draggable='true' onDrag={dragHandler} onDragEnd={handleDragEnd} onDragEnter={dragEnterHandler}><MdDragIndicator /></span>
-                  <textarea onDragEnter={dragEnterHandler}></textarea>
-                  <span onDragEnter={dragEnterHandler}><RiCloseCircleFill onClick={() => handleRemoveDirection(direction.tempId)} /></span>
-                </React.Fragment>
-              );
-            })}
+            {directions.map(renderDirectionInput)}
           </Fieldset>
 
         </Fieldset>

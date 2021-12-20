@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
 import { RootState } from '../../../rootReducer';
 import { showRecipe } from '../../../store/recipes/recipes.slice';
+import { RecipeIngredient } from '../../../utils/types/record.types';
 import RecipeDetailPageStyles from './RecipeDetailPage.styles';
 
 function RecipeDetailPage() {
@@ -19,11 +20,29 @@ function RecipeDetailPage() {
 
   const handleEditRecipe = () => navigate(`/recipes/${params.id}/edit`);
 
-  console.log(recipe);
+  const renderIngredient = (ingredient: RecipeIngredient) => {
+    return (
+      <div key={ingredient.id}>
+        {ingredient.quantity !== 0 ? ingredient.quantity : null} {ingredient.units} {ingredient.ingredient_name}
+      </div>
+    );
+  };
+
+  const renderRecipe = () => {
+    if (!recipe) return null;
+    return (
+      <>
+        <div>{recipe.name}</div>
+        <div>
+          {recipe.recipe_ingredients.map(renderIngredient)}
+        </div>
+      </>
+    );
+  };
 
   return (
     <RecipeDetailPageStyles>
-      {recipe ? recipe.name : null}
+      {renderRecipe()}
       <FloatingButton handleClickEvent={handleEditRecipe}><RiPencilFill /></FloatingButton>
     </RecipeDetailPageStyles>
   );
