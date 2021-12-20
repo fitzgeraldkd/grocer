@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
 import { RootState } from '../../../rootReducer';
 import { showRecipe } from '../../../store/recipes/recipes.slice';
-import { RecipeIngredient } from '../../../utils/types/record.types';
+import { Direction, RecipeIngredient } from '../../../utils/types/record.types';
 import RecipeDetailPageStyles from './RecipeDetailPage.styles';
 
 function RecipeDetailPage() {
@@ -28,6 +28,14 @@ function RecipeDetailPage() {
     );
   };
 
+  const renderDirection = (direction: Direction) => {
+    return (
+      <li key={direction.id}>
+        {direction.content}
+      </li>
+    )
+  };
+
   const renderRecipe = () => {
     if (!recipe) return null;
     return (
@@ -35,6 +43,11 @@ function RecipeDetailPage() {
         <div>{recipe.name}</div>
         <div>
           {recipe.recipe_ingredients.map(renderIngredient)}
+        </div>
+        <div>
+          <ol>
+            {recipe.directions.map(renderDirection)}
+          </ol>
         </div>
       </>
     );
