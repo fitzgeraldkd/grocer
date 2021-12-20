@@ -7,13 +7,13 @@ import Input from '../../../components/forms/Input/Input';
 import Select from '../../../components/forms/Select/Select';
 import { RootState } from '../../../rootReducer';
 import { createRecipe, updateRecipe } from '../../../store/recipes/recipes.slice';
-import { Direction, RecipeIngredient, PendingDirection, PendingRecipeDetailed, PendingRecipeIngredient, Recipe, ValidResponse, PendingIngredient } from '../../../utils/types/record.types';
+import { Direction, RecipeIngredient, PendingDirection, PendingRecipeDetailed, PendingRecipeIngredient, Recipe, ValidResponse, PendingIngredient, RecipeDetailed } from '../../../utils/types/record.types';
 import RecipeFormStyles from './RecipeForm.styles';
 import { RiAddFill, RiCloseCircleFill } from 'react-icons/ri';
 import { MdDragIndicator } from 'react-icons/md';
 
 interface RecipeFormProps {
-  recipe?: Recipe | null;
+  recipe?: RecipeDetailed | null;
 };
 
 interface SubRecord {
@@ -41,7 +41,20 @@ function RecipeForm({ recipe }: RecipeFormProps) {
   const allIngredients = useSelector((state: RootState) => state.ingredients.ingredients);
 
   useEffect(() => {
-
+    setFormData({
+      name: recipe ? recipe.name : '',
+      cuisine: recipe ? recipe.cuisine : ''
+    });
+    if (recipe) {
+      setIngredients(recipe.recipe_ingredients.map((ingredient, index) => {
+        setTempIngredientId(current => current + 1);
+        return {...ingredient, tempId: index};
+      }));
+      setDirections(recipe.directions.map((direction, index) => {
+        setTempDirectionId(current => current + 1);
+        return {...direction, tempId: index};
+      }));
+    }
   }, [recipe]);
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {

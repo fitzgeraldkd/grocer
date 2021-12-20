@@ -17,6 +17,7 @@ import AppStyled from './App.styles';
 import RecipeListPage from './views/Recipes/RecipesListPage/RecipeListPage';
 import RecipeDetailPage from './views/Recipes/RecipeDetailPage/RecipeDetailPage';
 import RecipeCreatePage from './views/Recipes/RecipeCreatePage/RecipeCreatePage';
+import RecipeEditPage from './views/Recipes/RecipeEditPage/RecipeEditPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -47,14 +48,14 @@ function App() {
             <Route path='' element={<RecipeListPage />} />
             <Route path='new' element={<RecipeCreatePage />} />
             <Route path=':id' element={<RecipeDetailPage />} />
-
+            <Route path=':id/edit' element={<RecipeEditPage />} />
           </Route>
 
           <Route path='/ingredients/'>
             <Route path='' element={<IngredientsListPage />} />
             <Route path='new' element={<IngredientCreatePage />} />
             <Route path=':id' element={<IngredientDetailPage />} />
-            <Route path='/ingredients/:id/edit' element={<IngredientEditPage />} />
+            <Route path=':id/edit' element={<IngredientEditPage />} />
           </Route>
         </Routes>
       </main>
