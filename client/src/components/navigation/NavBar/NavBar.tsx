@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import { RootState } from '../../../rootReducer';
 import { userLoggedOut } from '../../../store/authentication/authentication.slice';
+import RecipeFilter from '../../../views/Recipes/RecipeFilter/RecipeFilter';
 
 function NavBar() {
   const userId = useSelector((state: RootState) => state.authentication.userId)
@@ -25,8 +26,9 @@ function NavBar() {
 
       <Link to='/'>WIIMF</Link>
 
-      <NavBarMenu position='right'>
+      <NavBarMenu position='right' autohide={false}>
         <span>test</span>
+        <RecipeFilter />
       </NavBarMenu>
 
     </NavBarStyled>
