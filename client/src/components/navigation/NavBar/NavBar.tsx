@@ -3,7 +3,7 @@ import NavBarLink from '../NavBarLink/NavBarLink';
 import NavBarMenu from '../NavBarMenu/NavBarMenu';
 import NavBarStyled from './NavBar.styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import { RootState } from '../../../rootReducer';
 import { userLoggedOut } from '../../../store/authentication/authentication.slice';
 import RecipeFilter from '../../../views/Recipes/RecipeFilter/RecipeFilter';
@@ -11,6 +11,12 @@ import RecipeFilter from '../../../views/Recipes/RecipeFilter/RecipeFilter';
 function NavBar() {
   const userId = useSelector((state: RootState) => state.authentication.userId)
   const dispatch = useDispatch();
+
+  const recipeFilterMenu = (
+    <NavBarMenu position='right' autohide={false}>
+      <RecipeFilter />
+    </NavBarMenu>
+  );
 
   return (
     <NavBarStyled>
@@ -26,10 +32,14 @@ function NavBar() {
 
       <Link to='/'>WIIMF</Link>
 
-      <NavBarMenu position='right' autohide={false}>
+      <Routes>
+        <Route path='/recipes/' element={recipeFilterMenu} />
+        <Route path='*' element={null} />
+      </Routes>
+      {/* <NavBarMenu position='right' autohide={false}>
         <span>test</span>
-        <RecipeFilter />
-      </NavBarMenu>
+        
+      </NavBarMenu> */}
 
     </NavBarStyled>
   );

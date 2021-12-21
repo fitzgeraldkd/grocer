@@ -111,6 +111,9 @@ const recipesSlice = createSlice({
       if (action.payload.key in state.filters) {
         state.filters[action.payload.key as FilterOptions] = action.payload.value
       }
+    },
+    filterReset(state) {
+      state.filters = initialState.filters
     }
   },
   extraReducers: builder => {
@@ -179,5 +182,5 @@ const recipesSlice = createSlice({
   }
 });
 
-export const { filterApplied } = recipesSlice.actions;
+export const { filterApplied, filterReset } = recipesSlice.actions;
 export default recipesSlice.reducer;

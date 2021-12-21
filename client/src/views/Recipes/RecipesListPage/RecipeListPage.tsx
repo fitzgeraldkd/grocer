@@ -12,12 +12,18 @@ import RecipeCard from '../RecipeCard/RecipeCard';
 function RecipeListPage() {
   const navigate = useNavigate();
   const recipes = useSelector((state: RootState) => state.recipes.recipes);
+  const filters = useSelector((state: RootState) => state.recipes.filters);
+
+  const filteredRecipes = recipes.filter(recipe => (
+    recipe.name.toLowerCase().includes(filters.name.toLowerCase()) &&
+    (recipe.cuisine === filters.cuisine || filters.cuisine === '')
+  ));
 
   const handleNewRecipe = () => navigate('/recipes/new');
 
   return (
     <RecipeListPageStyles>
-      {recipes.map(recipe => <RecipeCard key={recipe.name} recipe={recipe} />)}
+      {filteredRecipes.map(recipe => <RecipeCard key={recipe.name} recipe={recipe} />)}
       <FloatingButton handleClickEvent={handleNewRecipe}><RiAddFill /></FloatingButton>
     </RecipeListPageStyles>
   );
