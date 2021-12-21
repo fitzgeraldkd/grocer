@@ -42,7 +42,7 @@ class RecipeIngredientTest < ActiveSupport::TestCase
     user_a_recipe = user_a.recipes.sample
     user_a_ingredient = user_a.ingredients.sample
 
-    test_recipe_ingredient = RecipeIngredient.create(recipe: user_a_recipe, ingredient: user_a_ingredient)
+    test_recipe_ingredient = RecipeIngredient.create(recipe: user_a_recipe, ingredient: user_a_ingredient, order: 42)
     assert test_recipe_ingredient.valid?, "Expected recipe_ingredient to be valid"
   end
 

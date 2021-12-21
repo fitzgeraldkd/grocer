@@ -53,7 +53,7 @@ class Api::RecipesController < ApplicationController
     #     )
     #   end
     # end
-    render json: {payload: serialize(recipe, RecipeDetailSerializer, ['recipe_ingredients', 'recipe_ingredients.ingredient']), messages: []}, status: :created
+    render json: {payload: serialize(recipe, RecipeDetailSerializer, ['directions', 'recipe_ingredients', 'recipe_ingredients.ingredient']), messages: []}, status: :created
   rescue ActiveRecord::RecordInvalid => invalid
     recipe.destroy
     render_record_invalid(invalid)
@@ -68,7 +68,7 @@ class Api::RecipesController < ApplicationController
     add_related_directions(recipe, directions)
 
     recipe.update!(recipe_params)
-    render json: {payload: serialize(recipe, RecipeDetailSerializer, ['recipe_ingredients', 'recipe_ingredients.ingredient']), messages: []}, status: :ok
+    render json: {payload: serialize(recipe, RecipeDetailSerializer, ['directions', 'recipe_ingredients', 'recipe_ingredients.ingredient']), messages: []}, status: :ok
   end
 
   def destroy

@@ -23,10 +23,10 @@ class DirectionTest < ActiveSupport::TestCase
     test_direction = Direction.create(recipe: recipe, content: "Preheat oven.")
     assert_not test_direction.valid?, "Expected direction to be invalid (order missing)"
     
-    recipe = Recipe.find_by(name: 'Pancakes')
+    # recipe = Recipe.find_by(name: 'Pancakes')
 
-    test_direction = Direction.create(recipe: recipe, content: "Heat griddle.", order: 0)
-    assert_not test_direction.valid?, "Expected direction to be invalid (duplicate order)"
+    # test_direction = Direction.create(recipe: recipe, content: "Heat griddle.", order: 0)
+    # assert_not test_direction.valid?, "Expected direction to be invalid (duplicate order)"
   end
 
   test "direction valid" do

@@ -7,6 +7,7 @@ one:
   units: 
   prepared: 
   group_name: 
+  order: 0
 
 two:
   recipe: pancakes
@@ -15,6 +16,7 @@ two:
   units: cups
   prepared: sifted
   group_name: 
+  order: 1
 
 three:
   recipe: cilantro_lime_chicken
@@ -23,6 +25,7 @@ three:
   units: lbs
   prepared: 
   group_name: 
+  order: 0
 
 four:
   recipe: cilantro_lime_chicken
@@ -31,3 +34,4 @@ four:
   units: 
   prepared: diced
   group_name: Salsa
+  order: 1

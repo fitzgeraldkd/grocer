@@ -28,7 +28,7 @@ class Api::RecipeIngredientsController < ApplicationController
   private
 
   def recipe_ingredient_params
-    params.permit(:recipe_id, :ingredient_id, :quantity, :units, :prepared, :group_name)
+    params.permit(:recipe_id, :ingredient_id, :quantity, :units, :prepared, :group_name, :order)
   end
 
   def authorize

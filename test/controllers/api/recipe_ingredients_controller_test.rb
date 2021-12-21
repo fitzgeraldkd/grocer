@@ -36,7 +36,7 @@ class Api::RecipeIngredientsControllerTest < ActionDispatch::IntegrationTest
     recipe = user.recipes.sample
     ingredient = user.ingredients.sample
     post "/api/login", params: { username: "kenny" }
-    post "/api/recipe_ingredients", params: { recipe_id: recipe.id, ingredient_id: ingredient.id }
+    post "/api/recipe_ingredients", params: { recipe_id: recipe.id, ingredient_id: ingredient.id, order: 42 }
     payload = assert_response_format response, 201
     assert_recipe_ingredient_payload payload
   end
