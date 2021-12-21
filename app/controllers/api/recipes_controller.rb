@@ -8,7 +8,7 @@ class Api::RecipesController < ApplicationController
 
   def show
     recipe = Recipe.find(params[:id])
-    render json: {payload: serialize(recipe, RecipeDetailSerializer), messages: []}, status: :ok
+    render json: {payload: serialize(recipe, RecipeDetailSerializer, ['directions', 'recipe_ingredients', 'recipe_ingredients.ingredient']), messages: []}, status: :ok
   end
 
   def create
@@ -53,7 +53,7 @@ class Api::RecipesController < ApplicationController
     #     )
     #   end
     # end
-    render json: {payload: serialize(recipe, RecipeDetailSerializer), messages: []}, status: :created
+    render json: {payload: serialize(recipe, RecipeDetailSerializer, ['recipe_ingredients', 'recipe_ingredients.ingredient']), messages: []}, status: :created
   rescue ActiveRecord::RecordInvalid => invalid
     recipe.destroy
     render_record_invalid(invalid)
@@ -68,7 +68,7 @@ class Api::RecipesController < ApplicationController
     add_related_directions(recipe, directions)
 
     recipe.update!(recipe_params)
-    render json: {payload: serialize(recipe, RecipeDetailSerializer), messages: []}, status: :ok
+    render json: {payload: serialize(recipe, RecipeDetailSerializer, ['recipe_ingredients', 'recipe_ingredients.ingredient']), messages: []}, status: :ok
   end
 
   def destroy
@@ -89,8 +89,8 @@ class Api::RecipesController < ApplicationController
 
   def add_related_ingredients(recipe, recipe_ingredients)
     recipe_ingredients.each do |recipe_ingredient|
-      ingredient = Ingredient.find_by(name: recipe_ingredient['ingredient_name'], user_id: @current_user.id)
-      ingredient = @current_user.ingredients.create!(name: recipe_ingredient['ingredient_name']) if !ingredient
+      ingredient = Ingredient.find_by(name: recipe_ingredient['ingredient']['name'], user_id: @current_user.id)
+      ingredient = @current_user.ingredients.create!(name: recipe_ingredient['ingredient']['name']) if !ingredient
       if recipe_ingredient['id'] == nil
         recipe.recipe_ingredients.create!(
           ingredient_id: ingredient.id,

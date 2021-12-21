@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
 import { RootState } from '../../../rootReducer';
 import { showRecipe } from '../../../store/recipes/recipes.slice';
-import { Direction, RecipeIngredient } from '../../../utils/types/record.types';
+import { Direction, RecipeIngredient, RecipeIngredientDetailed } from '../../../utils/types/record.types';
 import RecipeDetailPageStyles from './RecipeDetailPage.styles';
 
 function RecipeDetailPage() {
@@ -20,10 +20,10 @@ function RecipeDetailPage() {
 
   const handleEditRecipe = () => navigate(`/recipes/${params.id}/edit`);
 
-  const renderIngredient = (ingredient: RecipeIngredient) => {
+  const renderIngredient = (ingredient: RecipeIngredientDetailed) => {
     return (
       <div key={ingredient.id}>
-        {ingredient.quantity !== 0 ? ingredient.quantity : null} {ingredient.units} {ingredient.ingredient_name}
+        {ingredient.quantity !== 0 ? ingredient.quantity : null} {ingredient.units} {ingredient.ingredient.name}
       </div>
     );
   };

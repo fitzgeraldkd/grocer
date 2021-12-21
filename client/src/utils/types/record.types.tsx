@@ -33,7 +33,6 @@ export interface PendingRecipeIngredient {
   id?: number,
   recipe_id?: number,
   ingredient_id?: number,
-  ingredient_name: string,
   quantity: number,
   units: string,
   prepared: string,
@@ -66,14 +65,21 @@ export interface PendingRecipeDetailed extends PendingRecipe {
 };
 export interface RecipeDetailed extends Recipe {
   directions: Direction[],
-  recipe_ingredients: RecipeIngredient[]
+  recipe_ingredients: RecipeIngredientDetailed[]
 };
 
 export interface PendingUserDetailed extends PendingUser {
   recipes: PendingRecipe[],
   ingredients: PendingIngredient[]
 };
-export interface UserDetaild extends User {
+export interface UserDetailed extends User {
   recipes: Recipe[],
   ingredients: Ingredient[]
+};
+
+export interface PendingRecipeIngredientDetailed extends PendingRecipeIngredient {
+  ingredient: PendingIngredient
+};
+export interface RecipeIngredientDetailed extends RecipeIngredient {
+  ingredient: Ingredient
 }

@@ -12,6 +12,10 @@ export type RecipeDataType = {
   // recipeIngredients: RecipeIngredient[]
 };
 
+export interface RecipeIngredientData extends PendingRecipeIngredient {
+  name: string
+}
+
 export type UserCredentialsType = {
   username: string,
   password: string

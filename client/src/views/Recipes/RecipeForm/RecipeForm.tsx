@@ -7,10 +7,12 @@ import Input from '../../../components/forms/Input/Input';
 import Select from '../../../components/forms/Select/Select';
 import { RootState } from '../../../rootReducer';
 import { createRecipe, updateRecipe } from '../../../store/recipes/recipes.slice';
-import { Direction, RecipeIngredient, PendingDirection, PendingRecipeDetailed, PendingRecipeIngredient, Recipe, ValidResponse, PendingIngredient, RecipeDetailed } from '../../../utils/types/record.types';
+import { ingredientsAdded } from '../../../store/ingredients/ingredients.slice'
+import { Direction, RecipeIngredient, PendingDirection, PendingRecipeDetailed, PendingRecipeIngredient, Recipe, ValidResponse, PendingIngredient, RecipeDetailed, RecipeIngredientDetailed, PendingRecipeIngredientDetailed } from '../../../utils/types/record.types';
 import RecipeFormStyles from './RecipeForm.styles';
 import { RiAddFill, RiCloseCircleFill } from 'react-icons/ri';
 import { MdDragIndicator } from 'react-icons/md';
+import { RecipeIngredientData } from '../../../utils/types/formData.types'
 
 interface RecipeFormProps {
   recipe?: RecipeDetailed | null;
@@ -27,7 +29,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     name: '',
     cuisine: ''
   });
-  const [ingredients, setIngredients] = useState<((PendingRecipeIngredient | RecipeIngredient) & SubRecord)[]>([]);
+  const [ingredients, setIngredients] = useState<(RecipeIngredientData & SubRecord)[]>([]);
   const [tempIngredientId, setTempIngredientId] = useState(0);
   const [directions, setDirections] = useState<((PendingDirection | Direction) & SubRecord)[]>([]);
   const [tempDirectionId, setTempDirectionId] = useState(0);
@@ -46,9 +48,12 @@ function RecipeForm({ recipe }: RecipeFormProps) {
       cuisine: recipe ? recipe.cuisine : ''
     });
     if (recipe) {
-      setIngredients(recipe.recipe_ingredients.map((ingredient, index) => {
+      // console.log(recipe.recipe_ingredients[0].)
+      setIngredients(recipe.recipe_ingredients.map((thisIngredient, index) => {
+        const {ingredient, ...recipeIngredient} = thisIngredient;
         setTempIngredientId(current => current + 1);
-        return {...ingredient, tempId: index};
+        // return null;
+        return {...recipeIngredient, tempId: index, name: ingredient.name};
       }));
       setDirections(recipe.directions.map((direction, index) => {
         setTempDirectionId(current => current + 1);
@@ -84,21 +89,26 @@ function RecipeForm({ recipe }: RecipeFormProps) {
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const action = recipe ? updateRecipe : createRecipe;
-    const sideEffect = (success: boolean, payload: ValidResponse<Recipe>) => {
+    const sideEffect = (success: boolean, payload: ValidResponse<RecipeDetailed>) => {
+      console.log(payload.payload?.recipe_ingredients);
+      if (payload.payload?.recipe_ingredients) dispatch(ingredientsAdded(payload.payload.recipe_ingredients))
       success ? navigate('/recipes') : setMessages(payload.messages);
     };
-    const bodyIngredients = [] as (RecipeIngredient | PendingRecipeIngredient)[];
+    const bodyIngredients = [] as (RecipeIngredientDetailed | PendingRecipeIngredientDetailed)[];
     ingredients.forEach((ingredient, index) => {
       bodyIngredients.push({
         id: ingredient.id,
         recipe_id: recipe ? recipe.id : undefined,
         ingredient_id: ingredient.ingredient_id,
-        ingredient_name: ingredient.ingredient_name,
+        // ingredient_name: ingredient.ingredient_name,
         quantity: ingredient.quantity,
         units: ingredient.units,
         prepared: ingredient.prepared,
         group_name: ingredient.group_name,
-        order: index
+        order: index,
+        ingredient: {
+          name: ingredient.name
+        }
       });
     });
 
@@ -119,11 +129,12 @@ function RecipeForm({ recipe }: RecipeFormProps) {
   const handleAddIngredient = () => {
     setIngredients([...ingredients, {
       tempId: tempIngredientId,
-      ingredient_name: '',
+      // ingredient_name: '',
       quantity: 0,
       units: '',
       prepared: '',
-      order: 0
+      order: 0,
+      name: ''
     }]);
     setTempIngredientId(current => current + 1);
   };
@@ -174,13 +185,13 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     }
   };
 
-  const renderIngredientInput = (ingredient: (PendingRecipeIngredient | RecipeIngredient) & SubRecord) => {
+  const renderIngredientInput = (ingredient: RecipeIngredientData & SubRecord) => {
     const dragHandler = () => handleDrag('ingredient', ingredient.tempId);
     const dragEnterHandler = () => handleDragOver('ingredient', ingredient.tempId);
     return (
       <React.Fragment key={ingredient.tempId}>
         <span draggable='true' onDrag={dragHandler} onDragEnd={handleDragEnd} onDragEnter={dragEnterHandler}><MdDragIndicator /></span>
-        <Datalist inputProps={{id: `ingredient_name_${ingredient.tempId}`, name: `ingredient_name`}} onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.ingredient_name} required={true} >
+        <Datalist inputProps={{id: `ingredient_name_${ingredient.tempId}`, name: `name`}} onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.name} required={true} >
           {allIngredients.map(option => <option key={option.name} value={option.name} />)}
         </Datalist>
         <Input inputProps={{name: 'quantity', type: 'number'}} onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.quantity} />

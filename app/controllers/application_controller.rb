@@ -14,8 +14,10 @@ class ApplicationController < ActionController::API
     render json: { payload: nil, messages: ["You are not logged in."] }, status: :unauthorized unless current_user
   end
 
-  def serialize(record, serializer)
-    ActiveModelSerializers::SerializableResource.new(record, { serializer: serializer })
+  def serialize(record, serializer, include=nil)
+    options = { serializer: serializer }
+    options[:include] = include if include
+    ActiveModelSerializers::SerializableResource.new(record, options)
   end
 
   def serialize_all(record, serializer)

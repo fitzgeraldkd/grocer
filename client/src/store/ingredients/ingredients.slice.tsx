@@ -1,8 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { sendRequest } from '../../utils/helpers/requests.helpers';
 import { IngredientDataType } from '../../utils/types/formData.types';
-import { Ingredient, IngredientDetailed, RequestStatus } from '../../utils/types/record.types';
+import { Ingredient, IngredientDetailed, RecipeIngredientDetailed, RequestStatus } from '../../utils/types/record.types';
 
 interface IngredientsState {
   ingredients: Ingredient[],
@@ -93,7 +93,16 @@ export const destroyIngredient = createAsyncThunk<ThunkOutput, ThunkInput>(
 const ingredientsSlice = createSlice({
   name: 'ingredients',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    ingredientsAdded(state, action: PayloadAction<RecipeIngredientDetailed[]>) {
+      // payload.payload.forEach()
+      console.log(action.payload);
+      console.log(state.ingredients);
+      action.payload.forEach(ingredient => {
+        if (!state.ingredients.find(thisIngredient => thisIngredient.id === ingredient.ingredient.id)) state.ingredients.push(ingredient.ingredient);
+      })
+    }
+  },
   extraReducers: builder => {
     builder.addCase(indexIngredients.pending, state => {
       state.status = 'loading';
@@ -161,5 +170,5 @@ const ingredientsSlice = createSlice({
   }
 });
 
-
+export const { ingredientsAdded } = ingredientsSlice.actions;
 export default ingredientsSlice.reducer;
