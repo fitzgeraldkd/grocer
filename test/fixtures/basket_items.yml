@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ingredient: eggs
+  quantity: 12
+  units: 
+
+two:
+  ingredient: flour
+  quantity: 2
+  units: cups

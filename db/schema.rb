@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_20_203747) do
+ActiveRecord::Schema.define(version: 2021_12_21_165623) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "basket_items", force: :cascade do |t|
+    t.bigint "ingredient_id", null: false
+    t.float "quantity"
+    t.string "units"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["ingredient_id"], name: "index_basket_items_on_ingredient_id"
+  end
 
   create_table "directions", force: :cascade do |t|
     t.text "content"
@@ -63,6 +72,7 @@ ActiveRecord::Schema.define(version: 2021_12_20_203747) do
     t.string "email"
   end
 
+  add_foreign_key "basket_items", "ingredients"
   add_foreign_key "directions", "recipes"
   add_foreign_key "ingredients", "users"
   add_foreign_key "recipe_ingredients", "ingredients"
