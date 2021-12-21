@@ -18,6 +18,8 @@ import RecipeListPage from './views/Recipes/RecipesListPage/RecipeListPage';
 import RecipeDetailPage from './views/Recipes/RecipeDetailPage/RecipeDetailPage';
 import RecipeCreatePage from './views/Recipes/RecipeCreatePage/RecipeCreatePage';
 import RecipeEditPage from './views/Recipes/RecipeEditPage/RecipeEditPage';
+import BasketListPage from './views/Basket/BasketListPage/BasketListPage';
+import { indexBasketItems } from './store/basketItems/basketItems.slice';
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +35,7 @@ function App() {
     if (userId) {
       dispatch(indexIngredients({}));
       dispatch(indexRecipes({}));
+      dispatch(indexBasketItems({}))
     }
   }, [dispatch, userId])
 
@@ -51,11 +54,15 @@ function App() {
             <Route path=':id/edit' element={<RecipeEditPage />} />
           </Route>
 
-          <Route path='/ingredients/'>
+          <Route path='/ingredients'>
             <Route path='' element={<IngredientsListPage />} />
             <Route path='new' element={<IngredientCreatePage />} />
             <Route path=':id' element={<IngredientDetailPage />} />
             <Route path=':id/edit' element={<IngredientEditPage />} />
+          </Route>
+
+          <Route path='/basket_items'>
+            <Route path='' element={<BasketListPage />} />
           </Route>
         </Routes>
       </main>

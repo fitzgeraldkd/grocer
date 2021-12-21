@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import { RiPencilFill } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import Button from '../../../components/forms/Button/Button';
 import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
 import { RootState } from '../../../rootReducer';
+import { createBasketItem } from '../../../store/basketItems/basketItems.slice';
 import { showRecipe } from '../../../store/recipes/recipes.slice';
 import { Direction, RecipeIngredient, RecipeIngredientDetailed } from '../../../utils/types/record.types';
 import RecipeDetailPageStyles from './RecipeDetailPage.styles';
@@ -36,11 +38,25 @@ function RecipeDetailPage() {
     )
   };
 
+  const handleAddToBasket = () => {
+    recipe?.recipe_ingredients.forEach(recipeIngredient => {
+      const itemBody = {
+        ingredient_id: recipeIngredient.ingredient.id,
+        name: recipeIngredient.ingredient.name,
+        quantity: recipeIngredient.quantity,
+        units: recipeIngredient.units
+      };
+      console.log(itemBody);
+      dispatch(createBasketItem({body: itemBody}));
+    })
+  }
+
   const renderRecipe = () => {
     if (!recipe) return null;
     return (
       <>
         <div>{recipe.name}</div>
+        <div><Button onClick={handleAddToBasket}>Add Ingredients To Basket</Button></div>
         <div>
           {recipe.recipe_ingredients.map(renderIngredient)}
         </div>

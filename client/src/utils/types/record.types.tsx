@@ -44,6 +44,15 @@ export type RecipeIngredient = PendingRecipeIngredient & ValidRecord & {
   ingredient_id: number
 };
 
+export interface PendingBasketItem {
+  id?: number
+  ingredient_id: number
+  name: string,
+  quantity: number,
+  units: string
+};
+export type BasketItem = PendingBasketItem & ValidRecord;
+
 export interface PendingUser {
   id?: number,
   username: string,
@@ -51,6 +60,8 @@ export interface PendingUser {
   email: string
 };
 export type User = PendingUser & ValidRecord;
+
+
 
 export interface PendingIngredientDetailed extends PendingIngredient {
   recipes: PendingRecipe[]

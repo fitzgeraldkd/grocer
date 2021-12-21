@@ -3,10 +3,11 @@ class Api::BasketItemsController < ApplicationController
   skip_before_action :authorize, only: [:index, :create]
 
   def index
-    render json: {payload: @current_user.basket_items, messages: []}, status: :ok
+    render json: {payload: serialize_all(@current_user.basket_items, BasketItemSerializer), messages: []}, status: :ok
   end
 
   def create
+    p params
     ingredient = Ingredient.find(params[:ingredient_id])
     if @current_user.id == ingredient.user_id
       basket_item = ingredient.basket_items.create!(basket_item_params)

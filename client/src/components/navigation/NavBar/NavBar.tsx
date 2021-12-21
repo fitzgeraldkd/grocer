@@ -25,6 +25,7 @@ function NavBar() {
         <NavBarMenu>
           <Link to='/recipes'>Recipes</Link>
           <Link to='/ingredients'>Ingredients</Link>
+          <Link to='/basket_items'>Basket</Link>
           <span>Pantry</span>
           <Link to='/' onClick={() => dispatch(userLoggedOut())}>Log Out</Link>
         </NavBarMenu>
