@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     resources :ingredients
     resources :recipes
     resources :recipe_ingredients, except: [:index, :show]
+    resources :basket_items, except: [:show]
     get "/me", to: "users#show"
     post "/login", to: "sessions#create"
     delete "/logout", to: "sessions#destroy"
