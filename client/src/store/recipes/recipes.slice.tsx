@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { sendRequest } from '../../utils/helpers/requests.helpers';
 import { RecipeDataType } from '../../utils/types/formData.types';
@@ -7,14 +7,30 @@ import { Recipe, RecipeDetailed, RequestStatus } from '../../utils/types/record.
 interface RecipesState {
   recipes: Recipe[],
   activeRecipe: RecipeDetailed | null,
-  status: RequestStatus
+  status: RequestStatus,
+  filters: {
+    name: string,
+    cuisine: string
+  }
 };
 
 const initialState: RecipesState = {
   recipes: [],
   activeRecipe: null,
-  status: 'idle'
+  status: 'idle',
+  filters: {
+    name: '',
+    cuisine: ''
+  }
 };
+
+interface FilterToApply {
+  key: string,
+  // key: 'name' | 'cuisine',
+  value: string
+};
+
+type FilterOptions = ('name' | 'cuisine')
 
 interface ThunkInput {
   id?: number,
@@ -90,7 +106,13 @@ export const destroyRecipe = createAsyncThunk<ThunkOutput, ThunkInput>(
 const recipesSlice = createSlice({
   name: 'recipes',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    filterApplied(state, action: PayloadAction<FilterToApply>) {
+      if (action.payload.key in state.filters) {
+        state.filters[action.payload.key as FilterOptions] = action.payload.value
+      }
+    }
+  },
   extraReducers: builder => {
     builder.addCase(indexRecipes.pending, state => {
       state.status = 'loading';
@@ -157,4 +179,5 @@ const recipesSlice = createSlice({
   }
 });
 
+export const { filterApplied } = recipesSlice.actions;
 export default recipesSlice.reducer;
