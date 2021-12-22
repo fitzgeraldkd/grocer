@@ -1,8 +1,43 @@
-import { addMeasurements, convertUnits, getUnitGroup } from "./units.helpers";
+import { addMeasurements, convertUnits, getUnitGroup, MeasurementList, simplifyBasket } from "./units.helpers";
 import { UnitGroups, Unit, Measurement } from '../types/units.types';
+import { BasketItem } from "../types/record.types";
 
 describe('addMeasurements', () => {
-  
+  test('Reduces units of the same dimension to one measurement', () => {
+    {
+      const measurement1: Measurement = {quantity: 5, unit: 'cup'};
+      const measurement2: Measurement = {quantity: 16, unit: 'tbsp'};
+      const result: MeasurementList = {volume: {quantity: 6, unit: 'cup'}};
+      expect(addMeasurements([measurement1, measurement2])).toStrictEqual(result);
+    }
+    {
+      const measurement1: Measurement = {quantity: 5, unit: 'cup'};
+      const measurement2: Measurement = {quantity: 16, unit: 'tbsp'};
+      const measurement3: Measurement = {quantity: 24, unit: 'tsp'};
+      const result: MeasurementList = {volume: {quantity: 6.5, unit: 'cup'}};
+      expect(addMeasurements([measurement1, measurement2, measurement3])).toStrictEqual(result);
+    }
+    {
+      const measurement1: Measurement = {quantity: 5, unit: ''};
+      const measurement2: Measurement = {quantity: 16, unit: ''};
+      const result: MeasurementList = {quantity: {quantity: 21, unit: ''}};
+      expect(addMeasurements([measurement1, measurement2])).toStrictEqual(result);
+    }
+    {
+      const measurement1: Measurement = {quantity: 17, unit: 'cloves'};
+      const measurement2: Measurement = {quantity: 25, unit: 'cloves'};
+      const result: MeasurementList = {'custom-cloves': {quantity: 42, unit: 'cloves'}};
+      expect(addMeasurements([measurement1, measurement2])).toStrictEqual(result);
+    }
+  });
+  test('Reduces units of multiple dimensions to multiple measurements', () => {
+    const measurement1: Measurement = {quantity: 5, unit: 'cup'};
+    const measurement2: Measurement = {quantity: 1, unit: 'lbs'};
+    const measurement3: Measurement = {quantity: 3, unit: 'lbs'};
+    const measurement4: Measurement = {quantity: 16, unit: 'tbsp'};
+    const result: MeasurementList = {volume: {quantity: 6, unit: 'cup'}, weight: {quantity: 4, unit: 'lbs'}};
+    expect(addMeasurements([measurement1, measurement2, measurement3, measurement4])).toStrictEqual(result);
+  });
 });
 
 describe('convertUnits', () => {
@@ -36,5 +71,25 @@ describe('getUnitGroup', () => {
   test('Returns a valid unit group if the unit is predefined', () => {
     expect(getUnitGroup('tsp')).toBe('volume');
     expect(getUnitGroup('lbs')).toBe('weight');
+  });
+});
+
+describe('simplifyBasket', () => {
+  test('Some Test', () => {
+    const basketItems: BasketItem[] = [
+      {id: 0, ingredient_id: 0, name: 'Flour', quantity: 5, units: 'cup'},
+      {id: 1, ingredient_id: 0, name: 'Flour', quantity: 16, units: 'tbsp'},
+      {id: 2, ingredient_id: 1, name: 'Garlic', quantity: 3, units: 'cloves'},
+      {id: 3, ingredient_id: 1, name: 'Garlic', quantity: 4, units: 'cloves'},
+    ];
+    const expected = {
+      Flour: {
+        volume: {quantity: 6, unit: 'cup'}
+      },
+      Garlic: {
+        'custom-cloves': {quantity: 7, unit: 'cloves'}
+      }
+    };
+    expect(simplifyBasket(basketItems)).toStrictEqual(expected);
   });
 });

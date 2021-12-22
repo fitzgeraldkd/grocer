@@ -1,3 +1,4 @@
+import { BasketItem } from '../types/record.types';
 import { UnitGroups, Unit, Measurement } from '../types/units.types';
 
 interface SubUnit {
@@ -14,6 +15,10 @@ type UnitsList = {
     }
   }
 };
+
+export type MeasurementList = {
+  [prop in (UnitGroups | 'quantity' | `custom-${string}`)]?: Measurement
+}
 
 export const units: UnitsList = {
   volume: {
@@ -93,3 +98,20 @@ export const addMeasurements = (measurements: Measurement[]) => {
   }
   return results;
 };
+
+export const simplifyBasket = (basketItems: BasketItem[]) => {
+  const ingredientList: {[ingredient: string]: Measurement[]} = {};
+  for (const basketItem of basketItems) {
+    const newMeasurement: Measurement = {quantity: basketItem.quantity, unit: basketItem.units};
+    if (basketItem.name in ingredientList) {
+      ingredientList[basketItem.name].push(newMeasurement);
+    } else {
+      ingredientList[basketItem.name] = [newMeasurement];
+    }
+  }
+
+  const summedIngredients: {[ingredient: string]: {}} = {};
+  Object.keys(ingredientList).forEach(ingredient => (summedIngredients[ingredient] = addMeasurements(ingredientList[ingredient])));
+
+  return summedIngredients;
+}
