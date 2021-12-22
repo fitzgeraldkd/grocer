@@ -75,7 +75,7 @@ describe('getUnitGroup', () => {
 });
 
 describe('simplifyBasket', () => {
-  test('Some Test', () => {
+  test('Combines similar ingredients', () => {
     const basketItems: BasketItem[] = [
       {id: 0, ingredient_id: 0, name: 'Flour', quantity: 5, units: 'cup'},
       {id: 1, ingredient_id: 0, name: 'Flour', quantity: 16, units: 'tbsp'},

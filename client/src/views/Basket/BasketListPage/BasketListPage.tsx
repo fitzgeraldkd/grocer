@@ -7,6 +7,7 @@ import { basketEmptied } from '../../../store/basketItems/basketItems.slice';
 import Button from '../../../components/forms/Button/Button';
 import { Measurement } from '../../../utils/types/units.types';
 import { addMeasurements, getUnitGroup, simplifyBasket } from '../../../utils/helpers/units.helpers';
+import { sorter } from '../../../utils/helpers/arrays.helpers';
 
 function BasketListPage() {
   const basketItems = useSelector((state: RootState) => state.basketItems.basketItems);
@@ -17,12 +18,12 @@ function BasketListPage() {
   };
 
   const simplifiedBasket = simplifyBasket(basketItems);
+  const ingredients = Object.keys(simplifiedBasket).sort(sorter);
 
   return (
     <BasketListPageStyles>
       <Button onClick={handleBasketEmpty}>Empty Basket</Button>
-      {Object.keys(simplifiedBasket).map(basketItem => <BasketCard basketItem={simplifiedBasket[basketItem]} ingredient={basketItem} />)}
-      {/* {basketItems.map(basketItem => <BasketCard basketItem={basketItem} />)} */}
+      {ingredients.map(ingredient => <BasketCard basketItem={simplifiedBasket[ingredient]} ingredient={ingredient} />)}
     </BasketListPageStyles>
   );
 }

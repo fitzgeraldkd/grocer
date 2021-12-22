@@ -14,17 +14,15 @@ interface BasketCardProps {
 function BasketCard({ basketItem, ingredient }: BasketCardProps) {
   const dispatch = useDispatch();
 
-  // const handleBasketItemDelete = () => {
-  //   dispatch(destroyBasketItem({ id: basketItem.id }))
-  // };
+  const unitGroups = Object.keys(basketItem);
+  if (unitGroups.includes('quantity')) unitGroups.push(...unitGroups.splice(unitGroups.indexOf('quantity'), 1));
 
   return (
     <BasketCardStyles>
-      {Object.keys(basketItem).map(unitGroup => (
-        <>{basketItem[unitGroup].quantity} {basketItem[unitGroup].unit} {ingredient}</>
+      {unitGroups.map((unitGroup, index) => (
+        `${basketItem[unitGroup].quantity} ${basketItem[unitGroup].unit}${index < unitGroups.length-1 ? ', ' : ' '}`
       ))}
-      {/* {basketItem.name} {basketItem.quantity} {basketItem.units} */}
-      {/* <Button onClick={handleBasketItemDelete}>X</Button> */}
+      {ingredient}
     </BasketCardStyles>
   );
 }
