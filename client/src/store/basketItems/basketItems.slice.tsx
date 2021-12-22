@@ -75,7 +75,11 @@ export const destroyBasketItem = createAsyncThunk<ThunkOutput, ThunkInput>(
 const basketItemsSlice = createSlice({
   name: 'basketItems',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    basketEmptied(state) {
+      state.basketItems = [];
+    }
+  },
   extraReducers: builder => {
     builder.addCase(indexBasketItems.pending, state => {
       state.status = 'loading';
@@ -129,4 +133,5 @@ const basketItemsSlice = createSlice({
   }
 });
 
+export const { basketEmptied } = basketItemsSlice.actions;
 export default basketItemsSlice.reducer;

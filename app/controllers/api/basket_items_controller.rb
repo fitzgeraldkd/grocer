@@ -11,7 +11,7 @@ class Api::BasketItemsController < ApplicationController
     ingredient = Ingredient.find(params[:ingredient_id])
     if @current_user.id == ingredient.user_id
       basket_item = ingredient.basket_items.create!(basket_item_params)
-      render json: {payload: basket_item, messages: []}, status: :created
+      render json: {payload: serialize(basket_item, BasketItemSerializer), messages: []}, status: :created
     else
       render json: {payload: nil, messages: ["You are not authorized to perform this action."]}, status: :forbidden
     end
@@ -20,7 +20,7 @@ class Api::BasketItemsController < ApplicationController
   def update
     basket_item = BasketItem.find(params[:id])
     basket_item.update!(basket_item_params)
-    render json: {payload: basket_item, messages: []}, status: :ok
+    render json: {payload: serialize(basket_item, BasketItemSerializer), messages: []}, status: :ok
   end
 
   def destroy
