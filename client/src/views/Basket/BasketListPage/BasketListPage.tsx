@@ -23,7 +23,9 @@ function BasketListPage() {
   return (
     <BasketListPageStyles>
       <Button onClick={handleBasketEmpty}>Empty Basket</Button>
-      {ingredients.map(ingredient => <BasketCard basketItem={simplifiedBasket[ingredient]} ingredient={ingredient} />)}
+      {ingredients.map(ingredient => (
+        <BasketCard key={ingredient} basketItem={simplifiedBasket[ingredient]} ingredient={ingredient} />
+      ))}
     </BasketListPageStyles>
   );
 }

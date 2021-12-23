@@ -110,8 +110,13 @@ export const simplifyBasket = (basketItems: BasketItem[]) => {
     }
   }
 
-  const summedIngredients: {[ingredient: string]: {}} = {};
-  Object.keys(ingredientList).forEach(ingredient => (summedIngredients[ingredient] = addMeasurements(ingredientList[ingredient])));
-
+  const summedIngredients: {[ingredient: string]: {id: number, measurements: {}}} = {};
+  Object.keys(ingredientList).forEach(ingredient => (
+    summedIngredients[ingredient] = {
+      id: basketItems.find(item => item.name === ingredient)!.ingredient_id, 
+      measurements: addMeasurements(ingredientList[ingredient])
+    }
+  ));
+  console.log(summedIngredients);
   return summedIngredients;
 }

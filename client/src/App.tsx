@@ -20,6 +20,7 @@ import RecipeCreatePage from './views/Recipes/RecipeCreatePage/RecipeCreatePage'
 import RecipeEditPage from './views/Recipes/RecipeEditPage/RecipeEditPage';
 import BasketListPage from './views/Basket/BasketListPage/BasketListPage';
 import { indexBasketItems } from './store/basketItems/basketItems.slice';
+import BasketDetailPage from './views/Basket/BasketDetailPage/BasketDetailPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -59,6 +60,7 @@ function App() {
             <Route path='new' element={<IngredientCreatePage />} />
             <Route path=':id' element={<IngredientDetailPage />} />
             <Route path=':id/edit' element={<IngredientEditPage />} />
+            <Route path=':id/basket' element={<BasketDetailPage />} />
           </Route>
 
           <Route path='/basket_items'>

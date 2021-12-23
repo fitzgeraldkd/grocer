@@ -6,12 +6,15 @@ import { RootState } from '../../../rootReducer';
 import { RiAddFill, RiPencilFill, RiAddLine } from 'react-icons/ri';
 import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
 import { Recipe } from '../../../utils/types/record.types';
+import Button from '../../../components/forms/Button/Button';
+import { destroyBasketItem } from '../../../store/basketItems/basketItems.slice';
 
 function IngredientDetailPage() {
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const ingredient = useSelector((state: RootState) => state.ingredients.activeIngredient);
+  const basketItems = useSelector((state: RootState) => state.basketItems.basketItems);
 
   useEffect(() => {
     if (params.id) dispatch(showIngredient({id: parseInt(params.id, 10)}))
@@ -43,9 +46,28 @@ function IngredientDetailPage() {
     );
   };
 
+  const handleBasketItemDelete = (id: number) => {
+    dispatch(destroyBasketItem({ id }));
+  }
+
+  const renderBasket = () => {
+    if (!ingredient) return null;
+    return (
+      <>
+        {basketItems.filter(basketItem => basketItem.ingredient_id === ingredient.id).map(basketItem => (
+          <div>
+            {basketItem.quantity} {basketItem.units ? basketItem.units : ingredient.name}
+            <Button onClick={() => handleBasketItemDelete(basketItem.id)}>X</Button>
+          </div>
+        ))}
+      </>
+    )
+  };
+
   return (
     <div>
       {renderIngredient()}
+      {renderBasket()}
       <FloatingButton handleClickEvent={handleEditIngredient}><RiPencilFill /></FloatingButton>
     </div>
   );

@@ -84,10 +84,12 @@ describe('simplifyBasket', () => {
     ];
     const expected = {
       Flour: {
-        volume: {quantity: 6, unit: 'cup'}
+        id: 0,
+        measurements: {volume: {quantity: 6, unit: 'cup'}}
       },
       Garlic: {
-        'custom-cloves': {quantity: 7, unit: 'cloves'}
+        id: 1,
+        measurements: {'custom-cloves': {quantity: 7, unit: 'cloves'}}
       }
     };
     expect(simplifyBasket(basketItems)).toStrictEqual(expected);
