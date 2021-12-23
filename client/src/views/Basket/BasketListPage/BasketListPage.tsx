@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../rootReducer';
 import BasketListPageStyles from './BasketListPage.styles';
 import BasketCard from '../BasketCard/BasketCard';
-import { basketEmptied } from '../../../store/basketItems/basketItems.slice';
+import { basketEmptied, destroyBasketItem } from '../../../store/basketItems/basketItems.slice';
 import Button from '../../../components/forms/Button/Button';
 import { Measurement } from '../../../utils/types/units.types';
 import { addMeasurements, getUnitGroup, simplifyBasket } from '../../../utils/helpers/units.helpers';
@@ -14,7 +14,7 @@ function BasketListPage() {
   const dispatch = useDispatch();
 
   const handleBasketEmpty = () => {
-    dispatch(basketEmptied());
+    basketItems.forEach(basketItem => dispatch(destroyBasketItem({ id: basketItem.id })))
   };
 
   const simplifiedBasket = simplifyBasket(basketItems);
