@@ -6,12 +6,30 @@ import store from './rootReducer';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ThemeProvider } from 'styled-components';
+
+
+
+const theme = {
+  palette: {
+    light: {
+      primary: '#74A7F7',
+      'primary-light': '#A9BAD6',
+      'primary-dark': '#0E56C9',
+      secondary: '#EBB154',
+      'secondary-light': '#EBCB98',
+      'secondary-dark': '#7E5C25'
+    }
+  }
+}
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,

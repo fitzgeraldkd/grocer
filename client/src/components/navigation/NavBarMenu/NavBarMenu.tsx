@@ -6,10 +6,11 @@ import { RiMenuLine } from 'react-icons/ri';
 interface NavBarMenuProps {
   position?: 'left' | 'right',
   autohide?: boolean,
-  children: React.ReactNode
+  children: React.ReactNode,
+  icon: React.ReactNode
 }
 
-function NavBarMenu({ position='left', autohide=true, children }: NavBarMenuProps) {
+function NavBarMenu({ position='left', autohide=true, children, icon }: NavBarMenuProps) {
   const [showItems, setShowItems] = useState(false);
 
   const handleShowItems = (e: MouseEvent | React.MouseEvent) => {
@@ -19,7 +20,7 @@ function NavBarMenu({ position='left', autohide=true, children }: NavBarMenuProp
   const links = Array.isArray(children) ?  children : [children];
   return (
     <NavBarMenuStyled position={position}>
-      <span className='toggler' onClick={handleShowItems}><RiMenuLine /></span>
+      <span className='nav-toggler' onClick={handleShowItems}>{icon}</span>
       {autohide && showItems && <div className='navbar-menu-overlay' onClick={handleShowItems}></div>}
       <div className={showItems ? 'menu-items reveal' : 'menu-items'} onClick={autohide ? handleShowItems : () => {}}>
         {links}
