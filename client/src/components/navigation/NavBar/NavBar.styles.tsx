@@ -19,6 +19,7 @@ export default styled.div<StyledProps>`
     text-decoration: none;
     color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary-light']};
     font-family: 'Fredoka One', sans-serif;
+    text-shadow: 1px 2px black;
 
     &:hover {
     color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary']};

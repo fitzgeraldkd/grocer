@@ -16,6 +16,8 @@ export default styled.div<StyledProps>`
     font-size: 2em;
     cursor: pointer;
     color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary-light']};
+    filter: drop-shadow(1px 2px black);
+    -webkit-filter: drop-shadow(1px 1px black);
 
     &:hover {
       color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary']};

@@ -34,7 +34,7 @@ function NavBar() {
           <span>Pantry</span> */}
           <NavBarLink path='/' onClick={() => dispatch(userLoggedOut())}>Log Out</NavBarLink>
         </NavBarMenu>
-      : <NavBarMenu icon={<RiMenuLine />}><Link to='login'>Log In</Link></NavBarMenu>}
+      : <NavBarMenu icon={<RiMenuLine />}><NavBarLink path='/login'>Log In</NavBarLink></NavBarMenu>}
 
       <Link to='/' className='nav-title'>WIIMF</Link>
 

@@ -4,6 +4,17 @@ export default styled.div`
   font-family: 'Work Sans', sans-serif;
 
   main {
-    padding-top: 50px;
+    /* padding-top: 50px; */
+    padding: 50px 20px 0;
+  }
+
+  .page-header {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+
+  .page-subheader {
+    font-size: 1.15em;
+    font-weight: bold;
   }
 `;

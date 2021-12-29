@@ -24,7 +24,9 @@ function RecipeListPage() {
   return (
     <RecipeListPageStyles>
       <div className='page-header'>My Recipes</div>
-      {filteredRecipes.map(recipe => <RecipeCard key={recipe.name} recipe={recipe} />)}
+      <div className='card-container'>
+        {filteredRecipes.map(recipe => <RecipeCard key={recipe.name} recipe={recipe} />)}
+      </div>
       <FloatingButton handleClickEvent={handleNewRecipe}><RiAddFill /></FloatingButton>
     </RecipeListPageStyles>
   );

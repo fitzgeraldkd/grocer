@@ -11,7 +11,10 @@ function RecipeCard({ recipe }: RecipeCardProps) {
   return (
     <RecipeCardStyles>
       <Link to={`/recipes/${recipe.id}`}>
-        {recipe.name}
+        <div className='card'>
+          <span className='card-title'>{recipe.name}</span>
+          {recipe.cuisine}
+        </div>
       </Link>
     </RecipeCardStyles>
   );

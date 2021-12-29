@@ -18,7 +18,7 @@ export default styled.button<StyledProps>`
   border: 0;
   cursor: pointer;
 
-  border-color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary']};
+  /* border-color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary']}; */
   background-color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['secondary']};
   /* font-size: 1em; */
   box-shadow: 0 0 3px 2px ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary-dark']};

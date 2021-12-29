@@ -48,18 +48,19 @@ function RecipeDetailPage() {
       };
       console.log(itemBody);
       dispatch(createBasketItem({body: itemBody}));
-    })
-  }
+    });
+  };
 
   const renderRecipe = () => {
     if (!recipe) return null;
     return (
       <>
-        <div>{recipe.name}</div>
-        <div><Button onClick={handleAddToBasket}>Add Ingredients To Basket</Button></div>
-        <div>
+        <div className='page-header'>{recipe.name}</div>
+        <div className='page-subheader'>Ingredients<Button onClick={handleAddToBasket}>Add To Basket</Button></div>
+        <div className='ingredient-list'>
           {recipe.recipe_ingredients.map(renderIngredient)}
         </div>
+        <div className='page-subheader'>Directions</div>
         <div>
           <ol>
             {recipe.directions.map(renderDirection)}
