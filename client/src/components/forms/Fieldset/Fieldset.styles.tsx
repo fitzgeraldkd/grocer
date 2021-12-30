@@ -8,6 +8,7 @@ export interface StyleProps {
 }
 
 export default styled.fieldset<StyleProps>`
+  border: 0;
   display: grid;
   grid-template-columns: ${props => ' auto'.repeat(props.columns || 2)};
   ${props => props.literals ? Object.entries(props.literals).map(style => (

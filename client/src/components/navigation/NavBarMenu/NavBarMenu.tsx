@@ -21,7 +21,7 @@ function NavBarMenu({ position='left', autohide=true, children, icon }: NavBarMe
   return (
     <NavBarMenuStyled position={position}>
       <span className='nav-toggler' onClick={handleShowItems}>{icon}</span>
-      {autohide && showItems && <div className='navbar-menu-overlay' onClick={handleShowItems}></div>}
+      {showItems && <div className='navbar-menu-overlay' onClick={handleShowItems}></div>}
       <div className={showItems ? 'menu-items reveal' : 'menu-items'} onClick={autohide ? handleShowItems : () => {}}>
         {links}
         {/* {links.map(link => <NavBarLink>{link}</NavBarLink>)} */}

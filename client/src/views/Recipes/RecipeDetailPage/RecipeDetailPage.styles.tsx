@@ -4,6 +4,10 @@ export default styled.div`
   max-width: 1200px;
   margin: auto;
 
+  .page-header {
+    margin-top: 20px;
+  }
+
   .page-subheader {
     margin-top: 20px;
     margin-bottom: 10px;

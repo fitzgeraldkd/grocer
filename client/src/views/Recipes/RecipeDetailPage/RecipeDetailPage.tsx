@@ -72,6 +72,7 @@ function RecipeDetailPage() {
 
   return (
     <RecipeDetailPageStyles>
+      <div><Button onClick={() => navigate('/recipes')}>Back to Recipes</Button></div>
       {renderRecipe()}
       <FloatingButton handleClickEvent={handleEditRecipe}><RiPencilFill /></FloatingButton>
     </RecipeDetailPageStyles>
