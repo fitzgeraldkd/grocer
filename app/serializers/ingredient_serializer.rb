@@ -1,4 +1,8 @@
 class IngredientSerializer < ActiveModel::Serializer
   # puts self
-  attributes :id, :name
+  attributes :id, :name, :recipe_count
+
+  def recipe_count
+    object.recipes.count
+  end
 end

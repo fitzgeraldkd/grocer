@@ -8,6 +8,7 @@ import { createIngredient, updateIngredient } from '../../../store/ingredients/i
 import Fieldset from '../../../components/forms/Fieldset/Fieldset'
 import Input from '../../../components/forms/Input/Input'
 import IngredientFormStyles from './IngredientForm.styles';
+import Button from '../../../components/forms/Button/Button';
 
 interface IngredientFormProps {
   ingredient?: Ingredient | null
@@ -48,7 +49,9 @@ function IngredientForm({ ingredient }: IngredientFormProps) {
       <Fieldset>
         <Input label='Name:' inputProps={{name: 'name', value: formData.name, onChange: handleFormChange}} />
       </Fieldset>
-      <Input inputProps={{name: 'submit', type: 'submit'}} />
+      {/* <Input inputProps={{name: 'submit', type: 'submit'}} /> */}
+      <Button type='submit'>Submit</Button>
+      <Button onClick={() => navigate(`/ingredients/${ingredient ? ingredient.id : ''}`)}>Cancel</Button>
     </form>
     </IngredientFormStyles>
   );

@@ -11,7 +11,8 @@ type ValidRecord = {
 
 export interface PendingIngredient {
   id?: number,
-  name: string
+  name: string,
+  recipe_count?: number
 };
 export type Ingredient = PendingIngredient & ValidRecord;
 

@@ -6,6 +6,7 @@ import IngredientCard from '../IngredientCard/IngredientCard';
 import { RiAddFill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import IngredientsListPageStyles from './IngredientsListPage.styles';
+import { sorter } from '../../../utils/helpers/arrays.helpers';
 
 function IngredientsListPage() {
   const navigate = useNavigate();
@@ -15,7 +16,8 @@ function IngredientsListPage() {
 
   return (
     <IngredientsListPageStyles>
-      {ingredients.map(ingredient => <IngredientCard key={ingredient.name} ingredient={ingredient} />)}
+      <div className='page-header'>Saved Ingredients</div>
+      {[...ingredients].sort((a, b) => sorter(a.name, b.name)).map(ingredient => <IngredientCard key={ingredient.name} ingredient={ingredient} />)}
       <FloatingButton handleClickEvent={handleNewIngredient}><RiAddFill /></FloatingButton>
     </IngredientsListPageStyles>
   );

@@ -38,13 +38,22 @@ function IngredientDetailPage() {
     if (!ingredient) return null;
     return (
       <>
-        <div>{ingredient.name}</div>
+        <div className='page-header'>{ingredient.name}</div>
+      </>
+    );
+  };
+
+  const renderRecipes = () => {
+    if (!ingredient) return null;
+    return (
+      <>
+        <div className='page-subheader'>Recipes</div>
         <div>
           {ingredient.recipes.map(renderRecipe)}
         </div>
       </>
     );
-  };
+  }
 
   const handleBasketItemDelete = (id: number) => {
     dispatch(destroyBasketItem({ id }));
@@ -54,8 +63,9 @@ function IngredientDetailPage() {
     if (!ingredient) return null;
     return (
       <>
+        <div className='page-subheader'>Basket</div>
         {basketItems.filter(basketItem => basketItem.ingredient_id === ingredient.id).map(basketItem => (
-          <div>
+          <div key={basketItem.id}>
             {basketItem.quantity} {basketItem.units ? basketItem.units : ingredient.name}
             <Button onClick={() => handleBasketItemDelete(basketItem.id)}>X</Button>
           </div>
@@ -66,7 +76,9 @@ function IngredientDetailPage() {
 
   return (
     <div>
+      <div><Button onClick={() => navigate('/ingredients')}>Back to Ingredients</Button></div>
       {renderIngredient()}
+      {renderRecipes()}
       {renderBasket()}
       <FloatingButton handleClickEvent={handleEditIngredient}><RiPencilFill /></FloatingButton>
     </div>
