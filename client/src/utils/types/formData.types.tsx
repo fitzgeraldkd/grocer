@@ -7,6 +7,9 @@ export type IngredientDataType = {
 export type RecipeDataType = {
   name: string,
   cuisine: string,
+  course: string,
+  vegetarian: boolean,
+  vegan: boolean,
   recipe_ingredients: (RecipeIngredient | PendingRecipeIngredient)[],
   directions: (Direction | PendingDirection)[]
   // recipeIngredients: RecipeIngredient[]

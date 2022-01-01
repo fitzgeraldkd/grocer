@@ -1,5 +1,5 @@
 class RecipeDetailSerializer < ActiveModel::Serializer
-  attributes :id, :name, :cuisine
+  attributes :id, :name, :cuisine, :course, :vegetarian, :vegan, :source
   has_many :directions
   has_many :recipe_ingredients, serializer: RecipeIngredientSerializer
 

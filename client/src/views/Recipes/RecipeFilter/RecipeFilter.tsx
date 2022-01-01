@@ -15,10 +15,12 @@ function RecipeFilter() {
   const filters = useSelector((state: RootState) => state.recipes.filters)
   const cuisines = getUnique<string>(recipes.map(recipe => recipe.cuisine))
     .sort((a, b) => sorter(a.toLowerCase(), b.toLowerCase()));
+  const courses = getUnique<string>(recipes.map(recipe => recipe.course))
+    .sort((a, b) => sorter(a.toLowerCase(), b.toLowerCase()));
   const dispatch = useDispatch();
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    dispatch(filterApplied({key: e.target.name, value: e.target.value}))
+    dispatch(filterApplied({key: e.target.name, value: ('checked' in e.target ? e.target.checked : e.target.value)}))
   };
 
   const handleFilterReset = () => dispatch(filterReset());
@@ -30,6 +32,9 @@ function RecipeFilter() {
         <Fieldset>
           <Input label='Name:' inputProps={{name:'name'}} onChange={handleFilterChange} value={filters.name} />
           <Select label='Cuisine:' name='cuisine' addBlank={true} onChange={handleFilterChange} value={filters.cuisine}>{cuisines}</Select>
+          <Select label='Course:' name='course' addBlank={true} onChange={handleFilterChange} value={filters.course}>{courses}</Select>
+          <Input label='Vegetarian:' type='checkbox' inputProps={{name: 'vegetarian'}} onChange={handleFilterChange} checked={filters.vegetarian} />
+          <Input label='Vegan:' type='checkbox' inputProps={{name: 'vegan'}} onChange={handleFilterChange} checked={filters.vegan} />
         </Fieldset>
       </form>
       <Button onClick={handleFilterReset}>Reset Filters</Button>

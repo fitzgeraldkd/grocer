@@ -6,6 +6,11 @@ export default styled.div`
 
   .page-header {
     margin-top: 20px;
+
+    a {
+      font-size: 0.8em;
+      font-weight: initial;
+    }
   }
 
   .page-subheader {

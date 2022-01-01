@@ -10,7 +10,10 @@ interface RecipesState {
   status: RequestStatus,
   filters: {
     name: string,
-    cuisine: string
+    cuisine: string,
+    course: string,
+    vegetarian: boolean,
+    vegan: boolean
   }
 };
 
@@ -20,17 +23,21 @@ const initialState: RecipesState = {
   status: 'idle',
   filters: {
     name: '',
-    cuisine: ''
+    cuisine: '',
+    course: '',
+    vegetarian: false,
+    vegan: false
   }
 };
 
 interface FilterToApply {
   key: string,
   // key: 'name' | 'cuisine',
-  value: string
+  value: string | boolean
 };
 
-type FilterOptions = ('name' | 'cuisine')
+type FilterOptions = ('name' | 'cuisine' | 'course');
+type FilterBooleanOptions = ('vegetarian' | 'vegan');
 
 interface ThunkInput {
   id?: number,
@@ -109,7 +116,11 @@ const recipesSlice = createSlice({
   reducers: {
     filterApplied(state, action: PayloadAction<FilterToApply>) {
       if (action.payload.key in state.filters) {
-        state.filters[action.payload.key as FilterOptions] = action.payload.value
+        if (typeof action.payload.value === 'string') {
+          state.filters[action.payload.key as FilterOptions] = action.payload.value
+        } else if (typeof action.payload.value === 'boolean') {
+          state.filters[action.payload.key as FilterBooleanOptions] = action.payload.value
+        }
       }
     },
     filterReset(state) {

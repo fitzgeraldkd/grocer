@@ -7,7 +7,11 @@ class Api::RecipesControllerTest < ActionDispatch::IntegrationTest
     assert payload.key?('id'), 'Expected recipe payload to have id key'
     assert payload.key?('name'), 'Expected recipe payload to have name key'
     assert payload.key?('cuisine'), 'Expected recipe payload to have cuisine key'
+    assert payload.key?('course'), 'Expected recipe payload to have course key'
+    assert payload.key?('vegetarian'), 'Expected recipe payload to have vegetarian key'
+    assert payload.key?('vegan'), 'Expected recipe payload to have vegan key'
     if detailed
+      assert payload.key?('source'), 'Expected recipe payload to have source key'
       assert payload['directions'].kind_of?(Array), 'Expected recipe payload to have array of directions'
       assert payload['recipe_ingredients'].kind_of?(Array), 'Expected recipe payload to have array of ingredients'
     else

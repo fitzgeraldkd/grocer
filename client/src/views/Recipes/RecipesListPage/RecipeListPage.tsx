@@ -16,7 +16,10 @@ function RecipeListPage() {
 
   const filteredRecipes = recipes.filter(recipe => (
     recipe.name.toLowerCase().includes(filters.name.toLowerCase()) &&
-    (recipe.cuisine === filters.cuisine || filters.cuisine === '')
+    (recipe.cuisine === filters.cuisine || filters.cuisine === '') &&
+    (recipe.course === filters.course || filters.course === '') &&
+    (recipe.vegetarian || !filters.vegetarian) &&
+    (recipe.vegan || !filters.vegan)
   ));
 
   const handleNewRecipe = () => navigate('/recipes/new');
@@ -25,6 +28,7 @@ function RecipeListPage() {
     <RecipeListPageStyles>
       <div className='page-header'>My Recipes</div>
       <div className='card-container'>
+        {filteredRecipes.length === 0 && <div className='page-subheader'>No Recipes Found</div>}
         {filteredRecipes.map(recipe => <RecipeCard key={recipe.name} recipe={recipe} />)}
       </div>
       <FloatingButton handleClickEvent={handleNewRecipe}><RiAddFill /></FloatingButton>

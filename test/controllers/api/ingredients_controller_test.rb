@@ -10,6 +10,7 @@ class Api::IngredientsControllerTest < ActionDispatch::IntegrationTest
       assert payload['recipes'].kind_of?(Array), 'Expected ingredient payload to have array of recipes'
     else
       assert_not payload.key?('recipes'), 'Expected ingredient payload to not have array of recipes'
+      assert payload['recipe_count'].kind_of?(Integer), 'Expected ingredient payload to have recipe_count'
     end
   end
 

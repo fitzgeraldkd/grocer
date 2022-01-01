@@ -55,7 +55,12 @@ function RecipeDetailPage() {
     if (!recipe) return null;
     return (
       <>
-        <div className='page-header'>{recipe.name}</div>
+        <div className='page-header'>
+          {recipe.name}
+        </div>
+        <div>
+          {recipe.source && <a href={recipe.source} target='_blank' rel='noreferrer'>View Original Recipe</a>}
+        </div>
         <div className='page-subheader'>Ingredients<Button onClick={handleAddToBasket}>Add To Basket</Button></div>
         <div className='ingredient-list'>
           {recipe.recipe_ingredients.map(renderIngredient)}

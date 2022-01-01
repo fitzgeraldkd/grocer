@@ -13,7 +13,9 @@ function RecipeCard({ recipe }: RecipeCardProps) {
       <Link to={`/recipes/${recipe.id}`}>
         <div className='card'>
           <span className='card-title'>{recipe.name}</span>
-          {recipe.cuisine}
+          {recipe.course ? recipe.course : null}
+          {(recipe.course && recipe.cuisine) ? ' | ' : null}
+          {recipe.cuisine ? recipe.cuisine : null}
         </div>
       </Link>
     </RecipeCardStyles>

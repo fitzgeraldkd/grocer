@@ -80,7 +80,7 @@ class Api::RecipesController < ApplicationController
   private
 
   def recipe_params
-    params.permit(:name, :cuisine)
+    params.permit(:name, :cuisine, :course, :vegetarian, :vegan, :source)
   end
 
   def authorize

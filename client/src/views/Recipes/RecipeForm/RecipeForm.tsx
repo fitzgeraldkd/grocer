@@ -29,7 +29,11 @@ type Draggable = 'ingredient' | 'direction' | null;
 function RecipeForm({ recipe }: RecipeFormProps) {
   const [formData, setFormData] = useState({
     name: '',
-    cuisine: ''
+    cuisine: '',
+    course: '',
+    vegetarian: false,
+    vegan: false,
+    source: ''
   });
   const [ingredients, setIngredients] = useState<(RecipeIngredientData & SubRecord)[]>([]);
   const [tempIngredientId, setTempIngredientId] = useState(0);
@@ -52,7 +56,11 @@ function RecipeForm({ recipe }: RecipeFormProps) {
   useEffect(() => {
     setFormData({
       name: recipe ? recipe.name : '',
-      cuisine: recipe ? recipe.cuisine : ''
+      cuisine: recipe ? recipe.cuisine : '',
+      course: recipe ? recipe.course : '',
+      vegetarian: recipe ? recipe.vegetarian : false,
+      vegan: recipe ? recipe.vegan : false,
+      source: recipe?.source ? recipe.source : ''
     });
     if (recipe) {
       // console.log(recipe.recipe_ingredients[0].)
@@ -70,7 +78,10 @@ function RecipeForm({ recipe }: RecipeFormProps) {
   }, [recipe]);
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({...formData, [e.target.name]: e.target.value})
+    setFormData({
+      ...formData, 
+      [e.target.name]: e.target.type === 'checkbox' ? e.target.checked : e.target.value
+    });
   };
 
   const handleIngredientFormChange = (e: React.ChangeEvent<HTMLInputElement>, tempId: number) => {
@@ -201,7 +212,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
         <Datalist inputProps={{id: `ingredient_name_${ingredient.tempId}`, name: `name`}} onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.name} required={true} >
           {allIngredients.map(option => <option key={option.name} value={option.name} />)}
         </Datalist>
-        <Input inputProps={{name: 'quantity', type: 'number'}} onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.quantity} max={9999} min={0} />
+        <Input inputProps={{name: 'quantity', type: 'number'}} onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.quantity} max={9999} min={0} step={0.0001} />
         <Datalist inputProps={{id: `units`, name: `units`}} onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.units} size={10}>
           {['cups', 'oz'].map(unit => <option key={unit} value={unit} />)}
         </Datalist>
@@ -229,6 +240,10 @@ function RecipeForm({ recipe }: RecipeFormProps) {
         <Fieldset className='recipe-inputs'>
           <Input label='Name:' inputProps={{name: 'name', value: formData.name, onChange: handleFormChange}} />
           <Input label='Cuisine:' inputProps={{name: 'cuisine', value: formData.cuisine, onChange: handleFormChange}} />
+          <Input label='Course:' inputProps={{name: 'course', value: formData.course, onChange: handleFormChange}} />
+          <Input label='Vegetarian:' type='checkbox' inputProps={{name: 'vegetarian'}} checked={formData.vegetarian} onChange={handleFormChange} />
+          <Input label='Vegan:' type='checkbox' inputProps={{name: 'vegan'}} checked={formData.vegan} onChange={handleFormChange} />
+          <Input label='Source:' inputProps={{name: 'source'}} value={formData.source} onChange={handleFormChange} />
 
           <Fieldset className='ingredient-inputs' styleProps={{columns: 6}}>
             <span></span>

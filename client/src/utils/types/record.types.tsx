@@ -26,7 +26,11 @@ export type Direction = PendingDirection & ValidRecord;
 export interface PendingRecipe {
   id?: number,
   name: string,
-  cuisine: string
+  cuisine: string,
+  course: string,
+  vegetarian: boolean,
+  vegan: boolean,
+  source?: string
 };
 export type Recipe = PendingRecipe & ValidRecord;
 

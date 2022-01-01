@@ -7,7 +7,6 @@ class Api::BasketItemsController < ApplicationController
   end
 
   def create
-    p params
     ingredient = Ingredient.find(params[:ingredient_id])
     if @current_user.id == ingredient.user_id
       basket_item = ingredient.basket_items.create!(basket_item_params)
