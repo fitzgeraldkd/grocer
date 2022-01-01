@@ -5,6 +5,10 @@ export default styled.div`
     row-gap: 5px;
   }
 
+  .group-name-input {
+    grid-column: 2 / 6;
+  }
+
   .ingredient-inputs {
     grid-column: 1 / 3;
     grid-template-columns: 16px auto auto auto auto 16px;
