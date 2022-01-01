@@ -7,6 +7,7 @@ import FloatingButton from '../../../components/navigation/FloatingButton/Floati
 import { RootState } from '../../../rootReducer';
 import { createBasketItem } from '../../../store/basketItems/basketItems.slice';
 import { showRecipe } from '../../../store/recipes/recipes.slice';
+import { getUnique, sorter } from '../../../utils/helpers/arrays.helpers';
 import { Direction, RecipeIngredient, RecipeIngredientDetailed } from '../../../utils/types/record.types';
 import RecipeDetailPageStyles from './RecipeDetailPage.styles';
 
@@ -24,10 +25,22 @@ function RecipeDetailPage() {
 
   const renderIngredient = (ingredient: RecipeIngredientDetailed) => {
     return (
-      <div key={ingredient.id}>
+      <li key={ingredient.id}>
         {ingredient.quantity !== 0 ? ingredient.quantity : null} {ingredient.units} {ingredient.ingredient.name}
-      </div>
+      </li>
     );
+  };
+
+  const renderIngredients = (ingredients: RecipeIngredientDetailed[]) => {
+    const groups = getUnique(ingredients.map(ingredient => ingredient.group_name)).sort(sorter);
+    return groups.map(group => (
+      <React.Fragment key={group}>
+        {group}
+        <ul>
+          {ingredients.filter(ingredient => ingredient.group_name === group).map(renderIngredient)}
+        </ul>
+      </React.Fragment>
+    ))
   };
 
   const renderDirection = (direction: Direction) => {
@@ -63,7 +76,8 @@ function RecipeDetailPage() {
         </div>
         <div className='page-subheader'>Ingredients<Button onClick={handleAddToBasket}>Add To Basket</Button></div>
         <div className='ingredient-list'>
-          {recipe.recipe_ingredients.map(renderIngredient)}
+          {/* {recipe.recipe_ingredients.map(renderIngredient)} */}
+          {renderIngredients(recipe.recipe_ingredients)}
         </div>
         <div className='page-subheader'>Directions</div>
         <div>

@@ -165,6 +165,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
   };
 
   const handleAddIngredient = () => {
+    if (Object.keys(ingredientGroups).length === 0) handleAddIngredientGroup();
     setIngredients([...ingredients, {
       tempId: tempIngredientId,
       // ingredient_name: '',
@@ -173,7 +174,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
       prepared: '',
       order: 0,
       name: '',
-      group_name: ''
+      group_name: Object.values(ingredientGroups)[0]
     }]);
     setTempIngredientId(current => current + 1);
   };
@@ -183,9 +184,10 @@ function RecipeForm({ recipe }: RecipeFormProps) {
   };
 
   const handleAddIngredientGroup = (groupName: string = '') => {
-    console.log(groupName);
-    const lastIndex = parseInt(Object.keys(ingredientGroups).at(-1)!, 10);
-    setIngredientGroups(currentGroups => ({...currentGroups, [lastIndex + 1]: groupName}))
+    setIngredientGroups(currentGroups => {
+      const lastIndex = Object.keys(currentGroups).length === 0 ? 0 : parseInt(Object.keys(currentGroups).at(-1)!, 10);
+      return {...currentGroups, [lastIndex + 1]: groupName}
+    })
   };
 
   const handleAddDirection = () => {
@@ -265,7 +267,6 @@ function RecipeForm({ recipe }: RecipeFormProps) {
 
   const renderIngredientGroup = (group: string, groupId: number, includeIngredients: boolean) => {
     const dragEnterHandler = () => handleDragOverGroup('ingredient', groupId);
-    console.log(includeIngredients, group);
     return (
       <React.Fragment key={groupId}>
         <span></span>
@@ -280,8 +281,6 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     return Object.entries(ingredientGroups)
       .sort((a, b) => sorter(a[1], b[1]))
       .map((group, index, arr) => {
-        console.log(index)
-        console.log(arr.findIndex(value => value[1] === group[1]))
         const includeIngredients = arr.findIndex(value => value[1] === group[1]) === index;
         return {name: group[1], id: parseInt(group[0], 10), includeIngredients};
       })

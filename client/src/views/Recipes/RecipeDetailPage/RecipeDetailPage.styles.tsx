@@ -23,6 +23,9 @@ export default styled.div`
   }
 
   .ingredient-list {
-    padding-left: 40px;
+    /* padding-left: 40px; */
+    ul {
+      margin-top: 0;
+    }
   }
 `;

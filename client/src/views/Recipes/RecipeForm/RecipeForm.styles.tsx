@@ -7,6 +7,11 @@ export default styled.div`
 
   .group-name-input {
     grid-column: 2 / 6;
+    font-weight: bold;
+    border: 0;
+    &:not(.group-name-input:first-of-type) {
+      margin-top: 10px;
+    }
   }
 
   .ingredient-inputs {
