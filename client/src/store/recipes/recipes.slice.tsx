@@ -142,6 +142,7 @@ const recipesSlice = createSlice({
 
     builder.addCase(showRecipe.pending, state => {
       state.status = 'loading';
+      state.activeRecipe = null;
     });
     builder.addCase(showRecipe.fulfilled, (state, { payload }) => {
       if (payload.success) {

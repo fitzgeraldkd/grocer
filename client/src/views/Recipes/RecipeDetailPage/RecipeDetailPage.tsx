@@ -19,7 +19,7 @@ function RecipeDetailPage() {
 
   useEffect(() => {
     if (params.id) dispatch(showRecipe({id: parseInt(params.id, 10)}));
-  }, [dispatch, params]);
+  }, [dispatch, params.id]);
 
   const handleEditRecipe = () => navigate(`/recipes/${params.id}/edit`);
 
@@ -32,7 +32,7 @@ function RecipeDetailPage() {
   };
 
   const renderIngredients = (ingredients: RecipeIngredientDetailed[]) => {
-    const groups = getUnique(ingredients.map(ingredient => ingredient.group_name)).sort(sorter);
+    const groups = getUnique(ingredients.map(ingredient => ingredient.group_name), false).sort(sorter);
     return groups.map(group => (
       <React.Fragment key={group}>
         {group}

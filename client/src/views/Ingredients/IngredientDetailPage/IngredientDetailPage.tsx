@@ -18,7 +18,7 @@ function IngredientDetailPage() {
 
   useEffect(() => {
     if (params.id) dispatch(showIngredient({id: parseInt(params.id, 10)}))
-  }, [dispatch, params]);
+  }, [dispatch, params.id]);
 
   const handleEditIngredient = () => {
     navigate(`/ingredients/${params.id}/edit`)

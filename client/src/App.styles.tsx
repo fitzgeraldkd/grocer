@@ -5,7 +5,7 @@ export default styled.div`
 
   main {
     /* padding-top: 50px; */
-    padding: 50px 20px 0;
+    padding: 50px 20px 60px;
   }
 
   .page-header {

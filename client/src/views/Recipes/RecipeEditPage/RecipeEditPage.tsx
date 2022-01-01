@@ -26,7 +26,7 @@ function RecipeEditPage() {
         else navigate('/');
       }
     }))
-  }, [dispatch, navigate, params]);
+  }, [dispatch, navigate, params.id]);
 
   const handleDeleteRecipe = () => {
     if (params.id && window.confirm('Are you sure you want to delete this?')) {
@@ -38,8 +38,6 @@ function RecipeEditPage() {
       }))
     }
   };
-
-  console.log(recipe)
 
   return (
     <RecipeEditPageStyles>

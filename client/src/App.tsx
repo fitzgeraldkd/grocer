@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
@@ -21,12 +21,16 @@ import RecipeEditPage from './views/Recipes/RecipeEditPage/RecipeEditPage';
 import BasketListPage from './views/Basket/BasketListPage/BasketListPage';
 import { indexBasketItems } from './store/basketItems/basketItems.slice';
 import BasketDetailPage from './views/Basket/BasketDetailPage/BasketDetailPage';
+import Processing from './components/notifications/Processing/Processing';
 
 function App() {
   const dispatch = useDispatch();
   const userId = useSelector((state: RootState) => state.authentication.userId);
-  const loginState = useSelector((state: RootState) => state.authentication.status);
-  console.log(loginState);
+  const loginStatus = useSelector((state: RootState) => state.authentication.status);
+  const ingredientStatus = useSelector((state: RootState) => state.ingredients.status);
+  const recipeStatus = useSelector((state: RootState) => state.recipes.status);
+  const basketItemStatus = useSelector((state: RootState) => state.basketItems.status);
+  const [testState, setTestState] = useState(true);
   
   useEffect(() => {
     dispatch(verifyUser({}));
@@ -38,11 +42,25 @@ function App() {
       dispatch(indexRecipes({}));
       dispatch(indexBasketItems({}))
     }
-  }, [dispatch, userId])
+  }, [dispatch, userId]);
+
+  const renderNotifications = () => {
+    return (
+      <>
+        <Processing className={loginStatus === 'loading' ? 'visible' : ''}>Validating Credentials</Processing>
+        <Processing className={ingredientStatus === 'loading' ? 'visible' : ''}>Updating Ingredients</Processing>
+        <Processing className={recipeStatus === 'loading' ? 'visible' : ''}>Updating Recipes</Processing>
+        <Processing className={basketItemStatus === 'loading' ? 'visible' : ''}>Updating Basket Items</Processing>
+
+        {/* <Processing className={testState ? 'visible' : ''}>Validating Credentials</Processing> */}
+      </>
+    );
+  };
 
   return (
     <AppStyled>
       <NavBar />
+      {renderNotifications()}
 
       <main>
         <Routes>
