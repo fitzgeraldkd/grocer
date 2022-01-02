@@ -9,6 +9,8 @@ export default styled.div<StyledProps>`
   color: black;
   text-decoration: none;
   padding: 3px;
+  margin: 3px;
+  border-radius: 3px;
 
   &:hover {
     background-color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary']};

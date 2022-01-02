@@ -16,9 +16,9 @@ const theme = {
       primary: '#74A7F7',
       'primary-light': '#A9BAD6',
       'primary-dark': '#0E56C9',
-      secondary: '#EBB154',
-      'secondary-light': '#EBCB98',
-      'secondary-dark': '#7E5C25'
+      secondary: '#DEC8BA',
+      'secondary-light': '#E5DFDC',
+      'secondary-dark': '#5B4F48'
     }
   }
 }

@@ -17,4 +17,11 @@ export default styled.div`
     font-size: 1.15em;
     font-weight: bold;
   }
+
+  input, select, textarea {
+    border: 1px solid #e2e2e2;
+    border-bottom: 1px solid #9c9c9c;
+    /* border-radius: 5px 5px 2px 2px; */
+    border-radius: 2px;
+  }
 `;

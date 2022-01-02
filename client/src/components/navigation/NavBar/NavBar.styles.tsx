@@ -22,7 +22,7 @@ export default styled.div<StyledProps>`
     text-shadow: 1px 2px black;
 
     &:hover {
-    color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary']};
+      color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary']};
     }
   }
 `;

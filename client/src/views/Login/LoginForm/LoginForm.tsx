@@ -7,6 +7,7 @@ import { User, ValidResponse } from '../../../utils/types/record.types';
 import { useNavigate } from "react-router-dom";
 import Fieldset from '../../../components/forms/Fieldset/Fieldset';
 import LoginFormStyles from './LoginForm.styles';
+import Button from '../../../components/forms/Button/Button';
 
 function LoginForm() {
   const [formData, setFormData] = useState<UserCredentialsType>({
@@ -35,15 +36,15 @@ function LoginForm() {
       <form onSubmit={handleSubmit}>
         <div className='page-subheader'>Log In</div>
         <Fieldset>
-          <label htmlFor='username'>Username</label>
+          <label htmlFor='username'>Username:</label>
           <input id='username' name='username' type='text' value={formData.username} onChange={handleChange} />
-          <label htmlFor='password'>Password</label>
+          <label htmlFor='password'>Password:</label>
           <input id='password' name='password' type='password' value={formData.password} onChange={handleChange} />
         </Fieldset>
-        <input type='submit' />
+        <Button type='submit'>Submit</Button>
+        <Button onClick={(() => navigate('/?new_user=true'))}>Need an account?</Button>
       </form>
       {messages.map(message => <div key={message}>{message}</div>)}
-      <Link to='/?new_user=true'>Need an account?</Link>
     </LoginFormStyles>
   );
 }

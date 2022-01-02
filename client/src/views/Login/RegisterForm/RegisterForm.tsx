@@ -5,6 +5,7 @@ import { registerUser } from '../../../store/authentication/authentication.slice
 import { User, ValidResponse } from '../../../utils/types/record.types';
 import { useNavigate } from "react-router-dom";
 import Fieldset from '../../../components/forms/Fieldset/Fieldset';
+import Button from '../../../components/forms/Button/Button';
 
 
 function RegisterForm() {
@@ -39,19 +40,19 @@ function RegisterForm() {
           Create A New Account
         </div>
         <Fieldset>
-          <label htmlFor='username'>Username</label>
+          <label htmlFor='username'>Username:</label>
           <input id='username' name='username' type='text' value={formData.username} onChange={handleChange} />
-          <label htmlFor='email'>Email</label>
+          <label htmlFor='email'>Email:</label>
           <input id='email' name='email' type='email' value={formData.email} onChange={handleChange} />
-          <label htmlFor='password'>Password</label>
+          <label htmlFor='password'>Password:</label>
           <input id='password' name='password' type='password' value={formData.password} onChange={handleChange} />
-          <label htmlFor='confirmPassword'>Confirm Password</label>
+          <label htmlFor='confirmPassword'>Confirm:</label>
           <input id='confirmPassword' name='confirmPassword' type='password' value={formData.confirmPassword} onChange={handleChange} />
         </Fieldset>
-        <input type='submit' />
+        <Button type='submit'>Submit</Button>
+        <Button onClick={(() => navigate('/'))}>Have an account?</Button>
       </form>
       {messages.map(message => <div key={message}>{message}</div>)}
-      <Link to='/'>Have an account?</Link>
     </div>
   );
 }

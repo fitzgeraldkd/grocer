@@ -17,6 +17,7 @@ export default styled.button<StyledProps>`
   align-items: center;
   border: 0;
   cursor: pointer;
+  transition: background-color 0.2s;
 
   /* border-color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary']}; */
   background-color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['secondary']};
@@ -24,6 +25,7 @@ export default styled.button<StyledProps>`
   box-shadow: 0 0 3px 2px ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary-dark']};
 
   &:hover {
-    color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary-dark']};
+    background-color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['secondary-light']};
+    /* color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary-dark']}; */
   }
 `;
