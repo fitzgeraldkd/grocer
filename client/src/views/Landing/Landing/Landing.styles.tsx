@@ -7,6 +7,11 @@ interface StyledProps {
 export default styled.div<StyledProps>`
   display: grid;
   grid-template-columns: auto auto;
+
+  .about {
+    margin-bottom: 20px;
+  }
+
   .side-menu {
     padding: 5px;
     border-radius: 3px;

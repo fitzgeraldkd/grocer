@@ -14,6 +14,10 @@ export default styled.div<StyledProps>`
     margin-left: 10px;
   }
 
+  button[type='submit'] {
+    font-weight: bold;
+  }
+
   fieldset {
     row-gap: 5px;
     column-gap: 5px;

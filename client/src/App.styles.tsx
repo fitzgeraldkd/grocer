@@ -12,6 +12,8 @@ export default styled.div<StyledProps>`
     padding: 50px 20px 60px;
     display: grid;
     grid-template-columns: 50px auto 50px;
+    column-gap: 10px;
+    justify-content: space-around;
 
     .svg-container {
       display: flex;
