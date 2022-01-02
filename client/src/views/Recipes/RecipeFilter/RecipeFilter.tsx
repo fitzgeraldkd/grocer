@@ -30,11 +30,11 @@ function RecipeFilter() {
     <RecipeFilterStyles>
       <form>
         <Fieldset>
-          <Input label='Name:' inputProps={{name:'name'}} onChange={handleFilterChange} value={filters.name} />
+          <Input label='Name:' name='name' onChange={handleFilterChange} value={filters.name} />
           <Select label='Cuisine:' name='cuisine' addBlank={true} onChange={handleFilterChange} value={filters.cuisine}>{cuisines}</Select>
           <Select label='Course:' name='course' addBlank={true} onChange={handleFilterChange} value={filters.course}>{courses}</Select>
-          <Input label='Vegetarian:' type='checkbox' inputProps={{name: 'vegetarian'}} onChange={handleFilterChange} checked={filters.vegetarian} />
-          <Input label='Vegan:' type='checkbox' inputProps={{name: 'vegan'}} onChange={handleFilterChange} checked={filters.vegan} />
+          <Input label='Vegetarian:' type='checkbox' name='vegetarian' onChange={handleFilterChange} checked={filters.vegetarian} />
+          <Input label='Vegan:' type='checkbox' name='vegan' onChange={handleFilterChange} checked={filters.vegan} />
         </Fieldset>
       </form>
       <Button onClick={handleFilterReset}>Reset Filters</Button>

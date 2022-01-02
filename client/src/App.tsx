@@ -22,6 +22,7 @@ import BasketListPage from './views/Basket/BasketListPage/BasketListPage';
 import { indexBasketItems } from './store/basketItems/basketItems.slice';
 import BasketDetailPage from './views/Basket/BasketDetailPage/BasketDetailPage';
 import Processing from './components/notifications/Processing/Processing';
+import Landing from './views/Landing/Landing/Landing';
 
 function App() {
   const dispatch = useDispatch();
@@ -57,34 +58,52 @@ function App() {
     );
   };
 
+  const renderNotLoggedIn = () => {
+    return (
+      <Routes>
+        <Route path='/' element={<Landing />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='*' element={<Landing />} />
+      </Routes>
+    );
+  };
+
+  const renderLoggedIn = () => {
+    return (
+      <Routes>
+        <Route path='/' element={<Landing />} />
+
+        <Route path='/recipes'>
+          <Route path='' element={<RecipeListPage />} />
+          <Route path='new' element={<RecipeCreatePage />} />
+          <Route path=':id' element={<RecipeDetailPage />} />
+          <Route path=':id/edit' element={<RecipeEditPage />} />
+        </Route>
+
+        <Route path='/ingredients'>
+          <Route path='' element={<IngredientsListPage />} />
+          <Route path='new' element={<IngredientCreatePage />} />
+          <Route path=':id' element={<IngredientDetailPage />} />
+          <Route path=':id/edit' element={<IngredientEditPage />} />
+          <Route path=':id/basket' element={<BasketDetailPage />} />
+        </Route>
+
+        <Route path='/basket_items'>
+          <Route path='' element={<BasketListPage />} />
+        </Route>
+
+        <Route path='*' element={<Landing />} />
+      </Routes>
+    );
+  };
+
   return (
     <AppStyled>
       <NavBar />
       {renderNotifications()}
 
       <main>
-        <Routes>
-          <Route path='/login' element={<LoginPage />} />
-
-          <Route path='/recipes'>
-            <Route path='' element={<RecipeListPage />} />
-            <Route path='new' element={<RecipeCreatePage />} />
-            <Route path=':id' element={<RecipeDetailPage />} />
-            <Route path=':id/edit' element={<RecipeEditPage />} />
-          </Route>
-
-          <Route path='/ingredients'>
-            <Route path='' element={<IngredientsListPage />} />
-            <Route path='new' element={<IngredientCreatePage />} />
-            <Route path=':id' element={<IngredientDetailPage />} />
-            <Route path=':id/edit' element={<IngredientEditPage />} />
-            <Route path=':id/basket' element={<BasketDetailPage />} />
-          </Route>
-
-          <Route path='/basket_items'>
-            <Route path='' element={<BasketListPage />} />
-          </Route>
-        </Routes>
+        {userId ? renderLoggedIn() : renderNotLoggedIn()}
       </main>
     </AppStyled>
   );

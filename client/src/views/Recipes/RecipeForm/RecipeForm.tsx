@@ -252,14 +252,14 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     return (
       <React.Fragment key={ingredient.tempId}>
         <span className='drag-icon' draggable='true' onDrag={dragHandler} onDragEnd={handleDragEnd} onDragEnter={dragEnterHandler}><MdDragIndicator /></span>
-        <Datalist inputProps={{id: `ingredient_name_${ingredient.tempId}`, name: `name`}} onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.name} required={true} >
+        <Datalist id={`ingredient_name_${ingredient.tempId}`} name='name' onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.name} required={true} >
           {allIngredients.map(option => <option key={option.name} value={option.name} />)}
         </Datalist>
-        <Input inputProps={{name: 'quantity', type: 'number'}} onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.quantity} max={9999} min={0} step={0.0001} />
-        <Datalist inputProps={{id: `units`, name: `units`}} onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.units} size={10}>
+        <Input name='quantity' type='number' onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.quantity} max={9999} min={0} step={0.0001} />
+        <Datalist id='units' name='units' onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.units} size={10}>
           {['cups', 'oz'].map(unit => <option key={unit} value={unit} />)}
         </Datalist>
-        <Input inputProps={{name: 'prepared', type: 'text'}} onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.prepared} />
+        <Input name='prepared' onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.prepared} />
         <span className='icon-span' onDragEnter={dragEnterHandler}><RiCloseCircleFill onClick={() => handleRemoveIngredient(ingredient.tempId)} /></span>
       </React.Fragment>
     );
@@ -270,7 +270,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     return (
       <React.Fragment key={groupId}>
         <span></span>
-        <Input className='group-name-input' type='text' inputProps={{name: `${groupId}`}} value={`${group}`} onChange={handleIngredientGroupChange} onDragEnter={dragEnterHandler} placeholder='Group Name (optional)' />
+        <Input className='group-name-input' type='text' name={`${groupId}`} value={`${group}`} onChange={handleIngredientGroupChange} onDragEnter={dragEnterHandler} placeholder='Group Name (optional)' />
         <span></span>
         {includeIngredients && ingredients.filter(ingredient => ingredient.group_name === group).map(renderIngredientInput)}
       </React.Fragment>
@@ -303,12 +303,12 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     <RecipeFormStyles>
       <form onSubmit={handleFormSubmit}>
         <Fieldset className='recipe-inputs'>
-          <Input label='Name:' inputProps={{name: 'name', value: formData.name, onChange: handleFormChange}} />
-          <Input label='Cuisine:' inputProps={{name: 'cuisine', value: formData.cuisine, onChange: handleFormChange}} />
-          <Input label='Course:' inputProps={{name: 'course', value: formData.course, onChange: handleFormChange}} />
-          <Input label='Vegetarian:' type='checkbox' inputProps={{name: 'vegetarian'}} checked={formData.vegetarian} onChange={handleFormChange} />
-          <Input label='Vegan:' type='checkbox' inputProps={{name: 'vegan'}} checked={formData.vegan} onChange={handleFormChange} />
-          <Input label='Source:' inputProps={{name: 'source'}} value={formData.source} onChange={handleFormChange} />
+          <Input label='Name:' name='name' value={formData.name} onChange={handleFormChange} />
+          <Input label='Cuisine:' name='cuisine' value={formData.cuisine} onChange={handleFormChange} />
+          <Input label='Course:' name='course' value={formData.course} onChange={handleFormChange} />
+          <Input label='Vegetarian:' type='checkbox' name='vegetarian' checked={formData.vegetarian} onChange={handleFormChange} />
+          <Input label='Vegan:' type='checkbox' name='vegan' checked={formData.vegan} onChange={handleFormChange} />
+          <Input label='Source:' name='source' value={formData.source} onChange={handleFormChange} />
 
           <Fieldset className='ingredient-inputs' styleProps={{columns: 6}}>
             <span className='icon-span'><RiFolderAddFill onClick={() => handleAddIngredientGroup()} /></span>

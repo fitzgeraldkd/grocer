@@ -5,6 +5,8 @@ import { authenticateUser } from '../../../store/authentication/authentication.s
 import { UserCredentialsType } from '../../../utils/types/formData.types';
 import { User, ValidResponse } from '../../../utils/types/record.types';
 import { useNavigate } from "react-router-dom";
+import Fieldset from '../../../components/forms/Fieldset/Fieldset';
+import LoginFormStyles from './LoginForm.styles';
 
 function LoginForm() {
   const [formData, setFormData] = useState<UserCredentialsType>({
@@ -29,18 +31,20 @@ function LoginForm() {
   };
 
   return (
-    <div>
+    <LoginFormStyles>
       <form onSubmit={handleSubmit}>
-        Log In
-        <label htmlFor='username'>Username</label>
-        <input id='username' name='username' type='text' value={formData.username} onChange={handleChange} />
-        <label htmlFor='password'>Password</label>
-        <input id='password' name='password' type='password' value={formData.password} onChange={handleChange} />
+        <div className='page-subheader'>Log In</div>
+        <Fieldset>
+          <label htmlFor='username'>Username</label>
+          <input id='username' name='username' type='text' value={formData.username} onChange={handleChange} />
+          <label htmlFor='password'>Password</label>
+          <input id='password' name='password' type='password' value={formData.password} onChange={handleChange} />
+        </Fieldset>
         <input type='submit' />
       </form>
       {messages.map(message => <div key={message}>{message}</div>)}
-      <Link to='/login?new_user=true'>Need an account?</Link>
-    </div>
+      <Link to='/?new_user=true'>Need an account?</Link>
+    </LoginFormStyles>
   );
 }
 

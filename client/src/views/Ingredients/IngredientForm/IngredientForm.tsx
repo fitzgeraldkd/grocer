@@ -47,9 +47,8 @@ function IngredientForm({ ingredient }: IngredientFormProps) {
     <IngredientFormStyles>
     <form onSubmit={handleFormSubmit}>
       <Fieldset>
-        <Input label='Name:' inputProps={{name: 'name', value: formData.name, onChange: handleFormChange}} />
+        <Input label='Name:' name='name' value={formData.name} onChange={handleFormChange} />
       </Fieldset>
-      {/* <Input inputProps={{name: 'submit', type: 'submit'}} /> */}
       <Button type='submit'>Submit</Button>
       <Button onClick={() => navigate(`/ingredients/${ingredient ? ingredient.id : ''}`)}>Cancel</Button>
     </form>

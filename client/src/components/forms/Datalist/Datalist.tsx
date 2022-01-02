@@ -3,19 +3,14 @@ import DatalistStyles from './Datalist.styles';
 import Input from '../Input/Input';
 
 interface DatalistProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  children: React.ReactNode,
-  inputProps: {
-    id: string,
-    name: string,
-    [prop: string]: any
-  }
+  children: React.ReactNode
 };
 
-function Datalist({ children, inputProps, ...intrinsic }: DatalistProps) {
+function Datalist({ children, ...intrinsic }: DatalistProps) {
   return (
     <>
-      <Input inputProps={{...inputProps, list: `${inputProps.id}List`}} {...intrinsic} />
-      <DatalistStyles id={`${inputProps.id}List`}>
+      <Input {...intrinsic} list={`${intrinsic.id}List`} />
+      <DatalistStyles id={`${intrinsic.id}List`}>
         {children}
       </DatalistStyles>
     </>
