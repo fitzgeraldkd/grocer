@@ -164,7 +164,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     dispatch(action({id: recipe ? recipe.id : undefined, body, sideEffect}));
   };
 
-  const handleAddIngredient = () => {
+  const handleAddIngredient = (groupName: string = Object.values(ingredientGroups)[0]) => {
     if (Object.keys(ingredientGroups).length === 0) handleAddIngredientGroup();
     setIngredients([...ingredients, {
       tempId: tempIngredientId,
@@ -174,7 +174,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
       prepared: '',
       order: 0,
       name: '',
-      group_name: Object.values(ingredientGroups)[0]
+      group_name: groupName
     }]);
     setTempIngredientId(current => current + 1);
   };
@@ -255,9 +255,6 @@ function RecipeForm({ recipe }: RecipeFormProps) {
 
   const handleDragOverGroup = (element: Draggable, groupId: number) => {
     if (element === draggedElement) {
-      console.log('test');
-      console.log(draggedTempId)
-      console.log(ingredientGroups[groupId])
       const setter = element === 'ingredient' ? setIngredients : setDirections;
       setter((currentEntities: any[]) => 
         currentEntities.map(entity => (
@@ -290,9 +287,9 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     const dragEnterHandler = () => handleDragOverGroup('ingredient', groupId);
     return (
       <React.Fragment key={groupId}>
-        <span></span>
-        <Input className='group-name-input' type='text' name={`${groupId}`} value={`${group}`} onChange={handleIngredientGroupChange} onDragEnter={dragEnterHandler} placeholder='Group Name (optional)' />
-        <span></span>
+        <span className='group-row'></span>
+        <Input className='group-row group-name-input' type='text' name={`${groupId}`} value={`${group}`} onChange={handleIngredientGroupChange} onDragEnter={dragEnterHandler} placeholder='Group Name (optional)' />
+        <span className='group-row icon-span'><RiAddFill onClick={() => handleAddIngredient(group)} /></span>
         {includeIngredients && ingredients.filter(ingredient => ingredient.group_name === group).map(renderIngredientInput)}
       </React.Fragment>
     );
@@ -337,7 +334,8 @@ function RecipeForm({ recipe }: RecipeFormProps) {
             <span>Quantity</span>
             <span>Units</span>
             <span>Prepared</span>
-            <span className='icon-span'><RiAddFill onClick={handleAddIngredient} /></span>
+            <span></span>
+            {/* <span className='icon-span'><RiAddFill onClick={handleAddIngredient} /></span> */}
 
             {/* {ingredients.map(renderIngredientInput)} */}
             {renderIngredients()}

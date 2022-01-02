@@ -5,13 +5,17 @@ export default styled.div`
     row-gap: 5px;
   }
 
+  .group-row {
+    margin-top: 10px;
+  }
+
   .group-name-input {
     grid-column: 2 / 6;
     font-weight: bold;
     border: 0;
-    &:not(.group-name-input:first-of-type) {
+    /* &:not(.group-name-input:first-of-type) {
       margin-top: 10px;
-    }
+    } */
   }
 
   .ingredient-inputs {
