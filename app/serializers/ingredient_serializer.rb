@@ -3,6 +3,6 @@ class IngredientSerializer < ActiveModel::Serializer
   attributes :id, :name, :recipe_count
 
   def recipe_count
-    object.recipes.count
+    object.recipes.uniq.count
   end
 end
