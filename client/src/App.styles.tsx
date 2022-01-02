@@ -1,11 +1,26 @@
 import styled from 'styled-components';
 
-export default styled.div`
+interface StyledProps {
+  darkMode?: boolean
+};
+
+export default styled.div<StyledProps>`
   font-family: 'Work Sans', sans-serif;
 
   main {
     /* padding-top: 50px; */
     padding: 50px 20px 60px;
+    display: grid;
+    grid-template-columns: 50px auto 50px;
+
+    .svg-container {
+      display: flex;
+    }
+
+    .main-content {
+      max-width: 960px;
+      margin: auto;
+    }
   }
 
   .page-header {

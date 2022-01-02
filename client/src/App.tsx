@@ -23,6 +23,8 @@ import { indexBasketItems } from './store/basketItems/basketItems.slice';
 import BasketDetailPage from './views/Basket/BasketDetailPage/BasketDetailPage';
 import Processing from './components/notifications/Processing/Processing';
 import Landing from './views/Landing/Landing/Landing';
+import Fork from './components/svg/Fork/Fork';
+import Spoon from './components/svg/Spoon/Spoon';
 
 function App() {
   const dispatch = useDispatch();
@@ -103,7 +105,15 @@ function App() {
       {renderNotifications()}
 
       <main>
-        {userId ? renderLoggedIn() : renderNotLoggedIn()}
+        <div className='svg-container'>
+          <Fork />
+        </div>
+        <div className='main-content'>
+          {userId ? renderLoggedIn() : renderNotLoggedIn()}
+        </div>
+        <div className='svg-container'>
+          <Spoon />
+        </div>
       </main>
     </AppStyled>
   );
