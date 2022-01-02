@@ -5,7 +5,7 @@ import NavBarStyled from './NavBar.styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Route, Routes } from "react-router-dom";
 import { RootState } from '../../../rootReducer';
-import { userLoggedOut } from '../../../store/authentication/authentication.slice';
+import { userLoggedOut, signOutUser } from '../../../store/authentication/authentication.slice';
 import RecipeFilter from '../../../views/Recipes/RecipeFilter/RecipeFilter';
 import { RiFilter2Fill, RiMenuLine } from 'react-icons/ri';
 
@@ -32,7 +32,7 @@ function NavBar() {
           <Link to='/ingredients'>Ingredients</Link>
           <Link to='/basket_items'>Basket</Link>
           <span>Pantry</span> */}
-          <NavBarLink path='/' onClick={() => dispatch(userLoggedOut())}>Log Out</NavBarLink>
+          <NavBarLink path='/' onClick={() => dispatch(signOutUser({}))}>Log Out</NavBarLink>
         </NavBarMenu>
       : <NavBarMenu icon={<RiMenuLine />}><NavBarLink path='/login'>Log In</NavBarLink></NavBarMenu>}
 

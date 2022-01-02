@@ -39,6 +39,18 @@ export const authenticateUser = createAsyncThunk<ThunkOutput, ThunkInput>(
   }
 );
 
+export const signOutUser = createAsyncThunk<ThunkOutput, ThunkInput>(
+  'authenticate/signOut',
+  async ({body={}, sideEffect=() => {}}) => {
+    return sendRequest({
+      path: '/api/logout',
+      method: 'DELETE',
+      body,
+      sideEffect
+    });
+  }
+);
+
 export const registerUser = createAsyncThunk<ThunkOutput, ThunkInput>(
   'authenticate/register',
   async ({body={}, sideEffect=() => {}}) => {
@@ -84,6 +96,18 @@ const authenticationSlice = createSlice({
       state.userId = null;
       state.status = 'failed';
       console.error(action);
+    });
+
+    builder.addCase(signOutUser.pending, (state) => {
+      state.status = 'loading';
+    });
+    builder.addCase(signOutUser.fulfilled, (state) => {
+      state.status = 'idle';
+      state.userId = null;
+    });
+    builder.addCase(signOutUser.rejected, (state) => {
+      state.status = 'failed';
+      state.userId = null;
     });
 
     builder.addCase(registerUser.pending, (state) => {

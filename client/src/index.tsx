@@ -13,9 +13,9 @@ import { ThemeProvider } from 'styled-components';
 const theme = {
   palette: {
     light: {
-      primary: '#74A7F7',
-      'primary-light': '#A9BAD6',
-      'primary-dark': '#0E56C9',
+      primary: '#9FC1F9',
+      'primary-light': '#C8D3E4',
+      'primary-dark': '#0B4199',
       secondary: '#DEC8BA',
       'secondary-light': '#E5DFDC',
       'secondary-dark': '#5B4F48'

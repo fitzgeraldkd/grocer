@@ -214,14 +214,35 @@ function RecipeForm({ recipe }: RecipeFormProps) {
   };
 
   const handleDragOver = (element: Draggable, tempId: number) => {
+    // if (element === draggedElement) {
+    //   if (element === 'ingredient') {
+    //     const entities = [...ingredients];
+    //     const setter = setIngredients;
+    //     const entityIndexDrag = entities.findIndex(entity => entity.tempId === draggedTempId);
+    //     const entityIndexOver = entities.findIndex(entity => entity.tempId === tempId);
+    //     entities.splice(entityIndexOver, 0, entities.splice(entityIndexDrag, 1)[0])
+    //     setter(entities)
+
+    //   }
+    //   // const entities = element === 'ingredient' ? [...ingredients] : [...directions];
+    //   // const setter = element === 'ingredient' ? setIngredients : setDirections;
+    //   // const entityIndexDrag = entities.findIndex(entity => entity.tempId === draggedTempId);
+    //   // const entityIndexOver = entities.findIndex(entity => entity.tempId === tempId);
+    //   // setter(entities.splice(entityIndexOver, 0, entities.splice(entityIndexDrag, 1)[0]))
+    // }
+
     if (element === draggedElement) {
       const entities = element === 'ingredient' ? ingredients : directions;
       const setter = element === 'ingredient' ? setIngredients : setDirections;
       const entityIndexDrag = entities.findIndex(entity => entity.tempId === draggedTempId);
       const entityIndexOver = entities.findIndex(entity => entity.tempId === tempId);
       if (entityIndexDrag !== entityIndexOver) {
+        const moveUp = entityIndexDrag > entityIndexOver;
         setter((currentEntities: any[]) => {
-          const moveUp = entityIndexDrag > entityIndexOver;
+          // const newEntities = [...currentEntities];
+          // console.log(newEntities);
+          // newEntities.splice(moveUp ? entityIndexOver : entityIndexOver, 0, newEntities.splice(entityIndexDrag, 1)[0])
+          // return newEntities;
           const start = currentEntities.slice(0, moveUp ? entityIndexOver : entityIndexDrag);
           const middle = currentEntities.slice(moveUp ? entityIndexOver : entityIndexDrag + 1, moveUp ? entityIndexDrag : entityIndexOver + 1);
           const end = currentEntities.slice(moveUp ? entityIndexDrag + 1 : entityIndexOver + 1);
