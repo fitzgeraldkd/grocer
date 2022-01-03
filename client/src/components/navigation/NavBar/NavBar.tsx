@@ -36,7 +36,7 @@ function NavBar() {
         </NavBarMenu>
       : <NavBarMenu icon={<RiMenuLine />}><NavBarLink path='/login'>Log In</NavBarLink></NavBarMenu>}
 
-      <Link to='/' className='nav-title'>WIIMF</Link>
+      <Link to='/' className='nav-title'>GROCER</Link>
 
       <Routes>
         <Route path='/recipes/' element={recipeFilterMenu} />

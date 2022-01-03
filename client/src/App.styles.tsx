@@ -15,13 +15,22 @@ export default styled.div<StyledProps>`
     column-gap: 10px;
     justify-content: space-around;
 
+    @media only screen and (max-width: 768px) {
+      display: block;
+    }
+
     .svg-container {
       display: flex;
+
+      @media only screen and (max-width: 768px) {
+        display: none;
+      }
     }
 
     .main-content {
       max-width: 960px;
       margin: auto;
+      height: 100%;
     }
   }
 
