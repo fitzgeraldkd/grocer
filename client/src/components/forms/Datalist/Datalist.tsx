@@ -3,7 +3,8 @@ import DatalistStyles from './Datalist.styles';
 import Input from '../Input/Input';
 
 interface DatalistProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  children: React.ReactNode
+  children: React.ReactNode,
+  label?: string
 };
 
 function Datalist({ children, ...intrinsic }: DatalistProps) {
