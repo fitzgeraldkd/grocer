@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 export default styled.div`
   .pagination {
-    margin: 20px 0;
+    margin-bottom: 20px;
     input {
-
+      text-align: center;
     }
 
     button {
@@ -13,6 +13,13 @@ export default styled.div`
       svg ~ svg {
         margin-left: -8px;
       }
+    }
+  }
+
+  .filter-description {
+    margin-bottom: 20px;
+    button {
+      margin-left: 10px;
     }
   }
 `;
