@@ -20,6 +20,8 @@ function BasketListPage() {
   const simplifiedBasket = simplifyBasket(basketItems);
   const ingredients = Object.keys(simplifiedBasket).sort(sorter);
 
+  console.log(simplifiedBasket);
+
   return (
     <BasketListPageStyles>
       <Button onClick={handleBasketEmpty}>Empty Basket</Button>

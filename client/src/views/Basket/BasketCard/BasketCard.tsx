@@ -26,10 +26,14 @@ function BasketCard({ basketItem, ingredient }: BasketCardProps) {
     basketItem.basket_ids.forEach(id => dispatch(destroyBasketItem({ id })))
   };
 
+  const round = (value: number, digits=0) => {
+    return Math.round(value * (10 ** digits)) / (10 ** digits);
+  };
+
   return (
     <BasketCardStyles>
       {unitGroups.map((unitGroup, index) => (
-        `${basketItem.measurements[unitGroup].quantity} ${basketItem.measurements[unitGroup].unit}${index < unitGroups.length-1 ? ', ' : ' '}`
+        `${basketItem.measurements[unitGroup].quantity ? round(basketItem.measurements[unitGroup].quantity, 2) : ''} ${basketItem.measurements[unitGroup].unit}${index < unitGroups.length-1 ? ', ' : ' '}`
       ))}
       <Link to={`/ingredients/${basketItem.id}`}>
         {ingredient}

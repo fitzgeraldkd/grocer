@@ -70,7 +70,9 @@ export const getUnitGroup = (unit: string) => {
 export const convertUnits = (measurementIn: Measurement, unitOut: string) => {
   let { quantity, unit: unitIn } = measurementIn
   const unitGroup = getUnitGroup(unitIn);
-  if (unitGroup !== getUnitGroup(unitOut) || unitGroup === 'quantity' || unitGroup.startsWith('custom-')) return { quantity, unit: unitIn } as Measurement;
+  if (unitGroup !== getUnitGroup(unitOut) || unitGroup === 'quantity' || unitGroup.startsWith('custom-')) {
+    return { quantity, unit: unitIn } as Measurement;
+  }
   let unitRunner: (Unit | string | null) = unitIn;
   while (unitRunner !== null && unitRunner !== unitOut) {
     const nextUnit: (SubUnit | null) = units[unitGroup as UnitGroups][unitRunner as Unit]!.next;
@@ -84,6 +86,26 @@ export const convertUnits = (measurementIn: Measurement, unitOut: string) => {
   return { quantity, unit: unitOut } as Measurement;
 };
 
+const simplifyUnits = (measurement: Measurement) => {
+  const unitGroup = getUnitGroup(measurement.unit);
+  if (unitGroup === 'quantity' || unitGroup.startsWith('custom-')) {
+    return measurement;
+  }
+  const simplified = {...measurement};
+  console.log(unitGroup, simplified.unit);
+  while (units[unitGroup as UnitGroups][simplified.unit as Unit]?.next) {
+    const newQuantity = simplified.quantity * units[unitGroup as UnitGroups][simplified.unit as Unit]!.next!.conversion;
+    const newUnit = units[unitGroup as UnitGroups][simplified.unit as Unit]!.next!.unit;
+    if (newQuantity >= units[unitGroup as UnitGroups][newUnit]!.minimum) {
+      simplified.quantity = newQuantity;
+      simplified.unit = newUnit;
+    } else {
+      break;
+    }
+  }
+  return simplified;
+};
+
 export const addMeasurements = (measurements: Measurement[]) => {
   const results: {[unitGroup: string]: Measurement} = {};
 
@@ -93,13 +115,19 @@ export const addMeasurements = (measurements: Measurement[]) => {
       const converted = convertUnits(measurement, results[thisUnitGroup].unit)
       results[thisUnitGroup].quantity += converted.quantity;
     } else {
-      results[thisUnitGroup] = measurement;
+      results[thisUnitGroup] = {...measurement};
     }
   }
+
+  for (const result in results) {
+    results[result] = simplifyUnits(results[result]);
+  }
+
   return results;
 };
 
 export const simplifyBasket = (basketItems: BasketItem[]) => {
+  console.log(basketItems);
   const ingredientList: {[ingredient: string]: Measurement[]} = {};
   for (const basketItem of basketItems) {
     const newMeasurement: Measurement = {quantity: basketItem.quantity, unit: basketItem.units};
@@ -110,6 +138,7 @@ export const simplifyBasket = (basketItems: BasketItem[]) => {
     }
   }
 
+  console.log(ingredientList);
   const summedIngredients: {[ingredient: string]: {id: number, basket_ids: number[], measurements: {}}} = {};
   Object.keys(ingredientList).forEach(ingredient => (
     summedIngredients[ingredient] = {
