@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-export default styled.div`
+interface StyledProps {
+  darkMode?: boolean
+};
+
+export default styled.div<StyledProps>`
   .recipe-inputs {
     row-gap: 5px;
   }
@@ -42,5 +46,10 @@ export default styled.div`
 
   .icon-span svg {
     cursor: pointer;
+    color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['secondary-dark']};
+
+    &:hover {
+      color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary-dark']};
+    }
   }
 `;

@@ -311,7 +311,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     return (
       <React.Fragment key={direction.tempId}>
         <span className='drag-icon' draggable='true' onDrag={dragHandler} onDragEnd={handleDragEnd} onDragEnter={dragEnterHandler}><MdDragIndicator /></span>
-        <Textarea rows={3} name='content' onDragEnter={dragEnterHandler} onChange={e => handleDirectionFormChange(e, direction.tempId)} value={direction.content}></Textarea>
+        <Textarea rows={5} name='content' onDragEnter={dragEnterHandler} onChange={e => handleDirectionFormChange(e, direction.tempId)} value={direction.content}></Textarea>
         <span className='icon-span' onDragEnter={dragEnterHandler}><RiCloseCircleFill onClick={() => handleRemoveDirection(direction.tempId)} /></span>
       </React.Fragment>
     );
