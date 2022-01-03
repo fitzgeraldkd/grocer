@@ -49,6 +49,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
   const [draggedElement, setDraggedElement] = useState<Draggable>(null);
   const [ingredientGroups, setIngredientGroups] = useState<Group>({0: ''});
   const [directionGroups, setDirectionGroups] = useState<string[]>(['']);
+  const [disableForm, setDisableForm] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -129,6 +130,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     const action = recipe ? updateRecipe : createRecipe;
     const sideEffect = (success: boolean, payload: ValidResponse<RecipeDetailed>) => {
       console.log(payload.payload?.recipe_ingredients);
+      setDisableForm(false);
       if (payload.payload?.recipe_ingredients) dispatch(ingredientsAdded(payload.payload.recipe_ingredients))
       success ? navigate('/recipes') : setMessages(payload.messages);
     };
@@ -160,7 +162,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     })
 
     const body: PendingRecipeDetailed = {...formData, recipe_ingredients: bodyIngredients, directions: bodyDirections};
-
+    setDisableForm(true);
     dispatch(action({id: recipe ? recipe.id : undefined, body, sideEffect}));
   };
 
@@ -320,7 +322,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
   return (
     <RecipeFormStyles>
       <form onSubmit={handleFormSubmit}>
-        <Fieldset className='recipe-inputs'>
+        <Fieldset className='recipe-inputs' disabled={disableForm}>
           <Input label='Name:' name='name' value={formData.name} onChange={handleFormChange} />
           <Input label='Cuisine:' name='cuisine' value={formData.cuisine} onChange={handleFormChange} />
           <Input label='Course:' name='course' value={formData.course} onChange={handleFormChange} />
@@ -349,10 +351,10 @@ function RecipeForm({ recipe }: RecipeFormProps) {
             {directions.map(renderDirectionInput)}
           </Fieldset>
 
+          <Button type='submit'>Submit</Button>
+          <Button onClick={() => navigate(`/recipes/${recipe ? recipe.id : ''}`)}>Cancel</Button>
         </Fieldset>
         {/* <input type='submit' /> */}
-        <Button type='submit'>Submit</Button>
-        <Button onClick={() => navigate(`/recipes/${recipe ? recipe.id : ''}`)}>Cancel</Button>
       </form>
     </RecipeFormStyles>
   );
