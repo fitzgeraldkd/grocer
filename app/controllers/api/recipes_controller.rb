@@ -88,6 +88,12 @@ class Api::RecipesController < ApplicationController
   end
 
   def add_related_ingredients(recipe, recipe_ingredients)
+    # Destroy unused recipe_ingredients
+    recipe_ingredient_ids = recipe_ingredients.filter {|recipe_ingredient| recipe_ingredient.key?('id')}.map {|recipe_ingredient| recipe_ingredient['id']}
+    recipe.recipe_ingredients.each do |recipe_ingredient|
+      recipe_ingredient.destroy unless recipe_ingredient_ids.include?(recipe_ingredient.id)
+    end
+
     recipe_ingredients.each do |recipe_ingredient|
       ingredient = Ingredient.find_by(name: recipe_ingredient['ingredient']['name'], user_id: @current_user.id)
       ingredient = @current_user.ingredients.create!(name: recipe_ingredient['ingredient']['name']) if !ingredient

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 
-import { Ingredient, ValidResponse } from '../../../utils/types/record.types';
+import { Ingredient, IngredientDetailed, ValidResponse } from '../../../utils/types/record.types';
 import { createIngredient, updateIngredient } from '../../../store/ingredients/ingredients.slice';
 
 import Fieldset from '../../../components/forms/Fieldset/Fieldset'
@@ -11,7 +11,7 @@ import IngredientFormStyles from './IngredientForm.styles';
 import Button from '../../../components/forms/Button/Button';
 
 interface IngredientFormProps {
-  ingredient?: Ingredient | null
+  ingredient?: IngredientDetailed | null
 }
 
 function IngredientForm({ ingredient }: IngredientFormProps) {
@@ -45,13 +45,17 @@ function IngredientForm({ ingredient }: IngredientFormProps) {
   
   return (
     <IngredientFormStyles>
-    <form onSubmit={handleFormSubmit}>
-      <Fieldset>
-        <Input label='Name:' name='name' value={formData.name} onChange={handleFormChange} />
-      </Fieldset>
-      <Button type='submit'>Submit</Button>
-      <Button onClick={() => navigate(`/ingredients/${ingredient ? ingredient.id : ''}`)}>Cancel</Button>
-    </form>
+      <div className='page-header'>
+        {ingredient ? 'Edit Ingredient' : 'Add Ingredient'}
+      </div>
+      <form onSubmit={handleFormSubmit}>
+        {(ingredient && ingredient.recipes.length > 0) && <div>Renaming this ingredient will also rename it in the {ingredient.recipes.length} recipe(s) it is used in.</div>}
+        <Fieldset>
+          <Input label='Name:' name='name' value={formData.name} onChange={handleFormChange} />
+        </Fieldset>
+        <Button type='submit'>Submit</Button>
+        <Button onClick={() => navigate(`/ingredients/${ingredient ? ingredient.id : ''}`)}>Cancel</Button>
+      </form>
     </IngredientFormStyles>
   );
 }

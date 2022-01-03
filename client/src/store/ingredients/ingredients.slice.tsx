@@ -178,7 +178,9 @@ const ingredientsSlice = createSlice({
       // ));
       console.log(payload)
       const index = state.ingredients.findIndex(ingredient => ingredient.id === payload.data.payload.id);
-      state.ingredients[index] = payload.data.payload;
+      // state.ingredients[index] = payload.data.payload;
+  
+      state.ingredients[index] = {id: payload.data.payload.id, name: payload.data.payload.name, recipe_count: payload.data.payload.recipes.length}
       state.activeIngredient = payload.data.payload;
       state.status = 'idle';
     });

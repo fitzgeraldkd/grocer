@@ -10,7 +10,8 @@ import { sorter } from '../../../utils/helpers/arrays.helpers';
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
 import Button from '../../../components/forms/Button/Button';
 import Input from '../../../components/forms/Input/Input';
-import { filterReset } from '../../../store/ingredients/ingredients.slice';
+import { filterReset, indexIngredients } from '../../../store/ingredients/ingredients.slice';
+import { indexBasketItems } from '../../../store/basketItems/basketItems.slice';
 
 function IngredientsListPage() {
   const dispatch = useDispatch();
@@ -23,10 +24,14 @@ function IngredientsListPage() {
   const resultsPerPage = 20;
 
   useEffect(() => {
+    dispatch(indexIngredients({}));
+  }, [dispatch]);
+
+  useEffect(() => {
     const newPage = parseInt(searchParams.get('page')!, 10);
     if (!newPage || isNaN(newPage)) setIngredientPage(1);
     else setIngredientPage(newPage);
-  }, [searchParams])
+  }, [searchParams]);
 
   const handleNewIngredient = () => navigate('/ingredients/new');
 

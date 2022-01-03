@@ -8,6 +8,7 @@ interface IngredientCardProps {
 };
 
 function IngredientCard({ ingredient }: IngredientCardProps) {
+  console.log(ingredient);
   return (
     <IngredientCardStyles>
       <Link to={`/ingredients/${ingredient.id}`}>

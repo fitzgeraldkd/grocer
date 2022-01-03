@@ -5,30 +5,30 @@ import IngredientForm from '../IngredientForm/IngredientForm';
 import IngredientEditPageStyles from './IngredientEditPage.styles';
 import { RootState } from '../../../rootReducer';
 import { destroyIngredient, showIngredient } from '../../../store/ingredients/ingredients.slice';
-import { Ingredient, ValidResponse } from '../../../utils/types/record.types';
+import { Ingredient, IngredientDetailed, ValidResponse } from '../../../utils/types/record.types';
 import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
 import { RiDeleteBin2Fill } from 'react-icons/ri';
 
 function IngredientEditPage() {
-  const [ingredient, setIngredient] = useState<Ingredient>();
+  const [ingredient, setIngredient] = useState<IngredientDetailed>();
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const ingredient = useSelector((state: RootState) => state.ingredients.activeIngredient)
 
-  const handleLoadIngredient = (payload: Ingredient) => {
+  const handleLoadIngredient = (payload: IngredientDetailed) => {
     setIngredient(payload);
   }
 
   useEffect(() => {
     if (params.id) dispatch(showIngredient({
       id: parseInt(params.id, 10), 
-      sideEffect: (success: boolean, data: ValidResponse<Ingredient>) => {
+      sideEffect: (success: boolean, data: ValidResponse<IngredientDetailed>) => {
         if (success && data.payload) handleLoadIngredient(data.payload);
         else navigate('/');
       }
     }));
-  }, [dispatch, navigate, params]);
+  }, [dispatch, navigate, params.id]);
 
   const handleDeleteIngredient = () => {
     if (params.id && window.confirm('Are you sure you want to delete this?')) {
