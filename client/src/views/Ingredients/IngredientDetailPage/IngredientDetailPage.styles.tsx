@@ -21,4 +21,32 @@ export default styled.div<StyledProps>`
       text-align: center;
     }
   }
+
+  .page-header {
+    margin-top: 20px;
+  }
+
+  .page-subheader {
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .basket-items {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 10px;
+
+    .basket-quantity {
+      text-align: left;
+    }
+
+    .basket-delete {
+      text-align: right;
+    }
+    /* margin-bottom: 5px;
+
+    button {
+      margin-left: 10px;
+    } */
+  }
 `;

@@ -113,12 +113,18 @@ function IngredientDetailPage() {
             <Button type='submit'>Add to Basket</Button>
           </Fieldset>
         </form>
-        {relatedBasketItems.length > 0 ? relatedBasketItems.map(basketItem => (
-          <div key={basketItem.id}>
-            {basketItem.quantity} {basketItem.units ? basketItem.units : ingredient.name}
-            <Button onClick={() => handleBasketItemDelete(basketItem.id)}>X</Button>
-          </div>
-        )) : 'Not found in basket'}
+        <div className='basket-items'>
+          {relatedBasketItems.length > 0 ? relatedBasketItems.map(basketItem => (
+            <React.Fragment key={basketItem.id}>
+              <span className='basket-delete'>
+                <Button onClick={() => handleBasketItemDelete(basketItem.id)}>X</Button>
+              </span>
+              <span className='basket-quantity'>
+                {basketItem.quantity} {basketItem.units ? basketItem.units : ingredient.name}
+              </span>
+            </React.Fragment>
+          )) : 'Not found in basket'}
+        </div>
       </>
     )
   };
