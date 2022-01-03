@@ -14,6 +14,7 @@ import Input from '../../../components/forms/Input/Input';
 function IngredientsListPage() {
   const navigate = useNavigate();
   const ingredients = useSelector((state: RootState) => state.ingredients.ingredients);
+  const filters = useSelector((state: RootState) => state.ingredients.filters);
   const [ingredientPage, setIngredientPage] = useState(1);
   const [searchParams] = useSearchParams();
 
@@ -28,7 +29,11 @@ function IngredientsListPage() {
 
   const handleNewIngredient = () => navigate('/ingredients/new');
 
-  const filteredIngredients = [...ingredients].sort((a, b) => sorter(a.name, b.name));
+  const filteredIngredients = ingredients
+    .filter(ingredient => (
+      ingredient.name.toLowerCase().includes(filters.name.toLowerCase())
+    ))
+    .sort((a, b) => sorter(a.name, b.name));
   const lastPage = Math.ceil(filteredIngredients.length / resultsPerPage);
 
   return (

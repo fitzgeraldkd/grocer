@@ -8,6 +8,7 @@ import { RootState } from '../../../rootReducer';
 import { userLoggedOut, signOutUser } from '../../../store/authentication/authentication.slice';
 import RecipeFilter from '../../../views/Recipes/RecipeFilter/RecipeFilter';
 import { RiFilter2Fill, RiMenuLine } from 'react-icons/ri';
+import IngredientFilter from '../../../views/Ingredients/IngredientFilter/IngredientFilter';
 
 function NavBar() {
   const userId = useSelector((state: RootState) => state.authentication.userId)
@@ -16,6 +17,12 @@ function NavBar() {
   const recipeFilterMenu = (
     <NavBarMenu position='right' autohide={false} icon={<RiFilter2Fill />}>
       <RecipeFilter />
+    </NavBarMenu>
+  );
+
+  const ingredientFilterMenu = (
+    <NavBarMenu position='right' autohide={false} icon={<RiFilter2Fill />}>
+      <IngredientFilter />
     </NavBarMenu>
   );
 
@@ -40,6 +47,7 @@ function NavBar() {
 
       <Routes>
         <Route path='/recipes/' element={recipeFilterMenu} />
+        <Route path='/ingredients/' element={ingredientFilterMenu} />
         <Route path='*' element={null} />
       </Routes>
       {/* <NavBarMenu position='right' autohide={false}>

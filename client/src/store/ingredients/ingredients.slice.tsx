@@ -7,14 +7,28 @@ import { Ingredient, IngredientDetailed, RecipeIngredientDetailed, RequestStatus
 interface IngredientsState {
   ingredients: Ingredient[],
   activeIngredient: IngredientDetailed | null,
-  status: RequestStatus
+  status: RequestStatus,
+  filters: {
+    name: string
+  }
 };
 
 const initialState: IngredientsState = {
   ingredients: [],
   activeIngredient: null,
-  status: 'idle'
+  status: 'idle',
+  filters: {
+    name: ''
+  }
 };
+
+interface FilterToApply {
+  key: string,
+  value: string | boolean
+};
+
+type FilterOptions = ('name');
+type FilterBooleanOptions = ('inBasket');
 
 interface ThunkInput {
   id?: number,
@@ -101,6 +115,18 @@ const ingredientsSlice = createSlice({
       action.payload.forEach(ingredient => {
         if (!state.ingredients.find(thisIngredient => thisIngredient.id === ingredient.ingredient.id)) state.ingredients.push(ingredient.ingredient);
       })
+    },
+    filterApplied(state, action: PayloadAction<FilterToApply>) {
+      if (action.payload.key in state.filters) {
+        if (typeof action.payload.value === 'string') {
+          state.filters[action.payload.key as FilterOptions] = action.payload.value;
+        } else if (typeof action.payload.value === 'boolean') {
+          // state.filters[action.payload.key as FilterBooleanOptions] = action.payload.value;
+        }
+      }
+    },
+    filterReset(state) {
+      state.filters = initialState.filters
     }
   },
   extraReducers: builder => {
@@ -171,5 +197,5 @@ const ingredientsSlice = createSlice({
   }
 });
 
-export const { ingredientsAdded } = ingredientsSlice.actions;
+export const { ingredientsAdded, filterApplied, filterReset } = ingredientsSlice.actions;
 export default ingredientsSlice.reducer;
