@@ -1,6 +1,16 @@
 import styled from 'styled-components';
 
-export default styled.div`
+interface StyledProps {
+  darkMode?: boolean
+};
+
+export default styled.div<StyledProps>`
+  a {
+    text-decoration: none;
+    color: black;
+    text-shadow: 1px 1px ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['secondary-light']};
+  }
+
   fieldset {
     grid-auto-flow: column;
     grid-template-rows: auto auto;
