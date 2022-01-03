@@ -18,8 +18,11 @@ function RecipeDetailPage() {
   const recipe = useSelector((state: RootState) => state.recipes.activeRecipe);
 
   useEffect(() => {
-    if (params.id) dispatch(showRecipe({id: parseInt(params.id, 10)}));
-  }, [dispatch, params.id]);
+    const sideEffect = (success: boolean) => {
+      if (!success) navigate('/recipes')
+    };
+    if (params.id) dispatch(showRecipe({id: parseInt(params.id, 10), sideEffect}));
+  }, [dispatch, navigate, params.id]);
 
   const handleEditRecipe = () => navigate(`/recipes/${params.id}/edit`);
 
@@ -59,7 +62,6 @@ function RecipeDetailPage() {
         quantity: recipeIngredient.quantity,
         units: recipeIngredient.units
       };
-      console.log(itemBody);
       dispatch(createBasketItem({body: itemBody}));
     });
   };
