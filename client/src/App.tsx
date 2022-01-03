@@ -63,8 +63,6 @@ function App() {
   const renderNotLoggedIn = () => {
     return (
       <Routes>
-        <Route path='/' element={<Landing />} />
-        <Route path='/login' element={<LoginPage />} />
         <Route path='*' element={<Landing />} />
       </Routes>
     );

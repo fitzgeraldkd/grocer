@@ -34,7 +34,7 @@ function NavBar() {
           <span>Pantry</span> */}
           <NavBarLink path='/' onClick={() => dispatch(signOutUser({}))}>Log Out</NavBarLink>
         </NavBarMenu>
-      : <NavBarMenu icon={<RiMenuLine />}><NavBarLink path='/login'>Log In</NavBarLink></NavBarMenu>}
+      : null}
 
       <Link to='/' className='nav-title'>GROCER</Link>
 
