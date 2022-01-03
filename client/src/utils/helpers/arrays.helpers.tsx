@@ -17,4 +17,10 @@ export const sorter = (a: any, b: any, descending: boolean = false) => {
   if (a > b) return 1;
   if (a < b) return -1;
   return 0;
-}
+};
+
+export const getRandom = (arr: any[]) => {
+  if (arr.length === 0) return null;
+  const randomIndex = Math.floor(arr.length * Math.random());
+  return arr[randomIndex];
+};

@@ -20,7 +20,10 @@ function RecipeFilter() {
   const dispatch = useDispatch();
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    dispatch(filterApplied({key: e.target.name, value: ('checked' in e.target ? e.target.checked : e.target.value)}))
+    dispatch(filterApplied({
+      key: e.target.name, 
+      value: (e.target.type === 'checkbox' ? (e.target as HTMLInputElement).checked : e.target.value)
+    }))
   };
 
   const handleFilterReset = () => dispatch(filterReset());

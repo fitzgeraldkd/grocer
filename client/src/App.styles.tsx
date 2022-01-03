@@ -9,7 +9,8 @@ export default styled.div<StyledProps>`
 
   main {
     /* padding-top: 50px; */
-    padding: 50px 20px 60px;
+    /* padding: 50px 20px 60px; */
+    padding: 80px 0;
     display: grid;
     grid-template-columns: 50px auto 50px;
     column-gap: 10px;
