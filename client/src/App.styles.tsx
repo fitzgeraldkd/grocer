@@ -6,6 +6,10 @@ interface StyledProps {
 
 export default styled.div<StyledProps>`
   font-family: 'Work Sans', sans-serif;
+  background-color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['background']};
+  background-attachment: fixed;
+  min-width: 100%;
+  min-height: 100vh;
 
   main {
     /* padding-top: 50px; */

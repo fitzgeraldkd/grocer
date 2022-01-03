@@ -18,7 +18,8 @@ const theme = {
       'primary-dark': '#0B4199',
       secondary: '#DEC8BA',
       'secondary-light': '#E5DFDC',
-      'secondary-dark': '#5B4F48'
+      'secondary-dark': '#5B4F48',
+      background: '#E5DFDC44'
     }
   }
 }
