@@ -6,6 +6,7 @@ import { destroyBasketItem } from '../../../store/basketItems/basketItems.slice'
 import { BasketItem } from '../../../utils/types/record.types';
 import { Measurement, UnitGroups } from '../../../utils/types/units.types';
 import BasketCardStyles from './BasketCard.styles';
+import { RiCloseCircleFill } from 'react-icons/ri';
 
 type BasketCardProps = {
   basketItem: {
@@ -32,13 +33,18 @@ function BasketCard({ basketItem, ingredient }: BasketCardProps) {
 
   return (
     <BasketCardStyles>
-      {unitGroups.map((unitGroup, index) => (
-        `${basketItem.measurements[unitGroup].quantity ? round(basketItem.measurements[unitGroup].quantity, 2) : ''} ${basketItem.measurements[unitGroup].unit}${index < unitGroups.length-1 ? ', ' : ' '}`
-      ))}
-      <Link to={`/ingredients/${basketItem.id}`}>
-        {ingredient}
-      </Link>
-      <Button onClick={() => handleBasketItemDelete(ingredient)}>X</Button>
+      <span className='icon-span'>
+        <RiCloseCircleFill onClick={() => handleBasketItemDelete(ingredient)} />
+      </span>
+      {/* <Button onClick={() => handleBasketItemDelete(ingredient)}>X</Button> */}
+      <span>
+        {unitGroups.map((unitGroup, index) => (
+          `${basketItem.measurements[unitGroup].quantity ? round(basketItem.measurements[unitGroup].quantity, 2) : ''} ${basketItem.measurements[unitGroup].unit}${index < unitGroups.length-1 ? ', ' : ' '}`
+          ))}
+        <Link to={`/ingredients/${basketItem.id}`}>
+          {ingredient}
+        </Link>
+      </span>
     </BasketCardStyles>
   );
 }

@@ -7,7 +7,7 @@ import { basketEmptied, destroyBasketItem, indexBasketItems } from '../../../sto
 import Button from '../../../components/forms/Button/Button';
 import { Measurement } from '../../../utils/types/units.types';
 import { addMeasurements, getUnitGroup, simplifyBasket } from '../../../utils/helpers/units.helpers';
-import { sorter } from '../../../utils/helpers/arrays.helpers';
+import { getUnique, sorter } from '../../../utils/helpers/arrays.helpers';
 
 function BasketListPage() {
   const basketItems = useSelector((state: RootState) => state.basketItems.basketItems);
@@ -28,7 +28,11 @@ function BasketListPage() {
 
   return (
     <BasketListPageStyles>
-      <Button onClick={handleBasketEmpty}>Empty Basket</Button>
+      <div className='page-header'>Basket</div>
+      <div className='reset-container'>
+        You have {getUnique(basketItems.map(basketItem => basketItem.name)).length} items in your basket.
+        <Button onClick={handleBasketEmpty}>Empty Basket</Button>
+      </div>
       {ingredients.map(ingredient => (
         <BasketCard key={ingredient} basketItem={simplifiedBasket[ingredient]} ingredient={ingredient} />
       ))}
