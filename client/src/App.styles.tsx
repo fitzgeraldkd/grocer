@@ -24,6 +24,11 @@ export default styled.div<StyledProps>`
       display: block;
     }
 
+    a {
+      color: black;
+      text-shadow: 1px 1px ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['secondary-light']};
+    }
+
     .svg-container {
       display: flex;
 
