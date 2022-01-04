@@ -321,6 +321,9 @@ function RecipeForm({ recipe }: RecipeFormProps) {
 
   return (
     <RecipeFormStyles>
+      <div className='page-header'>
+        {recipe ? 'Edit Recipe' : 'Add Recipe'}
+      </div>
       <form onSubmit={handleFormSubmit}>
         <Fieldset className='recipe-inputs' disabled={disableForm}>
           <Input label='Name:' name='name' value={formData.name} onChange={handleFormChange} />

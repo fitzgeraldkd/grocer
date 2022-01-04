@@ -66,6 +66,15 @@ function RecipeDetailPage() {
     });
   };
 
+  const renderSource = () => {
+    if (!recipe || !recipe.source) return null;
+    if (recipe.source.toLowerCase().startsWith('http')) {
+      return <a href={recipe.source} target='_blank' rel='noreferrer'>View Original Recipe</a>
+    } else {
+      return <>{recipe.source}</>
+    }
+  }
+
   const renderRecipe = () => {
     if (!recipe) return null;
     return (
@@ -74,7 +83,8 @@ function RecipeDetailPage() {
           {recipe.name}
         </div>
         <div>
-          {recipe.source && <a href={recipe.source} target='_blank' rel='noreferrer'>View Original Recipe</a>}
+          {renderSource()}
+          {/* {recipe.source && <a href={recipe.source} target='_blank' rel='noreferrer'>View Original Recipe</a>} */}
         </div>
         <div className='page-subheader'>Ingredients<Button onClick={handleAddToBasket}>Add To Basket</Button></div>
         <div className='ingredient-list'>
