@@ -80,6 +80,8 @@ class ApplicationController < ActionController::API
       "No password provided"
     when "INVALID_PASSWORD"
       "Invalid login credentials"
+    when "INVALID_EMAIL"
+      "Invalid email"
     else
       message
     end

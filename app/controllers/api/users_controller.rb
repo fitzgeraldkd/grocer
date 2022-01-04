@@ -21,10 +21,10 @@ class Api::UsersController < ApplicationController
           render json: { payload: nil, messages: invalid.record.errors.full_messages }, status: :unprocessable_entity
         end
       else
-        render json: { payload: nil, messages: [response.body["error"]["message"]] }, status: :unprocessable_entity
+        render json: { payload: nil, messages: [translate_firebase_message(response.body["error"]["message"])] }, status: :unprocessable_entity
       end
     else
-      render json: { payload: nil, messages: ['password and password_confirmation do not match']}, status: :unprocessable_entity
+      render json: { payload: nil, messages: ['Passwords do not match']}, status: :unprocessable_entity
     end
   end
 
