@@ -32,6 +32,13 @@ export default styled.div<StyledProps>`
     .svg-container {
       display: flex;
 
+      svg {
+        position: fixed;
+        width: 50px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
       @media only screen and (max-width: 768px) {
         display: none;
       }
