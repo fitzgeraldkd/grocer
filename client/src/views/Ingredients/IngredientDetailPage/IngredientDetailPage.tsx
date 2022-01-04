@@ -5,7 +5,7 @@ import { showIngredient } from '../../../store/ingredients/ingredients.slice';
 import { RootState } from '../../../rootReducer';
 import { RiAddFill, RiPencilFill, RiAddLine, RiCloseCircleFill } from 'react-icons/ri';
 import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
-import { Recipe } from '../../../utils/types/record.types';
+import { BasketItem, Recipe } from '../../../utils/types/record.types';
 import Button from '../../../components/forms/Button/Button';
 import { createBasketItem, destroyBasketItem } from '../../../store/basketItems/basketItems.slice';
 import Input from '../../../components/forms/Input/Input';
@@ -78,7 +78,7 @@ function IngredientDetailPage() {
     return (
       <>
         <div className='page-subheader'>Recipes</div>
-        <div>
+        <div className='recipe-list'>
           {ingredient.recipes.length > 0 ? ingredient.recipes.map(renderRecipe) : 'No recipes (yet!)'}
         </div>
       </>
@@ -88,7 +88,26 @@ function IngredientDetailPage() {
   const handleBasketItemDelete = (id: number) => {
     dispatch(destroyBasketItem({ id }));
   }
-
+  
+  
+  const renderBasketItems = (relatedBasketItems: BasketItem[]) => {
+    if (!ingredient || relatedBasketItems.length === 0) return 'Not found in basket';
+    return (
+      <div className='basket-items'>
+      {relatedBasketItems.map(basketItem => (
+        <React.Fragment key={basketItem.id}>
+          <span className='basket-delete'>
+            <RiCloseCircleFill onClick={() => handleBasketItemDelete(basketItem.id)} />
+          </span>
+          <span className='basket-quantity'>
+            {basketItem.quantity ? basketItem.quantity : null} {basketItem.units ? basketItem.units : ingredient.name}
+          </span>
+        </React.Fragment>
+      ))}
+    </div>
+    );
+  };
+  
   const renderBasket = () => {
     if (!ingredient) return null;
     const relatedBasketItems = basketItems.filter(basketItem => basketItem.ingredient_id === ingredient.id);
@@ -113,19 +132,7 @@ function IngredientDetailPage() {
             <Button type='submit'>Add to Basket</Button>
           </Fieldset>
         </form>
-        <div className='basket-items'>
-          {relatedBasketItems.length > 0 ? relatedBasketItems.map(basketItem => (
-            <React.Fragment key={basketItem.id}>
-              <span className='basket-delete'>
-                <RiCloseCircleFill onClick={() => handleBasketItemDelete(basketItem.id)} />
-                {/* <Button onClick={() => handleBasketItemDelete(basketItem.id)}>X</Button> */}
-              </span>
-              <span className='basket-quantity'>
-                {basketItem.quantity} {basketItem.units ? basketItem.units : ingredient.name}
-              </span>
-            </React.Fragment>
-          )) : 'Not found in basket'}
-        </div>
+        {renderBasketItems(relatedBasketItems)}
       </>
     )
   };

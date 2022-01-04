@@ -5,6 +5,10 @@ interface StyledProps {
 };
 
 export default styled.div<StyledProps>`
+  .recipe-list {
+    margin-left: 20px;
+  }
+
   fieldset {
     grid-auto-flow: column;
     grid-template-rows: auto auto;
@@ -27,8 +31,10 @@ export default styled.div<StyledProps>`
 
   .basket-items {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 16px auto;
     grid-gap: 10px;
+    margin-left: 20px;
+    margin-top: 10px;
 
     .basket-quantity {
       text-align: left;
