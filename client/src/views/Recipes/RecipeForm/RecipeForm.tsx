@@ -16,6 +16,8 @@ import { RecipeIngredientData } from '../../../utils/types/formData.types'
 import Textarea from '../../../components/forms/Textarea/Textarea';
 import Button from '../../../components/forms/Button/Button';
 import { getUnique, sorter } from '../../../utils/helpers/arrays.helpers';
+import { units } from '../../../utils/helpers/units.helpers';
+import { UnitGroups } from '../../../utils/types/units.types';
 
 interface RecipeFormProps {
   recipe?: RecipeDetailed | null;
@@ -277,7 +279,16 @@ function RecipeForm({ recipe }: RecipeFormProps) {
         </Datalist>
         <Input name='quantity' type='number' onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.quantity} max={9999} min={0} step={0.0001} />
         <Datalist id='units' name='units' onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.units} size={10}>
-          {['cups', 'oz'].map(unit => <option key={unit} value={unit} />)}
+          {/* {['cups', 'oz'].map(unit => <option key={unit} value={unit} />)} */}
+          {(Object.keys(units) as UnitGroups[]).map(group => (
+                <React.Fragment key={group}>
+                  <optgroup label={group}>
+                    {Object.keys(units[group]).map(unit => (
+                      <option value={unit} key={unit}></option>
+                    ))}
+                  </optgroup>
+                </React.Fragment>
+              ))}
         </Datalist>
         <Input name='prepared' onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.prepared} />
         <span className='icon-span' onDragEnter={dragEnterHandler}><RiCloseCircleFill onClick={() => handleRemoveIngredient(ingredient.tempId)} /></span>

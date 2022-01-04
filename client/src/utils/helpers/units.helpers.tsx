@@ -49,10 +49,15 @@ export const units: UnitsList = {
     }
   },
   weight: {
-    lbs: {
+    oz: {
       minimum: 0,
-      next: null,
+      next: {unit: 'lbs', conversion: 1/16},
       prev: null
+    },
+    lbs: {
+      minimum: 0.5,
+      next: null,
+      prev: {unit: 'oz', conversion: 16}
     }
   }
 }
