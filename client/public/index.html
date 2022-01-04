@@ -2,7 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/grocer.png" />
+    <link id='favicon' rel="icon" href="%PUBLIC_URL%/grocer.png" type="image/png" />
+    <!-- <link rel="icon" media="(prefers-color-scheme:light)" href="%PUBLIC_URL%/grocer-light.png" type="image/png" /> -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -25,6 +26,16 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Grocer</title>
+    <script>
+      function switchIcon() {
+        const usesDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches || false;
+        const favicon = document.getElementById('favicon');
+        favicon.href = usesDarkMode ? '%PUBLIC_URL%/grocer.png' : '%PUBLIC_URL%/grocer-light.png';
+      }
+
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener("change", switchIcon);
+      switchIcon(); 
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
