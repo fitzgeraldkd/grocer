@@ -48,9 +48,11 @@ function RegisterForm() {
           <input id='password' name='password' type='password' value={formData.password} onChange={handleChange} />
           <label htmlFor='confirmPassword'>Confirm:</label>
           <input id='confirmPassword' name='confirmPassword' type='password' value={formData.confirmPassword} onChange={handleChange} />
+          <div className='button-container'>
+            <Button type='submit'>Submit</Button>
+            <Button onClick={(() => navigate('/'))}>Have an account?</Button>
+          </div>
         </Fieldset>
-        <Button type='submit'>Submit</Button>
-        <Button onClick={(() => navigate('/'))}>Have an account?</Button>
       </form>
       {messages.map(message => <div key={message}>{message}</div>)}
     </div>

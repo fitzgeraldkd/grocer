@@ -360,6 +360,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
         </Fieldset>
         {/* <input type='submit' /> */}
       </form>
+      {messages.map(message => <div key={message}>{message}</div>)}
     </RecipeFormStyles>
   );
 }
