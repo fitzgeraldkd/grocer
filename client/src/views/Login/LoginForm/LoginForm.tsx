@@ -40,9 +40,11 @@ function LoginForm() {
           <input id='username' name='username' type='text' value={formData.username} onChange={handleChange} />
           <label htmlFor='password'>Password:</label>
           <input id='password' name='password' type='password' value={formData.password} onChange={handleChange} />
+          <div className='button-container'>
+            <Button type='submit'>Submit</Button>
+            <Button onClick={(() => navigate('/?new_user=true'))}>Need an account?</Button>
+          </div>
         </Fieldset>
-        <Button type='submit'>Submit</Button>
-        <Button onClick={(() => navigate('/?new_user=true'))}>Need an account?</Button>
       </form>
       {messages.map(message => <div key={message}>{message}</div>)}
     </LoginFormStyles>

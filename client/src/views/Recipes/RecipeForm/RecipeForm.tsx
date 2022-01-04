@@ -352,7 +352,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
           </Fieldset>
           <div className='button-container'>
             <Button type='submit'>Submit</Button>
-            <Button onClick={() => navigate(`/recipes/${recipe ? recipe.id : ''}`)}>Cancel</Button>
+            <Button className='cancel' onClick={() => navigate(`/recipes/${recipe ? recipe.id : ''}`)}>Cancel</Button>
           </div>
         </Fieldset>
         {/* <input type='submit' /> */}

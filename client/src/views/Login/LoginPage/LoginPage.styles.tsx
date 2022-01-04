@@ -10,19 +10,20 @@ export default styled.div<StyledProps>`
   width: 350px;
   background-color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary-light']}; */
 
-  button ~ button {
-    margin-left: 10px;
-  }
-
-  button[type='submit'] {
-    font-weight: bold;
-  }
-
   fieldset {
     row-gap: 5px;
     column-gap: 5px;
     label {
       text-align: right;
+    }
+  }
+
+  .button-container {
+    text-align: right;
+    grid-column: 1 / 3;
+
+    button[type='submit'] {
+      margin-right: 10px;
     }
   }
 `;

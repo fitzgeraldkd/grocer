@@ -17,4 +17,17 @@ export default styled.button<StyledProps>`
     /* color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary-dark']}; */
   }
 
+  &[type='submit'] {
+    font-weight: bold;
+  }
+
+  &.cancel {
+    opacity: 0.8;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
 `;

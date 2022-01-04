@@ -46,7 +46,6 @@ export default styled.div<StyledProps>`
     text-align: right;
 
     button[type='submit'] {
-      font-weight: bold;
       margin-right: 10px;
     }
   }
