@@ -58,6 +58,7 @@ function IngredientForm({ ingredient }: IngredientFormProps) {
           <Button className='cancel' onClick={() => navigate(`/ingredients/${ingredient ? ingredient.id : ''}`)}>Cancel</Button>
         </div>
       </form>
+      {messages.map(message => <div key={message}>{message}</div>)}
     </IngredientFormStyles>
   );
 }

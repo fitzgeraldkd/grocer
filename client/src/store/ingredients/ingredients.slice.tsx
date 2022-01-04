@@ -147,9 +147,9 @@ const ingredientsSlice = createSlice({
       state.activeIngredient = null;
     });
     builder.addCase(showIngredient.fulfilled, (state, { payload }) => {
+      state.status = 'idle';
       if (payload.success) {
         state.activeIngredient = payload.data.payload;
-        state.status = 'idle';
       } else {
         payload.data.messages.forEach(message => console.warn(message));
       }
@@ -159,10 +159,10 @@ const ingredientsSlice = createSlice({
       state.status = 'loading';
     });
     builder.addCase(createIngredient.fulfilled, (state, { payload }) => {
+      state.status = 'idle';
       if (payload.success) {
         state.ingredients.push(payload.data.payload);
         state.activeIngredient = payload.data.payload;
-        state.status = 'idle';
       } else {
         payload.data.messages.forEach(message => console.warn(message));
       }
