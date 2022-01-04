@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { showIngredient } from '../../../store/ingredients/ingredients.slice';
 import { RootState } from '../../../rootReducer';
-import { RiAddFill, RiPencilFill, RiAddLine } from 'react-icons/ri';
+import { RiAddFill, RiPencilFill, RiAddLine, RiCloseCircleFill } from 'react-icons/ri';
 import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
 import { Recipe } from '../../../utils/types/record.types';
 import Button from '../../../components/forms/Button/Button';
@@ -117,7 +117,8 @@ function IngredientDetailPage() {
           {relatedBasketItems.length > 0 ? relatedBasketItems.map(basketItem => (
             <React.Fragment key={basketItem.id}>
               <span className='basket-delete'>
-                <Button onClick={() => handleBasketItemDelete(basketItem.id)}>X</Button>
+                <RiCloseCircleFill onClick={() => handleBasketItemDelete(basketItem.id)} />
+                {/* <Button onClick={() => handleBasketItemDelete(basketItem.id)}>X</Button> */}
               </span>
               <span className='basket-quantity'>
                 {basketItem.quantity} {basketItem.units ? basketItem.units : ingredient.name}

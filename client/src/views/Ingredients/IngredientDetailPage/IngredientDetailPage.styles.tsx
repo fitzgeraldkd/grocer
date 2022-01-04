@@ -42,6 +42,15 @@ export default styled.div<StyledProps>`
 
     .basket-delete {
       text-align: right;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      cursor: pointer;
+      color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['secondary-dark']};
+
+      &:hover {
+        color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary-dark']};
+      }
     }
     /* margin-bottom: 5px;
 
