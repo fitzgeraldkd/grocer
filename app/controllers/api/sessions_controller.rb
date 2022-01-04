@@ -17,7 +17,7 @@ class Api::SessionsController < ApplicationController
       session[:id_token] = response.body['idToken']
       render json: { payload: user, messages: [] }, status: :ok
     else
-      render json: { payload: nil, messages: [response.body['error']['message']] }, status: :unauthorized
+      render json: { payload: nil, messages: [translate_firebase_message(response.body['error']['message'])] }, status: :unauthorized
     end
   end
 

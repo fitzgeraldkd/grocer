@@ -74,4 +74,15 @@ class ApplicationController < ActionController::API
     end
   end
 
+  def translate_firebase_message(message)
+    case message
+    when "MISSING_PASSWORD"
+      "No password provided"
+    when "INVALID_PASSWORD"
+      "Invalid login credentials"
+    else
+      message
+    end
+  end
+
 end

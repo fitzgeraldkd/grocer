@@ -15,6 +15,7 @@ function LoginForm() {
     password: ''
   });
   const [messages, setMessages] = useState<string[]>([]);
+  const [disableForm, setDisableForm] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,8 +27,10 @@ function LoginForm() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const sideEffect = (success: boolean, payload: ValidResponse<User>) => {
+      setDisableForm(false);
       success ? navigate('/') : setMessages(payload.messages);
     };
+    setDisableForm(true);
     dispatch(authenticateUser({body: formData, sideEffect: sideEffect}));
   };
 
@@ -35,7 +38,7 @@ function LoginForm() {
     <LoginFormStyles>
       <form onSubmit={handleSubmit}>
         <div className='page-subheader'>Log In</div>
-        <Fieldset>
+        <Fieldset disabled={disableForm}>
           <label htmlFor='username'>Username:</label>
           <input id='username' name='username' type='text' value={formData.username} onChange={handleChange} />
           <label htmlFor='password'>Password:</label>
