@@ -17,6 +17,7 @@ export default styled.div<StyledProps>`
     grid-column: 2 / 6;
     font-weight: bold;
     border: 0;
+    background-color: #FFFFFF88;
     /* &:not(.group-name-input:first-of-type) {
       margin-top: 10px;
     } */
@@ -40,9 +41,16 @@ export default styled.div<StyledProps>`
     cursor: grab;
   }
 
-  button[type='submit'] {
-    margin-right: 10px;
+  .button-container {
+    grid-column: 1 / 3;
+    text-align: right;
+
+    button[type='submit'] {
+      font-weight: bold;
+      margin-right: 10px;
+    }
   }
+
 
   .icon-span svg {
     cursor: pointer;

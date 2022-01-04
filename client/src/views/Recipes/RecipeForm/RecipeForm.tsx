@@ -350,9 +350,10 @@ function RecipeForm({ recipe }: RecipeFormProps) {
 
             {directions.map(renderDirectionInput)}
           </Fieldset>
-
-          <Button type='submit'>Submit</Button>
-          <Button onClick={() => navigate(`/recipes/${recipe ? recipe.id : ''}`)}>Cancel</Button>
+          <div className='button-container'>
+            <Button type='submit'>Submit</Button>
+            <Button onClick={() => navigate(`/recipes/${recipe ? recipe.id : ''}`)}>Cancel</Button>
+          </div>
         </Fieldset>
         {/* <input type='submit' /> */}
       </form>
