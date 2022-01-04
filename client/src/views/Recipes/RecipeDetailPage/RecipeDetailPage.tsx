@@ -29,7 +29,7 @@ function RecipeDetailPage() {
   const renderIngredient = (ingredient: RecipeIngredientDetailed) => {
     return (
       <li key={ingredient.id}>
-        {ingredient.quantity !== 0 ? ingredient.quantity : null} {ingredient.units} {ingredient.ingredient.name}
+        {ingredient.quantity !== 0 ? ingredient.quantity : null} {ingredient.units} {ingredient.ingredient.name}{ingredient.prepared ? ', ' + ingredient.prepared : null}
       </li>
     );
   };
