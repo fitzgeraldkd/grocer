@@ -74,7 +74,7 @@ function IngredientsListPage() {
     <IngredientsListPageStyles>
       <div className='page-header'>Saved Ingredients</div>
       <div className='filter-description'>
-        Use the filter icon on the top-right to search your recipes!
+        Use the filter icon on the top-right to search through your ingredients!
         <Button onClick={handleFilterReset}>Reset Filters</Button>
       </div>
       {renderPagination()}
