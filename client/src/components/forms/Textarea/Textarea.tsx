@@ -1,13 +1,13 @@
 import React from 'react';
-import TextareaStyles from './Textarea.styles';
+import TextareaStyles, { StyledProps } from './Textarea.styles';
 
 interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-
+  styledProps?: StyledProps
 };
 
-function Textarea({ ...intrinsic }: TextareaProps) {
+function Textarea({ styledProps, ...intrinsic }: TextareaProps) {
   return (
-    <TextareaStyles {...intrinsic} />
+    <TextareaStyles {...styledProps} {...intrinsic} />
   );
 }
 

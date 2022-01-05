@@ -1,14 +1,14 @@
 import React from 'react';
-import FieldsetStyles, { StyleProps } from './Fieldset.styles';
+import FieldsetStyles, { StyledProps } from './Fieldset.styles';
 
 interface FieldsetProps extends React.FieldsetHTMLAttributes<HTMLFieldSetElement> {
   children: React.ReactNode,
-  styleProps?: StyleProps
-}
+  styledProps?: StyledProps
+};
 
-function Fieldset({ children, styleProps, ...intrinsic }: FieldsetProps) {
+function Fieldset({ children, styledProps, ...intrinsic }: FieldsetProps) {
   return (
-    <FieldsetStyles {...styleProps} {...intrinsic}>
+    <FieldsetStyles {...styledProps} {...intrinsic}>
       {children}
     </FieldsetStyles>
   );

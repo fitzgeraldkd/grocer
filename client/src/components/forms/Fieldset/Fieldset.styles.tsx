@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
-export interface StyleProps {
+export interface StyledProps {
+  darkMode?: boolean,
   columns?: number,
   literals?: {
     [prop: string]: string
   }
-}
+};
 
-export default styled.fieldset<StyleProps>`
+export default styled.fieldset<StyledProps>`
   border: 0;
   display: grid;
   grid-template-columns: ${props => ' auto'.repeat(props.columns || 2)};

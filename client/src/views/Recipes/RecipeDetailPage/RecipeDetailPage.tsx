@@ -115,7 +115,7 @@ function RecipeDetailPage() {
     <RecipeDetailPageStyles>
       <div><Button onClick={() => navigate('/recipes')}>Back to Recipes</Button></div>
       {renderRecipe()}
-      <FloatingButton handleClickEvent={handleEditRecipe}><RiPencilFill /></FloatingButton>
+      <FloatingButton onClick={handleEditRecipe}><RiPencilFill /></FloatingButton>
     </RecipeDetailPageStyles>
   );
 }

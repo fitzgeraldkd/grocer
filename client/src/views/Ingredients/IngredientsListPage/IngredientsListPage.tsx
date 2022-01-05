@@ -80,7 +80,7 @@ function IngredientsListPage() {
       {renderPagination()}
       {displayedIngredients.length === 0 && "No ingredients found!"}
       {displayedIngredients.map(ingredient => <IngredientCard key={ingredient.name} ingredient={ingredient} />)}
-      <FloatingButton handleClickEvent={handleNewIngredient}><RiAddFill /></FloatingButton>
+      <FloatingButton onClick={handleNewIngredient}><RiAddFill /></FloatingButton>
     </IngredientsListPageStyles>
   );
 }

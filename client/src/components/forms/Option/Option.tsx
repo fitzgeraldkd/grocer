@@ -1,13 +1,14 @@
 import React from 'react';
-import OptionStyles from './Option.styles';
+import OptionStyles, { StyledProps } from './Option.styles';
 
 interface OptionProps extends React.OptionHTMLAttributes<HTMLOptionElement> {
-  value: string
-}
+  value: string,
+  styledProps?: StyledProps
+};
 
-function Option({ value }: OptionProps) {
+function Option({ value, styledProps, ...intrinsic }: OptionProps) {
   return (
-    <OptionStyles value={value}>
+    <OptionStyles value={value} {...styledProps} {...intrinsic}>
       {value}
     </OptionStyles>
   );

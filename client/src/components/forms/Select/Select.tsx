@@ -1,20 +1,20 @@
 import React from 'react';
 import Option from '../Option/Option';
-import SelectStyles from './Select.styles';
+import SelectStyles, { StyledProps } from './Select.styles';
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   label?: string,
   children: string[],
-  name: string,
-  addBlank: boolean
-}
+  addBlank: boolean,
+  styledProps?: StyledProps
+};
 
-function Select({ label, children, addBlank, ...intrinsic }: SelectProps) {
+function Select({ label, children, addBlank, styledProps, ...intrinsic }: SelectProps) {
   intrinsic.id ||= intrinsic.name;
   return (
     <>
       {label ? <label htmlFor={intrinsic.id}>{label}</label> : null}
-      <SelectStyles {...intrinsic} >
+      <SelectStyles {...styledProps} {...intrinsic} >
         {addBlank && <Option value='' />}
         {children.map(value => <Option key={value} value={value} />)}
       </SelectStyles>

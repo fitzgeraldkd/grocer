@@ -44,7 +44,7 @@ function RecipeListPage() {
         {filteredRecipes.length === 0 && <div className='page-subheader'>No Recipes Found</div>}
         {filteredRecipes.map(recipe => <RecipeCard key={recipe.name} recipe={recipe} />)}
       </div>
-      <FloatingButton handleClickEvent={handleNewRecipe}><RiAddFill /></FloatingButton>
+      <FloatingButton onClick={handleNewRecipe}><RiAddFill /></FloatingButton>
     </RecipeListPageStyles>
   );
 }

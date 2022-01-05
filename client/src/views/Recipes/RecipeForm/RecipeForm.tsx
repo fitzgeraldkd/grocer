@@ -344,7 +344,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
           <Input label='Vegan:' type='checkbox' name='vegan' checked={formData.vegan} onChange={handleFormChange} />
           <Input label='Source:' name='source' value={formData.source} onChange={handleFormChange} />
 
-          <Fieldset className='ingredient-inputs' styleProps={{columns: 6}}>
+          <Fieldset className='ingredient-inputs' styledProps={{columns: 6}}>
             <span className='icon-span'><RiFolderAddFill onClick={() => handleAddIngredientGroup()} /></span>
             <span>Ingredient</span>
             <span>Quantity</span>
@@ -357,7 +357,7 @@ function RecipeForm({ recipe }: RecipeFormProps) {
             {renderIngredients()}
           </Fieldset>
 
-          <Fieldset className='direction-inputs' styleProps={{columns: 3, literals: {'grid-column': '1 / 3'}}}>
+          <Fieldset className='direction-inputs' styledProps={{columns: 3, literals: {'grid-column': '1 / 3'}}}>
             <span></span>
             <span>Directions</span>
             <span className='icon-span'><RiAddFill onClick={handleAddDirection} /></span>

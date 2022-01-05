@@ -1,17 +1,17 @@
 import React from 'react';
-import { IconContext } from 'react-icons';
 import { Link } from 'react-router-dom';
-import NavBarLinkStyles from './NavBarLink.styles';
+import NavBarLinkStyles, { StyledProps } from './NavBarLink.styles';
 
 interface NavBarLinkProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode,
-  path: string
-}
+  path: string,
+  styledProps?: StyledProps
+};
 
-function NavBarLink({ children, path, ...intrinsic }: NavBarLinkProps) {
+function NavBarLink({ children, path, styledProps, ...intrinsic }: NavBarLinkProps) {
   return (
     <Link to={path}>
-      <NavBarLinkStyles role='link' {...intrinsic}>
+      <NavBarLinkStyles role='link' {...styledProps} {...intrinsic}>
         {children}
       </NavBarLinkStyles>
     </Link>

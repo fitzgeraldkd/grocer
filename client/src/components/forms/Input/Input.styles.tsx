@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 
-export interface StyleProps {
+export interface StyledProps {
+  darkMode?: boolean
+};
 
-}
-
-export default styled.input<StyleProps>`
-
-`;
+export default styled.input<StyledProps>``;

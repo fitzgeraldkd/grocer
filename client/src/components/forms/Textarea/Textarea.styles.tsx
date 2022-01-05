@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
-export default styled.textarea`
+export interface StyledProps {
+  darkMode?: boolean
+};
+
+export default styled.textarea<StyledProps>`
   resize: vertical;
 `;

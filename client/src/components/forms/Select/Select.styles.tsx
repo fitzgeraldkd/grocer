@@ -1,4 +1,7 @@
 import styled from 'styled-components';
 
-export default styled.select`
-`;
+export interface StyledProps {
+  darkMode?: boolean
+};
+
+export default styled.select<StyledProps>``;

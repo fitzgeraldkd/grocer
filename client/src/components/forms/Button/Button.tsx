@@ -1,13 +1,13 @@
 import React from 'react';
-import ButtonStyles from './Button.styles';
+import ButtonStyles, { StyledProps } from './Button.styles';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-
+  styledProps?: StyledProps
 };
 
-function Button({ children, ...intrinsic }: ButtonProps) {
+function Button({ children, styledProps, ...intrinsic }: ButtonProps) {
   return (
-    <ButtonStyles {...intrinsic}>
+    <ButtonStyles {...styledProps} {...intrinsic}>
       {children}
     </ButtonStyles>
   );

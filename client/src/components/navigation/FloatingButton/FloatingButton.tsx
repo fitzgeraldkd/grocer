@@ -1,16 +1,16 @@
 import React from 'react';
-import FloatingButtonStyled from './FloatingButton.styles';
+import FloatingButtonStyles, { StyledProps } from './FloatingButton.styles';
 
-interface FloatingButtonProps {
-  children: JSX.Element,
-  handleClickEvent: React.MouseEventHandler<HTMLButtonElement>
+interface FloatingButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode,
+  styledProps?: StyledProps
 };
 
-function FloatingButton({ children, handleClickEvent }: FloatingButtonProps) {
+function FloatingButton({ children, styledProps, ...intrinsic }: FloatingButtonProps) {
   return (
-    <FloatingButtonStyled onClick={handleClickEvent}>
+    <FloatingButtonStyles {...styledProps} {...intrinsic}>
       {children}
-    </FloatingButtonStyled>
+    </FloatingButtonStyles>
   );
 }
 

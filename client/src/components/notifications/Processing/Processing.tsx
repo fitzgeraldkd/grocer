@@ -1,13 +1,14 @@
 import React from 'react';
-import ProcessingStyles from './Processing.styles';
+import ProcessingStyles, { StyledProps } from './Processing.styles';
 
 interface ProcessingProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode
+  children: React.ReactNode,
+  styledProps?: StyledProps
 };
 
-function Processing({ children, ...intrinsic }: ProcessingProps) {
+function Processing({ children, styledProps, ...intrinsic }: ProcessingProps) {
   return (
-    <ProcessingStyles {...intrinsic}>
+    <ProcessingStyles {...styledProps} {...intrinsic}>
       <div className='spinner' />
       {children}
     </ProcessingStyles>

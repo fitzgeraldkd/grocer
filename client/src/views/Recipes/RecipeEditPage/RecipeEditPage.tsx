@@ -42,7 +42,7 @@ function RecipeEditPage() {
   return (
     <RecipeEditPageStyles>
     {recipe ? <RecipeForm recipe={recipe} /> : <RecipeForm />}
-    <FloatingButton handleClickEvent={handleDeleteRecipe}><RiDeleteBin2Fill /></FloatingButton>
+    <FloatingButton onClick={handleDeleteRecipe}><RiDeleteBin2Fill /></FloatingButton>
     </RecipeEditPageStyles>
   )
 }

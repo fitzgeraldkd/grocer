@@ -143,7 +143,7 @@ function IngredientDetailPage() {
       {renderIngredient()}
       {renderRecipes()}
       {renderBasket()}
-      <FloatingButton handleClickEvent={handleEditIngredient}><RiPencilFill /></FloatingButton>
+      <FloatingButton onClick={handleEditIngredient}><RiPencilFill /></FloatingButton>
     </IngredientDetailPageStyles>
   );
 }

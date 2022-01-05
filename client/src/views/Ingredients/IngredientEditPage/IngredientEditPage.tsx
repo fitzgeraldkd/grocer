@@ -46,7 +46,7 @@ function IngredientEditPage() {
   return (
     <IngredientEditPageStyles>
       {ingredient ? <IngredientForm ingredient={ingredient} /> : <IngredientForm />}
-      <FloatingButton handleClickEvent={handleDeleteIngredient}><RiDeleteBin2Fill /></FloatingButton>
+      <FloatingButton onClick={handleDeleteIngredient}><RiDeleteBin2Fill /></FloatingButton>
     </IngredientEditPageStyles>
   );
 }

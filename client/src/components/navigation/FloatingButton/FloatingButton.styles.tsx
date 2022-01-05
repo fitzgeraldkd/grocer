@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-interface StyledProps {
+export interface StyledProps {
   darkMode?: boolean
 };
 
@@ -19,13 +19,10 @@ export default styled.button<StyledProps>`
   cursor: pointer;
   transition: background-color 0.2s;
 
-  /* border-color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary']}; */
   background-color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['secondary']};
-  /* font-size: 1em; */
   box-shadow: 0 0 3px 2px ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary-dark']};
 
   &:hover {
     background-color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['secondary-light']};
-    /* color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary-dark']}; */
   }
 `;

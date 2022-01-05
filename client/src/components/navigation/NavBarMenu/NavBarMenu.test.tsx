@@ -1,4 +1,3 @@
-import NavBarMenu from './NavBarMenu';
-// import { renderWrappe}
+import React from 'react';
 
 test.todo('Write tests for NavBarMenu');

@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import NavBarMenuStyled from './NavBarMenu.styles';
-import NavBarLink from '../NavBarLink/NavBarLink';
-import { RiMenuLine } from 'react-icons/ri';
+import React, { useState } from 'react';
+import NavBarMenuStyled, { StyledProps } from './NavBarMenu.styles';
 
-interface NavBarMenuProps {
+interface NavBarMenuProps extends React.HTMLAttributes<HTMLDivElement> {
   position?: 'left' | 'right',
   autohide?: boolean,
   children: React.ReactNode,
-  icon: React.ReactNode
-}
+  icon: React.ReactNode,
+  styledProps?: StyledProps
+};
 
-function NavBarMenu({ position='left', autohide=true, children, icon }: NavBarMenuProps) {
+function NavBarMenu({ position='left', autohide=true, children, icon, styledProps, ...intrinsic }: NavBarMenuProps) {
   const [showItems, setShowItems] = useState(false);
 
   const handleShowItems = (e: MouseEvent | React.MouseEvent) => {
@@ -18,13 +17,13 @@ function NavBarMenu({ position='left', autohide=true, children, icon }: NavBarMe
   };
 
   const links = Array.isArray(children) ?  children : [children];
+
   return (
-    <NavBarMenuStyled position={position}>
+    <NavBarMenuStyled position={position} {...styledProps} {...intrinsic}>
       <span className='nav-toggler' onClick={handleShowItems}>{icon}</span>
       {showItems && <div className='navbar-menu-overlay' onClick={handleShowItems}></div>}
       <div className={showItems ? 'menu-items reveal' : 'menu-items'} onClick={autohide ? handleShowItems : () => {}}>
         {links}
-        {/* {links.map(link => <NavBarLink>{link}</NavBarLink>)} */}
       </div>
     </NavBarMenuStyled>
   );
