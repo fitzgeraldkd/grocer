@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import { registerUser } from '../../../store/authentication/authentication.slice';
 import { User, ValidResponse } from '../../../utils/types/record.types';
-import { useNavigate } from "react-router-dom";
-import Fieldset from '../../../components/forms/Fieldset/Fieldset';
 import Button from '../../../components/forms/Button/Button';
-
+import Fieldset from '../../../components/forms/Fieldset/Fieldset';
+import RegisterFormStyles from './RegisterForm.styles';
 
 function RegisterForm() {
   const [messages, setMessages] = useState<string[]>([])
@@ -34,7 +33,7 @@ function RegisterForm() {
   };
 
   return (
-    <div>
+    <RegisterFormStyles>
       <form onSubmit={handleSubmit}>
         <div className='page-subheader'>
           Create A New Account
@@ -55,7 +54,7 @@ function RegisterForm() {
         </Fieldset>
       </form>
       {messages.map(message => <div key={message}>{message}</div>)}
-    </div>
+    </RegisterFormStyles>
   );
 }
 

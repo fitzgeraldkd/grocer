@@ -1,18 +1,18 @@
-import React from 'react'
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../rootReducer';
 import Button from '../../../components/forms/Button/Button';
 import Fieldset from '../../../components/forms/Fieldset/Fieldset';
 import Input from '../../../components/forms/Input/Input';
 import Select from '../../../components/forms/Select/Select';
-import { RootState } from '../../../rootReducer';
 import { filterApplied, filterReset } from '../../../store/recipes/recipes.slice';
 import { getUnique, sorter } from '../../../utils/helpers/arrays.helpers';
-import RecipeFilterStyles from './RecipeFilter.styles'
+import RecipeFilterStyles from './RecipeFilter.styles';
 
 function RecipeFilter() {
 
   const recipes = useSelector((state: RootState) => state.recipes.recipes);
-  const filters = useSelector((state: RootState) => state.recipes.filters)
+  const filters = useSelector((state: RootState) => state.recipes.filters);
   const cuisines = getUnique<string>(recipes.map(recipe => recipe.cuisine))
     .sort((a, b) => sorter(a.toLowerCase(), b.toLowerCase()));
   const courses = getUnique<string>(recipes.map(recipe => recipe.course))
@@ -23,7 +23,7 @@ function RecipeFilter() {
     dispatch(filterApplied({
       key: e.target.name, 
       value: (e.target.type === 'checkbox' ? (e.target as HTMLInputElement).checked : e.target.value)
-    }))
+    }));
   };
 
   const handleFilterReset = () => dispatch(filterReset());
@@ -42,7 +42,7 @@ function RecipeFilter() {
       </form>
       <Button onClick={handleFilterReset}>Reset Filters</Button>
     </RecipeFilterStyles>
-  )
+  );
 }
 
-export default RecipeFilter
+export default RecipeFilter;

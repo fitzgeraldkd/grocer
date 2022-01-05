@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Button from '../../../components/forms/Button/Button';
 import { RootState } from '../../../rootReducer';
+import Button from '../../../components/forms/Button/Button';
 import { getRandom } from '../../../utils/helpers/arrays.helpers';
 import HomeStyles from './Home.styles';
 

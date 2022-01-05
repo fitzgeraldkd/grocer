@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import IngredientForm from '../IngredientForm/IngredientForm';
-import IngredientEditPageStyles from './IngredientEditPage.styles';
-import { RootState } from '../../../rootReducer';
-import { destroyIngredient, showIngredient } from '../../../store/ingredients/ingredients.slice';
-import { Ingredient, IngredientDetailed, ValidResponse } from '../../../utils/types/record.types';
-import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
 import { RiDeleteBin2Fill } from 'react-icons/ri';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import IngredientForm from '../IngredientForm/IngredientForm';
+import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
+import { destroyIngredient, showIngredient } from '../../../store/ingredients/ingredients.slice';
+import { IngredientDetailed, ValidResponse } from '../../../utils/types/record.types';
+import IngredientEditPageStyles from './IngredientEditPage.styles';
 
 function IngredientEditPage() {
   const [ingredient, setIngredient] = useState<IngredientDetailed>();
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const ingredient = useSelector((state: RootState) => state.ingredients.activeIngredient)
 
   const handleLoadIngredient = (payload: IngredientDetailed) => {
     setIngredient(payload);
-  }
+  };
 
   useEffect(() => {
     if (params.id) dispatch(showIngredient({
@@ -37,12 +35,10 @@ function IngredientEditPage() {
         sideEffect: (success:boolean) => {
           if (success) navigate('/ingredients')
         }
-      }))
+      }));
     }
   };
 
-  // if (!ingredient) return null;
-  console.log(ingredient)
   return (
     <IngredientEditPageStyles>
       {ingredient ? <IngredientForm ingredient={ingredient} /> : <IngredientForm />}

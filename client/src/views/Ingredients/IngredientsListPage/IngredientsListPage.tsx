@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { RiAddFill, RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
-import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
-import { RootState } from '../../../rootReducer';
-import IngredientCard from '../IngredientCard/IngredientCard';
-import { RiAddFill } from 'react-icons/ri';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import IngredientsListPageStyles from './IngredientsListPage.styles';
-import { sorter } from '../../../utils/helpers/arrays.helpers';
-import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
+import { RootState } from '../../../rootReducer';
 import Button from '../../../components/forms/Button/Button';
 import Input from '../../../components/forms/Input/Input';
+import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
 import { filterReset, indexIngredients } from '../../../store/ingredients/ingredients.slice';
-import { indexBasketItems } from '../../../store/basketItems/basketItems.slice';
+import { sorter } from '../../../utils/helpers/arrays.helpers';
+import IngredientCard from '../IngredientCard/IngredientCard';
+import IngredientsListPageStyles from './IngredientsListPage.styles';
 
 function IngredientsListPage() {
   const dispatch = useDispatch();
@@ -40,10 +38,10 @@ function IngredientsListPage() {
   };
 
   const handlePageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // setSearchParams({ page: e.target.value })
-    // searchParams.set('page', e.target.value);
     handleSetPage(e.target.value);
   };
+
+  const handleFilterReset = () => dispatch(filterReset());
 
   const filteredIngredients = ingredients
     .filter(ingredient => (
@@ -67,8 +65,6 @@ function IngredientsListPage() {
       </div>
     );
   };
-
-  const handleFilterReset = () => dispatch(filterReset());
 
   return (
     <IngredientsListPageStyles>

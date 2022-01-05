@@ -52,10 +52,5 @@ export default styled.div<StyledProps>`
         color: ${props => props.theme.palette[props.darkMode ? 'dark' : 'light']['primary-dark']};
       }
     }
-    /* margin-bottom: 5px;
-
-    button {
-      margin-left: 10px;
-    } */
   }
 `;

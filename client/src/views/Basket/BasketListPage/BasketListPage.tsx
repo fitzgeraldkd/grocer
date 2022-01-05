@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../rootReducer';
-import BasketListPageStyles from './BasketListPage.styles';
-import BasketCard from '../BasketCard/BasketCard';
-import { basketEmptied, destroyBasketItem, indexBasketItems } from '../../../store/basketItems/basketItems.slice';
 import Button from '../../../components/forms/Button/Button';
-import { Measurement } from '../../../utils/types/units.types';
-import { addMeasurements, getUnitGroup, simplifyBasket } from '../../../utils/helpers/units.helpers';
+import { destroyBasketItem, indexBasketItems } from '../../../store/basketItems/basketItems.slice';
+import { simplifyBasket } from '../../../utils/helpers/units.helpers';
 import { getUnique, sorter } from '../../../utils/helpers/arrays.helpers';
+import BasketCard from '../BasketCard/BasketCard';
+import BasketListPageStyles from './BasketListPage.styles';
 
 function BasketListPage() {
   const basketItems = useSelector((state: RootState) => state.basketItems.basketItems);
@@ -23,8 +22,6 @@ function BasketListPage() {
 
   const simplifiedBasket = simplifyBasket(basketItems);
   const ingredients = Object.keys(simplifiedBasket).sort(sorter);
-
-  console.log(simplifiedBasket);
 
   return (
     <BasketListPageStyles>

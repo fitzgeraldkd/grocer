@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-export default styled.div`
+export interface StyledProps {
+  darkMode?: boolean
+};
+
+export default styled.div<StyledProps>`
   .recipe-count {
     font-size: 0.8em;
   }

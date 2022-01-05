@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-
-import { Ingredient, IngredientDetailed, ValidResponse } from '../../../utils/types/record.types';
-import { createIngredient, updateIngredient } from '../../../store/ingredients/ingredients.slice';
-
+import Button from '../../../components/forms/Button/Button';
 import Fieldset from '../../../components/forms/Fieldset/Fieldset'
 import Input from '../../../components/forms/Input/Input'
+import { createIngredient, updateIngredient } from '../../../store/ingredients/ingredients.slice';
+import { Ingredient, IngredientDetailed, ValidResponse } from '../../../utils/types/record.types';
 import IngredientFormStyles from './IngredientForm.styles';
-import Button from '../../../components/forms/Button/Button';
 
 interface IngredientFormProps {
   ingredient?: IngredientDetailed | null
-}
+};
 
 function IngredientForm({ ingredient }: IngredientFormProps) {
   const [formData, setFormData] = useState({
@@ -27,8 +25,8 @@ function IngredientForm({ ingredient }: IngredientFormProps) {
   useEffect(() => {
     setFormData({
       name: ingredient ? ingredient.name : ''
-    })
-  }, [ingredient])
+    });
+  }, [ingredient]);
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value});
@@ -40,7 +38,7 @@ function IngredientForm({ ingredient }: IngredientFormProps) {
     const sideEffect = (success: boolean, payload: ValidResponse<Ingredient>) => {
       success ? navigate(`/ingredients`) : setMessages(payload.messages);
     };
-    dispatch(action({id: ingredient ? ingredient.id : undefined, body: formData, sideEffect}))
+    dispatch(action({id: ingredient ? ingredient.id : undefined, body: formData, sideEffect}));
   };
   
   return (

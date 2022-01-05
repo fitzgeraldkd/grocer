@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import Button from '../../../components/forms/Button/Button';
+import Fieldset from '../../../components/forms/Fieldset/Fieldset';
 import { authenticateUser } from '../../../store/authentication/authentication.slice';
 import { UserCredentialsType } from '../../../utils/types/formData.types';
 import { User, ValidResponse } from '../../../utils/types/record.types';
-import { useNavigate } from "react-router-dom";
-import Fieldset from '../../../components/forms/Fieldset/Fieldset';
 import LoginFormStyles from './LoginForm.styles';
-import Button from '../../../components/forms/Button/Button';
 
 function LoginForm() {
   const [formData, setFormData] = useState<UserCredentialsType>({

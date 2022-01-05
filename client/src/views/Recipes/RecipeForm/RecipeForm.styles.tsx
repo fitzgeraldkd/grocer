@@ -18,9 +18,6 @@ export default styled.div<StyledProps>`
     font-weight: bold;
     border: 0;
     background-color: #FFFFFF88;
-    /* &:not(.group-name-input:first-of-type) {
-      margin-top: 10px;
-    } */
   }
 
   .ingredient-inputs {
@@ -49,7 +46,6 @@ export default styled.div<StyledProps>`
       margin-right: 10px;
     }
   }
-
 
   .icon-span svg {
     cursor: pointer;

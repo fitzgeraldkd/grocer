@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import { MdDragIndicator } from 'react-icons/md';
+import { RiAddFill, RiCloseCircleFill, RiFolderAddFill } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../../../rootReducer';
+import Button from '../../../components/forms/Button/Button';
 import Datalist from '../../../components/forms/Datalist/Datalist';
 import Fieldset from '../../../components/forms/Fieldset/Fieldset';
 import Input from '../../../components/forms/Input/Input';
-import Select from '../../../components/forms/Select/Select';
-import { RootState } from '../../../rootReducer';
-import { createRecipe, updateRecipe } from '../../../store/recipes/recipes.slice';
-import { ingredientsAdded } from '../../../store/ingredients/ingredients.slice'
-import { Direction, RecipeIngredient, PendingDirection, PendingRecipeDetailed, PendingRecipeIngredient, Recipe, ValidResponse, PendingIngredient, RecipeDetailed, RecipeIngredientDetailed, PendingRecipeIngredientDetailed } from '../../../utils/types/record.types';
-import RecipeFormStyles from './RecipeForm.styles';
-import { RiAddFill, RiCloseCircleFill, RiFolderAddFill } from 'react-icons/ri';
-import { MdDragIndicator } from 'react-icons/md';
-import { RecipeIngredientData } from '../../../utils/types/formData.types'
 import Textarea from '../../../components/forms/Textarea/Textarea';
-import Button from '../../../components/forms/Button/Button';
+import { ingredientsAdded } from '../../../store/ingredients/ingredients.slice';
+import { createRecipe, updateRecipe } from '../../../store/recipes/recipes.slice';
 import { getUnique, sorter } from '../../../utils/helpers/arrays.helpers';
 import { units } from '../../../utils/helpers/units.helpers';
+import { RecipeIngredientData } from '../../../utils/types/formData.types'
+import { Direction, PendingDirection, PendingRecipeDetailed, ValidResponse, RecipeDetailed, RecipeIngredientDetailed, PendingRecipeIngredientDetailed } from '../../../utils/types/record.types';
 import { UnitGroups } from '../../../utils/types/units.types';
+import RecipeFormStyles from './RecipeForm.styles';
 
 interface RecipeFormProps {
   recipe?: RecipeDetailed | null;
@@ -50,18 +49,13 @@ function RecipeForm({ recipe }: RecipeFormProps) {
   const [draggedTempId, setDraggedTempId] = useState<number | null>(null);
   const [draggedElement, setDraggedElement] = useState<Draggable>(null);
   const [ingredientGroups, setIngredientGroups] = useState<Group>({0: ''});
-  const [directionGroups, setDirectionGroups] = useState<string[]>(['']);
+  // const [directionGroups, setDirectionGroups] = useState<string[]>(['']);
   const [disableForm, setDisableForm] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const allIngredients = useSelector((state: RootState) => state.ingredients.ingredients);
-
-  useEffect(() => {
-    handleAddIngredient();
-    handleAddDirection();
-  }, []);
 
   useEffect(() => {
     setFormData({
@@ -73,11 +67,9 @@ function RecipeForm({ recipe }: RecipeFormProps) {
       source: recipe?.source ? recipe.source : ''
     });
     if (recipe) {
-      // console.log(recipe.recipe_ingredients[0].)
       setIngredients(recipe.recipe_ingredients.map((thisIngredient, index) => {
         const {ingredient, ...recipeIngredient} = thisIngredient;
         setTempIngredientId(current => current + 1);
-        // return null;
         return {...recipeIngredient, tempId: index, name: ingredient.name};
       }));
       setIngredientGroups({});
@@ -123,17 +115,16 @@ function RecipeForm({ recipe }: RecipeFormProps) {
       currentIngredients.map(ingredient => (
         ingredient.group_name === ingredientGroups[e.target.name] ? {...ingredient, group_name: e.target.value} : ingredient
       ))
-    ))
-    setIngredientGroups(currentGroups => ({...currentGroups, [e.target.name]: e.target.value}))
-  }
+    ));
+    setIngredientGroups(currentGroups => ({...currentGroups, [e.target.name]: e.target.value}));
+  };
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const action = recipe ? updateRecipe : createRecipe;
     const sideEffect = (success: boolean, payload: ValidResponse<RecipeDetailed>) => {
-      console.log(payload.payload?.recipe_ingredients);
       setDisableForm(false);
-      if (payload.payload?.recipe_ingredients) dispatch(ingredientsAdded(payload.payload.recipe_ingredients))
+      if (payload.payload?.recipe_ingredients) dispatch(ingredientsAdded(payload.payload.recipe_ingredients));
       success ? navigate('/recipes') : setMessages(payload.messages);
     };
     const bodyIngredients = [] as (RecipeIngredientDetailed | PendingRecipeIngredientDetailed)[];
@@ -142,7 +133,6 @@ function RecipeForm({ recipe }: RecipeFormProps) {
         id: ingredient.id,
         recipe_id: recipe ? recipe.id : undefined,
         ingredient_id: ingredient.ingredient_id,
-        // ingredient_name: ingredient.ingredient_name,
         quantity: ingredient.quantity,
         units: ingredient.units,
         prepared: ingredient.prepared,
@@ -160,8 +150,8 @@ function RecipeForm({ recipe }: RecipeFormProps) {
         id: direction.id,
         content: direction.content,
         order: index
-      })
-    })
+      });
+    });
 
     const body: PendingRecipeDetailed = {...formData, recipe_ingredients: bodyIngredients, directions: bodyDirections};
     setDisableForm(true);
@@ -172,7 +162,6 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     if (Object.keys(ingredientGroups).length === 0) handleAddIngredientGroup();
     setIngredients([...ingredients, {
       tempId: tempIngredientId,
-      // ingredient_name: '',
       quantity: 0,
       units: '',
       prepared: '',
@@ -190,8 +179,8 @@ function RecipeForm({ recipe }: RecipeFormProps) {
   const handleAddIngredientGroup = (groupName: string = '') => {
     setIngredientGroups(currentGroups => {
       const lastIndex = Object.keys(currentGroups).length === 0 ? 0 : parseInt(Object.keys(currentGroups).at(-1)!, 10);
-      return {...currentGroups, [lastIndex + 1]: groupName}
-    })
+      return {...currentGroups, [lastIndex + 1]: groupName};
+    });
   };
 
   const handleAddDirection = () => {
@@ -218,23 +207,6 @@ function RecipeForm({ recipe }: RecipeFormProps) {
   };
 
   const handleDragOver = (element: Draggable, tempId: number) => {
-    // if (element === draggedElement) {
-    //   if (element === 'ingredient') {
-    //     const entities = [...ingredients];
-    //     const setter = setIngredients;
-    //     const entityIndexDrag = entities.findIndex(entity => entity.tempId === draggedTempId);
-    //     const entityIndexOver = entities.findIndex(entity => entity.tempId === tempId);
-    //     entities.splice(entityIndexOver, 0, entities.splice(entityIndexDrag, 1)[0])
-    //     setter(entities)
-
-    //   }
-    //   // const entities = element === 'ingredient' ? [...ingredients] : [...directions];
-    //   // const setter = element === 'ingredient' ? setIngredients : setDirections;
-    //   // const entityIndexDrag = entities.findIndex(entity => entity.tempId === draggedTempId);
-    //   // const entityIndexOver = entities.findIndex(entity => entity.tempId === tempId);
-    //   // setter(entities.splice(entityIndexOver, 0, entities.splice(entityIndexDrag, 1)[0]))
-    // }
-
     if (element === draggedElement) {
       const entities = element === 'ingredient' ? ingredients : directions;
       const setter = element === 'ingredient' ? setIngredients : setDirections;
@@ -243,10 +215,6 @@ function RecipeForm({ recipe }: RecipeFormProps) {
       if (entityIndexDrag !== entityIndexOver) {
         const moveUp = entityIndexDrag > entityIndexOver;
         setter((currentEntities: any[]) => {
-          // const newEntities = [...currentEntities];
-          // console.log(newEntities);
-          // newEntities.splice(moveUp ? entityIndexOver : entityIndexOver, 0, newEntities.splice(entityIndexDrag, 1)[0])
-          // return newEntities;
           const start = currentEntities.slice(0, moveUp ? entityIndexOver : entityIndexDrag);
           const middle = currentEntities.slice(moveUp ? entityIndexOver : entityIndexDrag + 1, moveUp ? entityIndexDrag : entityIndexOver + 1);
           const end = currentEntities.slice(moveUp ? entityIndexDrag + 1 : entityIndexOver + 1);
@@ -268,6 +236,11 @@ function RecipeForm({ recipe }: RecipeFormProps) {
     }
   };
 
+  useEffect(() => {
+    handleAddIngredient();
+    handleAddDirection();
+  }, []);
+
   const renderIngredientInput = (ingredient: RecipeIngredientData & SubRecord) => {
     const dragHandler = () => handleDrag('ingredient', ingredient.tempId);
     const dragEnterHandler = () => handleDragOver('ingredient', ingredient.tempId);
@@ -279,7 +252,6 @@ function RecipeForm({ recipe }: RecipeFormProps) {
         </Datalist>
         <Input name='quantity' type='number' onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.quantity} max={9999} min={0} step={0.0001} />
         <Datalist id='units' name='units' onDragEnter={dragEnterHandler} onChange={e => handleIngredientFormChange(e, ingredient.tempId)} value={ingredient.units} size={10}>
-          {/* {['cups', 'oz'].map(unit => <option key={unit} value={unit} />)} */}
           {(Object.keys(units) as UnitGroups[]).map(group => (
                 <React.Fragment key={group}>
                   <optgroup label={group}>
@@ -351,9 +323,6 @@ function RecipeForm({ recipe }: RecipeFormProps) {
             <span>Units</span>
             <span>Prepared</span>
             <span></span>
-            {/* <span className='icon-span'><RiAddFill onClick={handleAddIngredient} /></span> */}
-
-            {/* {ingredients.map(renderIngredientInput)} */}
             {renderIngredients()}
           </Fieldset>
 
@@ -369,7 +338,6 @@ function RecipeForm({ recipe }: RecipeFormProps) {
             <Button className='cancel' onClick={() => navigate(`/recipes/${recipe ? recipe.id : ''}`)}>Cancel</Button>
           </div>
         </Fieldset>
-        {/* <input type='submit' /> */}
       </form>
       {messages.map(message => <div key={message}>{message}</div>)}
     </RecipeFormStyles>

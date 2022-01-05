@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../rootReducer';
 import Button from '../../../components/forms/Button/Button';
 import Fieldset from '../../../components/forms/Fieldset/Fieldset';
 import Input from '../../../components/forms/Input/Input';
-import { RootState } from '../../../rootReducer';
 import { filterApplied, filterReset } from '../../../store/ingredients/ingredients.slice';
 import IngredientFilterStyles from './IngredientFilter.styles';
 

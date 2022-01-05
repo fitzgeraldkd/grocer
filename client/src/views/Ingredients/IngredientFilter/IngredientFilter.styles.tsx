@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-export default styled.div`
+interface StyledProps {
+  darkMode?: boolean
+};
+
+export default styled.div<StyledProps>`
   padding-bottom: 10px;
 
   fieldset {

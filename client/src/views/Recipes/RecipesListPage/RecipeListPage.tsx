@@ -1,23 +1,19 @@
 import React from 'react';
+import { RiAddFill } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
 import { RootState } from '../../../rootReducer';
-
-import { RiAddFill } from 'react-icons/ri';
-import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
-import RecipeListPageStyles from './RecipeListPage.styles';
-import RecipeCard from '../RecipeCard/RecipeCard';
 import Button from '../../../components/forms/Button/Button';
+import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
 import { filterReset } from '../../../store/recipes/recipes.slice';
+import RecipeCard from '../RecipeCard/RecipeCard';
+import RecipeListPageStyles from './RecipeListPage.styles';
 
 function RecipeListPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const recipes = useSelector((state: RootState) => state.recipes.recipes);
   const filters = useSelector((state: RootState) => state.recipes.filters);
-
-  console.log(recipes);
 
   const filteredRecipes = recipes.filter(recipe => (
     recipe.name.toLowerCase().includes(filters.name.toLowerCase()) &&

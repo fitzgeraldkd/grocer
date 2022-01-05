@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import RecipeEditPageStyles from './RecipeEditPage.styles'
-import { RecipeDetailed, ValidResponse } from '../../../utils/types/record.types';
-import { destroyRecipe, showRecipe } from '../../../store/recipes/recipes.slice';
-import RecipeForm from '../RecipeForm/RecipeForm';
-import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
+import React, { useEffect, useState } from 'react';
 import { RiDeleteBin2Fill } from 'react-icons/ri';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
+import { destroyRecipe, showRecipe } from '../../../store/recipes/recipes.slice';
+import { RecipeDetailed, ValidResponse } from '../../../utils/types/record.types';
+import RecipeForm from '../RecipeForm/RecipeForm';
+import RecipeEditPageStyles from './RecipeEditPage.styles';
 
 function RecipeEditPage() {
   const [recipe, setRecipe] = useState<RecipeDetailed>();
@@ -25,7 +25,7 @@ function RecipeEditPage() {
         if (success && data.payload) handleLoadRecipe(data.payload);
         else navigate('/');
       }
-    }))
+    }));
   }, [dispatch, navigate, params.id]);
 
   const handleDeleteRecipe = () => {
@@ -33,9 +33,9 @@ function RecipeEditPage() {
       dispatch(destroyRecipe({
         id: parseInt(params.id, 10),
         sideEffect: (success:boolean) => {
-          if (success) navigate('/recipes')
+          if (success) navigate('/recipes');
         }
-      }))
+      }));
     }
   };
 
@@ -44,7 +44,7 @@ function RecipeEditPage() {
     {recipe ? <RecipeForm recipe={recipe} /> : <RecipeForm />}
     <FloatingButton onClick={handleDeleteRecipe}><RiDeleteBin2Fill /></FloatingButton>
     </RecipeEditPageStyles>
-  )
+  );
 }
 
-export default RecipeEditPage
+export default RecipeEditPage;

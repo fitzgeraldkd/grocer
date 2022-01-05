@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
-import { RiPencilFill } from 'react-icons/ri';
+import { RiPencilFill, RiSeedlingFill, RiSeedlingLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import { RootState } from '../../../rootReducer';
 import Button from '../../../components/forms/Button/Button';
 import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
-import { RootState } from '../../../rootReducer';
 import { createBasketItem } from '../../../store/basketItems/basketItems.slice';
 import { showRecipe } from '../../../store/recipes/recipes.slice';
 import { getUnique, sorter } from '../../../utils/helpers/arrays.helpers';
-import { Direction, RecipeIngredient, RecipeIngredientDetailed } from '../../../utils/types/record.types';
+import { Direction, RecipeIngredientDetailed } from '../../../utils/types/record.types';
 import RecipeDetailPageStyles from './RecipeDetailPage.styles';
-import { RiSeedlingFill, RiSeedlingLine } from 'react-icons/ri';
 
 function RecipeDetailPage() {
   const params = useParams();
@@ -20,7 +19,7 @@ function RecipeDetailPage() {
 
   useEffect(() => {
     const sideEffect = (success: boolean) => {
-      if (!success) navigate('/recipes')
+      if (!success) navigate('/recipes');
     };
     if (params.id) dispatch(showRecipe({id: parseInt(params.id, 10), sideEffect}));
   }, [dispatch, navigate, params.id]);
@@ -44,7 +43,7 @@ function RecipeDetailPage() {
           {ingredients.filter(ingredient => ingredient.group_name === group).map(renderIngredient)}
         </ul>
       </React.Fragment>
-    ))
+    ));
   };
 
   const renderDirection = (direction: Direction) => {
@@ -52,7 +51,7 @@ function RecipeDetailPage() {
       <li key={direction.id}>
         {direction.content}
       </li>
-    )
+    );
   };
 
   const handleAddToBasket = () => {
@@ -70,11 +69,11 @@ function RecipeDetailPage() {
   const renderSource = () => {
     if (!recipe || !recipe.source) return null;
     if (recipe.source.toLowerCase().startsWith('http')) {
-      return <a href={recipe.source} target='_blank' rel='noreferrer'>View Original Recipe</a>
+      return <a href={recipe.source} target='_blank' rel='noreferrer'>View Original Recipe</a>;
     } else {
-      return <>{recipe.source}</>
+      return <>{recipe.source}</>;
     }
-  }
+  };
 
   const renderIcons = () => {
     if (!recipe) return null;
@@ -94,11 +93,12 @@ function RecipeDetailPage() {
         </div>
         <div>
           {renderSource()}
-          {/* {recipe.source && <a href={recipe.source} target='_blank' rel='noreferrer'>View Original Recipe</a>} */}
         </div>
-        <div className='page-subheader'>Ingredients<Button onClick={handleAddToBasket}>Add To Basket</Button></div>
+        <div className='page-subheader'>
+          Ingredients
+          <Button onClick={handleAddToBasket}>Add To Basket</Button>
+        </div>
         <div className='ingredient-list'>
-          {/* {recipe.recipe_ingredients.map(renderIngredient)} */}
           {renderIngredients(recipe.recipe_ingredients)}
         </div>
         <div className='page-subheader'>Directions</div>

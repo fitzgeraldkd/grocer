@@ -97,7 +97,6 @@ const simplifyUnits = (measurement: Measurement) => {
     return measurement;
   }
   const simplified = {...measurement};
-  console.log(unitGroup, simplified.unit);
   while (units[unitGroup as UnitGroups][simplified.unit as Unit]?.next) {
     const newQuantity = simplified.quantity * units[unitGroup as UnitGroups][simplified.unit as Unit]!.next!.conversion;
     const newUnit = units[unitGroup as UnitGroups][simplified.unit as Unit]!.next!.unit;
@@ -132,7 +131,6 @@ export const addMeasurements = (measurements: Measurement[]) => {
 };
 
 export const simplifyBasket = (basketItems: BasketItem[]) => {
-  console.log(basketItems);
   const ingredientList: {[ingredient: string]: Measurement[]} = {};
   for (const basketItem of basketItems) {
     const newMeasurement: Measurement = {quantity: basketItem.quantity, unit: basketItem.units};
@@ -143,7 +141,6 @@ export const simplifyBasket = (basketItems: BasketItem[]) => {
     }
   }
 
-  console.log(ingredientList);
   const summedIngredients: {[ingredient: string]: {id: number, basket_ids: number[], measurements: {}}} = {};
   Object.keys(ingredientList).forEach(ingredient => (
     summedIngredients[ingredient] = {
@@ -152,6 +149,5 @@ export const simplifyBasket = (basketItems: BasketItem[]) => {
       measurements: addMeasurements(ingredientList[ingredient])
     }
   ));
-  console.log(summedIngredients);
   return summedIngredients;
 }

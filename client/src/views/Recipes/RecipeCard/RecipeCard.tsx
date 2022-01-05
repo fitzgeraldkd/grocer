@@ -1,8 +1,8 @@
 import React from 'react';
+import { RiSeedlingFill, RiSeedlingLine } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import { Recipe } from '../../../utils/types/record.types';
 import RecipeCardStyles from './RecipeCard.styles';
-import { RiSeedlingFill, RiSeedlingLine } from 'react-icons/ri';
 
 interface RecipeCardProps {
   recipe: Recipe

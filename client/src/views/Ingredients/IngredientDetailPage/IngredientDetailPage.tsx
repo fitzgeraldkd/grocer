@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { RiPencilFill, RiCloseCircleFill } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
-import { showIngredient } from '../../../store/ingredients/ingredients.slice';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { RootState } from '../../../rootReducer';
-import { RiAddFill, RiPencilFill, RiAddLine, RiCloseCircleFill } from 'react-icons/ri';
-import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
-import { BasketItem, Recipe } from '../../../utils/types/record.types';
 import Button from '../../../components/forms/Button/Button';
-import { createBasketItem, destroyBasketItem } from '../../../store/basketItems/basketItems.slice';
-import Input from '../../../components/forms/Input/Input';
-import { units } from '../../../utils/helpers/units.helpers';
 import Datalist from '../../../components/forms/Datalist/Datalist';
-import { UnitGroups } from '../../../utils/types/units.types';
 import Fieldset from '../../../components/forms/Fieldset/Fieldset';
+import Input from '../../../components/forms/Input/Input';
+import FloatingButton from '../../../components/navigation/FloatingButton/FloatingButton';
+import { createBasketItem, destroyBasketItem } from '../../../store/basketItems/basketItems.slice';
+import { showIngredient } from '../../../store/ingredients/ingredients.slice';
+import { units } from '../../../utils/helpers/units.helpers';
+import { BasketItem, Recipe } from '../../../utils/types/record.types';
+import { UnitGroups } from '../../../utils/types/units.types';
 import IngredientDetailPageStyles from './IngredientDetailPage.styles';
 
 function IngredientDetailPage() {
@@ -83,11 +83,11 @@ function IngredientDetailPage() {
         </div>
       </>
     );
-  }
+  };
 
   const handleBasketItemDelete = (id: number) => {
     dispatch(destroyBasketItem({ id }));
-  }
+  };
   
   
   const renderBasketItems = (relatedBasketItems: BasketItem[]) => {

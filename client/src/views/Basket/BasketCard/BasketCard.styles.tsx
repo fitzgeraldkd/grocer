@@ -1,15 +1,12 @@
 import styled from 'styled-components';
 
-interface StyledProps {
+export interface StyledProps {
   darkMode?: boolean
 };
 
 export default styled.div<StyledProps>`
   margin-bottom: 10px;
   display: flex;
-  /* button {
-    margin-right: 10px;
-  } */
 
   .icon-span {
     display: flex;

@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-export default styled.div`
+interface StyledProps {
+  darkMode?: boolean
+};
+
+export default styled.div<StyledProps>`
   max-width: 1200px;
   margin: auto;
 
@@ -31,10 +35,7 @@ export default styled.div`
     }
   }
 
-  .ingredient-list {
-    /* padding-left: 40px; */
-    ul {
-      margin-top: 0;
-    }
+  .ingredient-list, ul {
+    margin-top: 0;
   }
 `;
