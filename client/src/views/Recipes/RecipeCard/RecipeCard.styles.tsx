@@ -21,5 +21,10 @@ export default styled.div<StyledProps>`
       font-size: 1.15em;
       display: block;
     }
+
+    .icons {
+      float: right;
+      color: #0b360b;
+    }
   }
 `;

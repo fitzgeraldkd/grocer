@@ -5,7 +5,7 @@ export default styled.div`
   .card-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    /* justify-content: space-around; */
     margin-top: 20px;
   }
 

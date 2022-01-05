@@ -11,6 +11,15 @@ export default styled.div`
       font-size: 0.8em;
       font-weight: initial;
     }
+
+    .icons {
+      margin-left: 10px;
+      color: #0b360b;
+
+      svg {
+        vertical-align: bottom;
+      }
+    }
   }
 
   .page-subheader {

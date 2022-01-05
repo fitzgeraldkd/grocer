@@ -10,6 +10,7 @@ import { showRecipe } from '../../../store/recipes/recipes.slice';
 import { getUnique, sorter } from '../../../utils/helpers/arrays.helpers';
 import { Direction, RecipeIngredient, RecipeIngredientDetailed } from '../../../utils/types/record.types';
 import RecipeDetailPageStyles from './RecipeDetailPage.styles';
+import { RiSeedlingFill, RiSeedlingLine } from 'react-icons/ri';
 
 function RecipeDetailPage() {
   const params = useParams();
@@ -75,12 +76,21 @@ function RecipeDetailPage() {
     }
   }
 
+  const renderIcons = () => {
+    if (!recipe) return null;
+    if (recipe.vegan) return <RiSeedlingFill />;
+    if (recipe.vegetarian) return <RiSeedlingLine />;
+  };
+
   const renderRecipe = () => {
     if (!recipe) return null;
     return (
       <>
         <div className='page-header'>
           {recipe.name}
+          <span className='icons'>
+            {renderIcons()}
+          </span>
         </div>
         <div>
           {renderSource()}
