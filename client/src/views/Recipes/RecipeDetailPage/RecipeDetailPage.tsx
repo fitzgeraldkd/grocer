@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RiPencilFill, RiSeedlingFill, RiSeedlingLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -16,6 +16,7 @@ function RecipeDetailPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const recipe = useSelector((state: RootState) => state.recipes.activeRecipe);
+  const [messages, setMessages] = useState<string[]>([]);
 
   useEffect(() => {
     const sideEffect = (success: boolean) => {
@@ -62,7 +63,10 @@ function RecipeDetailPage() {
         quantity: recipeIngredient.quantity,
         units: recipeIngredient.units
       };
-      dispatch(createBasketItem({body: itemBody}));
+      const sideEffect = () => {
+        setMessages(['Successfully added to basket!']);
+      };
+      dispatch(createBasketItem({body: itemBody, sideEffect}));
     });
   };
 
@@ -97,6 +101,9 @@ function RecipeDetailPage() {
         <div className='page-subheader'>
           Ingredients
           <Button onClick={handleAddToBasket}>Add To Basket</Button>
+        </div>
+        <div className='messages'>
+          {messages}
         </div>
         <div className='ingredient-list'>
           {renderIngredients(recipe.recipe_ingredients)}

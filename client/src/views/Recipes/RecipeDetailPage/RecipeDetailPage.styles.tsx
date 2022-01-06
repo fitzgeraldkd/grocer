@@ -26,6 +26,10 @@ export default styled.div<StyledProps>`
     }
   }
 
+  .messages {
+    margin-bottom: 20px;
+  }
+
   .page-subheader {
     margin-top: 20px;
     margin-bottom: 10px;
