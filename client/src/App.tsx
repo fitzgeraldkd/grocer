@@ -1,30 +1,28 @@
-import React, { useEffect, useState } from 'react';
-// import logo from './logo.svg';
-import './App.css';
-import { Routes, Route } from 'react-router-dom';
-import LoginPage from './views/Login/LoginPage/LoginPage';
-import NavBar from './components/navigation/NavBar/NavBar';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { verifyUser } from './store/authentication/authentication.slice';
-import { indexRecipes } from './store/recipes/recipes.slice';
-import { indexIngredients } from './store/ingredients/ingredients.slice';
+import { Routes, Route } from 'react-router-dom';
 import { RootState } from './rootReducer';
-import IngredientsListPage from './views/Ingredients/IngredientsListPage/IngredientsListPage';
-import IngredientDetailPage from './views/Ingredients/IngredientDetailPage/IngredientDetailPage';
-import IngredientCreatePage from './views/Ingredients/IngredientCreatePage/IngredientCreatePage';
-import IngredientEditPage from './views/Ingredients/IngredientEditPage/IngredientEditPage';
-import AppStyled from './App.styles';
-import RecipeListPage from './views/Recipes/RecipesListPage/RecipeListPage';
-import RecipeDetailPage from './views/Recipes/RecipeDetailPage/RecipeDetailPage';
-import RecipeCreatePage from './views/Recipes/RecipeCreatePage/RecipeCreatePage';
-import RecipeEditPage from './views/Recipes/RecipeEditPage/RecipeEditPage';
-import BasketListPage from './views/Basket/BasketListPage/BasketListPage';
-import { indexBasketItems } from './store/basketItems/basketItems.slice';
-import BasketDetailPage from './views/Basket/BasketDetailPage/BasketDetailPage';
+import NavBar from './components/navigation/NavBar/NavBar';
 import Processing from './components/notifications/Processing/Processing';
-import Landing from './views/Landing/Landing/Landing';
 import Fork from './components/svg/Fork/Fork';
 import Spoon from './components/svg/Spoon/Spoon';
+import { verifyUser } from './store/authentication/authentication.slice';
+import { indexBasketItems } from './store/basketItems/basketItems.slice';
+import { indexIngredients } from './store/ingredients/ingredients.slice';
+import { indexRecipes } from './store/recipes/recipes.slice';
+import BasketDetailPage from './views/Basket/BasketDetailPage/BasketDetailPage';
+import BasketListPage from './views/Basket/BasketListPage/BasketListPage';
+import IngredientCreatePage from './views/Ingredients/IngredientCreatePage/IngredientCreatePage';
+import IngredientDetailPage from './views/Ingredients/IngredientDetailPage/IngredientDetailPage';
+import IngredientEditPage from './views/Ingredients/IngredientEditPage/IngredientEditPage';
+import IngredientsListPage from './views/Ingredients/IngredientsListPage/IngredientsListPage';
+import Landing from './views/Landing/Landing/Landing';
+import RecipeCreatePage from './views/Recipes/RecipeCreatePage/RecipeCreatePage';
+import RecipeDetailPage from './views/Recipes/RecipeDetailPage/RecipeDetailPage';
+import RecipeEditPage from './views/Recipes/RecipeEditPage/RecipeEditPage';
+import RecipeListPage from './views/Recipes/RecipesListPage/RecipeListPage';
+import AppStyled from './App.styles';
+import './App.css';
 
 function App() {
   const dispatch = useDispatch();
@@ -33,7 +31,6 @@ function App() {
   const ingredientStatus = useSelector((state: RootState) => state.ingredients.status);
   const recipeStatus = useSelector((state: RootState) => state.recipes.status);
   const basketItemStatus = useSelector((state: RootState) => state.basketItems.status);
-  const [testState, setTestState] = useState(true);
   
   useEffect(() => {
     dispatch(verifyUser({}));
@@ -54,8 +51,6 @@ function App() {
         <Processing className={ingredientStatus === 'loading' ? 'visible' : ''}>Updating Ingredients</Processing>
         <Processing className={recipeStatus === 'loading' ? 'visible' : ''}>Updating Recipes</Processing>
         <Processing className={basketItemStatus === 'loading' ? 'visible' : ''}>Updating Basket Items</Processing>
-
-        {/* <Processing className={testState ? 'visible' : ''}>Validating Credentials</Processing> */}
       </>
     );
   };
