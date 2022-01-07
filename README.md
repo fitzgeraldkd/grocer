@@ -15,7 +15,7 @@
 
 ## What is Grocer?
 
-
+Organize your recipes and compile shopping lists quickly with Grocer! Save your recipes, quickly find them by searching and filtering, and add all of the required ingredients to your basket with the click of a button. A great way for anyone to keep all of their favorite recipes in one place!
 
 ## Technologies
 
