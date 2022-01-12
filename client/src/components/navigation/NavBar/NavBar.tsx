@@ -12,21 +12,21 @@ import NavBarMenu from '../NavBarMenu/NavBarMenu';
 import NavBarStyles, { StyledProps } from './NavBar.styles';
 
 interface NavBarProps extends React.HTMLAttributes<HTMLDivElement> {
-  styledProps?: StyledProps
-};
+  styledProps?: StyledProps;
+}
 
 function NavBar({ styledProps, ...intrinsic }: NavBarProps) {
   const userId = useSelector((state: RootState) => state.authentication.userId);
   const dispatch = useDispatch();
 
   const recipeFilterMenu = (
-    <NavBarMenu position='right' autohide={false} icon={<RiFilter2Fill />}>
+    <NavBarMenu position='right' autohide={false} icon={<RiFilter2Fill title='filter-icon' />}>
       <RecipeFilter />
     </NavBarMenu>
   );
 
   const ingredientFilterMenu = (
-    <NavBarMenu position='right' autohide={false} icon={<RiFilter2Fill />}>
+    <NavBarMenu position='right' autohide={false} icon={<RiFilter2Fill title='filter-icon' />}>
       <IngredientFilter />
     </NavBarMenu>
   );
@@ -35,7 +35,7 @@ function NavBar({ styledProps, ...intrinsic }: NavBarProps) {
     <NavBarStyles {...styledProps} {...intrinsic}>
 
       {userId ?       
-        <NavBarMenu icon={<RiMenuLine />}>
+        <NavBarMenu icon={<RiMenuLine title='nav-icon' />}>
           <NavBarLink path='/recipes'>Recipes</NavBarLink>
           <NavBarLink path='/ingredients'>Ingredients</NavBarLink>
           <NavBarLink path='/basket_items'>Basket</NavBarLink>
