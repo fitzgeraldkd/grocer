@@ -7,22 +7,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from 'styled-components';
-
-
-
-const theme = {
-  palette: {
-    light: {
-      primary: '#9FC1F9',
-      'primary-light': '#C8D3E4',
-      'primary-dark': '#0B4199',
-      secondary: '#DEC8BA',
-      'secondary-light': '#E5DFDC',
-      'secondary-dark': '#5B4F48',
-      background: '#E5DFDC44'
-    }
-  }
-}
+import { theme } from './index.styles';
 
 ReactDOM.render(
   <React.StrictMode>
