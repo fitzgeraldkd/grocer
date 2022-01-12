@@ -2,12 +2,43 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
-import store from '../../rootReducer';
+import { RootState } from '../../rootReducer';
+import { ThemeProvider } from 'styled-components';
+import { theme } from '../../index.styles';
+import { configureStore } from '@reduxjs/toolkit';
+import authenticationReducer, { initialState as authenticationInitialState } from '../../store/authentication/authentication.slice';
+import basketItemsReducer, { initialState as basketItemsInitialState } from '../../store/basketItems/basketItems.slice';
+import ingredientsReducer, { initialState as ingredientsInitialState } from '../../store/ingredients/ingredients.slice';
+import recipesReducer, { initialState as recipesInitialState } from '../../store/recipes/recipes.slice';
 
-export const renderWrappedComponent = function(component: JSX.Element, path: string = '/') {
+const initialState: RootState = {
+  authentication: authenticationInitialState,
+  ingredients: ingredientsInitialState,
+  recipes: recipesInitialState,
+  basketItems: basketItemsInitialState
+};
+
+export const renderWrappedComponent = (component: React.ReactNode, path: string = '/', preloadedState: RootState = initialState) => {
   window.history.pushState({}, 'Test', path);
-  render(<Provider store={store}>{component}</Provider>, {wrapper: BrowserRouter});
-}
+  const store = configureStore({
+    reducer: {
+      authentication: authenticationReducer,
+      ingredients: ingredientsReducer,
+      recipes: recipesReducer,
+      basketItems: basketItemsReducer
+    },
+    preloadedState
+  });
+  return render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          {component}
+        </ThemeProvider>
+      </BrowserRouter>
+    </Provider>
+  );
+};
 
 export const countLabeledInputs = function(expectedCount: number) {
   expect(screen.queryAllByLabelText(text => text !== '').length).toBe(expectedCount);
