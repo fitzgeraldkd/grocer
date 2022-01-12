@@ -17,7 +17,7 @@ interface RecipesState {
   }
 };
 
-const initialState: RecipesState = {
+export const initialState: RecipesState = {
   recipes: [],
   activeRecipe: null,
   status: 'idle',

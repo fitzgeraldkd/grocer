@@ -9,7 +9,7 @@ interface AuthenticationState {
   status: RequestStatus
 };
 
-const initialState: AuthenticationState = {
+export const initialState: AuthenticationState = {
   userId: null,
   status: 'idle'
 };

@@ -7,7 +7,7 @@ interface BasketItemsState {
   status: RequestStatus
 };
 
-const initialState: BasketItemsState = {
+export const initialState: BasketItemsState = {
   basketItems: [],
   status: 'idle'
 };

@@ -13,7 +13,7 @@ interface IngredientsState {
   }
 };
 
-const initialState: IngredientsState = {
+export const initialState: IngredientsState = {
   ingredients: [],
   activeIngredient: null,
   status: 'idle',
