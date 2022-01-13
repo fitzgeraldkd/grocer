@@ -9,6 +9,8 @@ interface DatalistProps extends React.InputHTMLAttributes<HTMLInputElement> {
 };
 
 function Datalist({ children, label, styledProps, ...intrinsic }: DatalistProps) {
+  intrinsic.id ||= intrinsic.name;
+  
   return (
     <>
       <Input label={label} {...styledProps} {...intrinsic} list={`${intrinsic.id}List`} />
