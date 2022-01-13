@@ -3,29 +3,49 @@ import React from 'react';
 import { renderWrappedComponent } from '../../../utils/helpers/tests.helpers';
 import NavBarLink from './NavBarLink';
 
-describe('render NavBarLink component', () => {
-  const paths = ['/', '/recipes', '/ingredients', '/recipes/1'];
+interface LinkProps {
+  path: string;
+  label: string;
+}
+
+const renderNavBarLinks = (links: LinkProps[]) => {
   renderWrappedComponent(
     <div>
-      {paths.map(path => <NavBarLink path={path} key={path}>Link</NavBarLink>)}
+      {links.map(link => <NavBarLink path={link.path} key={link.path}>{link.label}</NavBarLink>)}
     </div>
   );
+};
 
-  const links = screen.getAllByRole('link');
+describe('render NavBarLink component', () => {
+  const links = [
+    {path: '/', label: 'Home'},
+    {path: '/recipes', label: 'Recipes'},
+    {path: '/ingredients', label: 'Ingredients'},
+    {path: '/recipes/1', label: 'Recipe Detail'}
+  ];
 
   test('correct number of links rendered', () => {
-    expect(links.length).toBe(paths.length);
+    renderNavBarLinks(links);
+    const renderedLinks = screen.getAllByRole('link');
+    expect(renderedLinks.length).toBe(links.length);
+    for (const link of renderedLinks) {
+      expect(link).toBeVisible();
+    }
   });
 
-  test.todo('verify that links are visible');
-
-  links.forEach((link, index) => {
-    test('component is visible', () => {
-      expect(link).toHaveTextContent('Link');
+  test('links have text contents', () => {
+    renderNavBarLinks(links);
+    const renderedLinks = screen.getAllByRole('link');
+    renderedLinks.forEach((link, index) => {
+      expect(link).toHaveTextContent(links[index].label);
     });
-  
-    test('href property is assigned', () => {
-      expect(link).toHaveAttribute('href', paths[index]);
+  });
+
+  test('links have href attribute assigned', () => {
+    renderNavBarLinks(links);
+    const renderedLinks = screen.getAllByRole('link');
+    renderedLinks.forEach((link, index) => {
+      expect(link).toHaveAttribute('href', links[index].path);
     });
   });
 });
