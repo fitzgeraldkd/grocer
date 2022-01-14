@@ -1,7 +1,7 @@
 import React from 'react';
 import InputStyles, { StyledProps } from './Input.styles';
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string,
   styledProps?: StyledProps
 };
